@@ -1,11 +1,21 @@
-import { eventHandlerControl, jsonControl, jsonExposingStateControl, Section, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-import AppMultiSelect from './base';
-import { defaultOptions, defaultValue, exposingConfigs, staticProps } from './config';
+import { eventHandlerControl, jsonControl, jsonExposingStateControl, NameConfig, Section, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+import { MultiSelect } from 'primereact/multiselect';
+
+const defStaticProps = { placeholder: 'Select Cities', optionLabel: 'name', filter: true };
+const defValue = [{ name: 'New York', code: 'NY' }];
+const defOptions = [
+  { name: 'New York', code: 'NY' },
+  { name: 'Rome', code: 'RM' },
+  { name: 'London', code: 'LDN' },
+  { name: 'Istanbul', code: 'IST' },
+  { name: 'Paris', code: 'PRS' },
+];
+
 let MultiSelectCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
-    value: jsonExposingStateControl('value', toJSONObjectArray, defaultValue),
-    options: jsonControl(toJSONObjectArray, defaultOptions),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
+    value: jsonExposingStateControl('value', toJSONObjectArray, defValue),
+    options: jsonControl(toJSONObjectArray, defOptions),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
@@ -15,13 +25,13 @@ let MultiSelectCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { onEvent: any; options: any[]; value: any; staticProps: any[] | null | undefined }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     const handleChange = (e: any) => {
       props.value.onChange(e.target.value);
       props.onEvent('change');
     };
 
-    return <AppMultiSelect {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange}></AppMultiSelect>;
+    return <MultiSelect {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange}></MultiSelect>;
   })
     .setPropertyViewFn((children: any) => {
       return (
@@ -48,4 +58,5 @@ let MultiSelectCompBase = (function () {
     .build();
 })();
 
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value'), new NameConfig('options')];
 export default withExposingConfigs(MultiSelectCompBase, exposingConfigs);

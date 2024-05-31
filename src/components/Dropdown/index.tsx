@@ -1,13 +1,24 @@
 import { eventHandlerControl, jsonControl, jsonObjectExposingStateControl, Section, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-import Dropdown from './base';
-import { defaultOptions, defaultValue, exposingConfigs, staticProps } from './config';
+import { Dropdown } from 'primereact/dropdown';
+
+import { NameConfig } from 'lowcoder-sdk';
+const defStaticProps = { placeholder: 'Select a City', optionLabel: 'name' };
+
+const defValue = { name: 'New York', code: 'NY' };
+
+const defOptions = [
+  { name: 'New York', code: 'NY' },
+  { name: 'Rome', code: 'RM' },
+  { name: 'London', code: 'LDN' },
+  { name: 'Istanbul', code: 'IST' },
+  { name: 'Paris', code: 'PRS' },
+];
 
 let DropdownCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
-
-    value: jsonObjectExposingStateControl('value', defaultValue),
-    options: jsonControl(toJSONObjectArray, defaultOptions),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
+    value: jsonObjectExposingStateControl('value', defValue),
+    options: jsonControl(toJSONObjectArray, defOptions),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
@@ -17,7 +28,7 @@ let DropdownCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { onEvent: any; options: any[]; value: any; staticProps: any[] | null | undefined }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     const handleChange = (e: any) => {
       props.value.onChange(e.target.value);
       props.onEvent('change');
@@ -49,5 +60,7 @@ let DropdownCompBase = (function () {
     })
     .build();
 })();
+
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value'), new NameConfig('options')];
 
 export default withExposingConfigs(DropdownCompBase, exposingConfigs);

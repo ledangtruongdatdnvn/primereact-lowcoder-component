@@ -1,10 +1,21 @@
-import { BooleanStateControl, eventHandlerControl, jsonControl, Section, toJSONObject, UICompBuilder, withDefault, withExposingConfigs } from 'lowcoder-sdk';
-import AppButton from './base';
-import { exposingConfigs, staticProps } from './config';
+import { BooleanStateControl, eventHandlerControl, jsonControl, Section, toJSONObject, UICompBuilder, withDefault, withExposingConfigs, NameConfig } from 'lowcoder-sdk';
+import { Button } from 'primereact/button';
+
+export const defStaticProps = {
+  label: 'button',
+  raised: false,
+  tooltip: 'tooltip',
+  icon: 'pi pi-cog',
+  iconPos: 'left',
+  size: 'small',
+  badge: '',
+  rounded: false,
+  severity: 'success',
+};
 
 let ButtonCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
     visible: withDefault(BooleanStateControl, 'true'),
     loading: withDefault(BooleanStateControl, 'false'),
     disabled: withDefault(BooleanStateControl, 'false'),
@@ -17,12 +28,12 @@ let ButtonCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { onEvent: any; staticProps: any[] | null | undefined; visible: any; loading: any; disabled: any }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     const handleClick = () => {
       props.onEvent('click');
     };
 
-    return <AppButton {...props.staticProps} disabled={props.disabled.value} loading={props.loading.value} visible={props.visible.value} onClick={handleClick}></AppButton>;
+    return <Button {...props.staticProps} disabled={props.disabled.value} loading={props.loading.value} visible={props.visible.value} onClick={handleClick}></Button>;
   })
     .setPropertyViewFn((children: any) => {
       return (
@@ -49,5 +60,7 @@ let ButtonCompBase = (function () {
     })
     .build();
 })();
+
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('visible'), new NameConfig('loading'), new NameConfig('disabled')];
 
 export default withExposingConfigs(ButtonCompBase, exposingConfigs);

@@ -1,11 +1,20 @@
-import { eventHandlerControl, jsonControl, Section, stringExposingStateControl, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-import AppRadioButton from './base';
-import { commonProps, defaultChecked, exposingConfigs, radioButtons } from './config';
+import { eventHandlerControl, jsonControl, NameConfig, Section, stringExposingStateControl, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+import { RadioButton } from 'primereact/radiobutton';
+
+const defCommonProps = { tooltip: 'Choose one!' };
+const defRadioButtons = [
+  { name: 'pizza', value: 'Cheese', inputId: 'pizza' },
+  { name: 'pizza2', value: 'Cheese2', inputId: 'pizza2' },
+  { name: 'pizza3', value: 'Cheese3', inputId: 'pizza3' },
+  { name: 'pizza4', value: 'Cheese4', inputId: 'pizza4' },
+];
+const defChecked = '';
+
 let RadioButtonCompBase = (function () {
   const childrenMap = {
-    commonProps: jsonControl(toJSONObject, commonProps),
-    radioButtons: jsonControl(toJSONObjectArray, radioButtons),
-    checked: stringExposingStateControl('checked', defaultChecked),
+    commonProps: jsonControl(toJSONObject, defCommonProps),
+    radioButtons: jsonControl(toJSONObjectArray, defRadioButtons),
+    checked: stringExposingStateControl('checked', defChecked),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
@@ -15,7 +24,7 @@ let RadioButtonCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { onEvent: any; checked: any; commonProps: any[] | null | undefined; radioButtons: any[] }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     const handleChange = (e: any) => {
       props.checked.onChange(e.target.value);
       props.onEvent('change');
@@ -23,9 +32,12 @@ let RadioButtonCompBase = (function () {
 
     return (
       <div className='flex gap-4 justify-content-center align-items-center'>
-        {radioButtons.map((item, index) => (
+        {props.radioButtons.map((item: any, index: number) => (
           <div key={index}>
-            <AppRadioButton {...props.commonProps} {...item} checked={props.checked.value === item.value} onChange={handleChange}></AppRadioButton>
+            <RadioButton {...props.commonProps} {...item} checked={props.checked.value === item.value} onChange={handleChange}></RadioButton>
+            <label htmlFor={item.inputId} className='ml-2'>
+              {item.name}
+            </label>
           </div>
         ))}
       </div>
@@ -56,4 +68,5 @@ let RadioButtonCompBase = (function () {
     .build();
 })();
 
+const exposingConfigs = [new NameConfig('commonProps'), new NameConfig('checked')];
 export default withExposingConfigs(RadioButtonCompBase, exposingConfigs);

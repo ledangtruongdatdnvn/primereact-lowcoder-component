@@ -1,17 +1,24 @@
-import { jsonControl, Section, StringControl, toJSONObject, toJSONObjectArray, UICompBuilder, withDefault, withExposingConfigs } from 'lowcoder-sdk';
-import Timeline from './base';
-import { defaultValue, exposingConfigs, staticProps } from './config';
+import { jsonControl, NameConfig, Section, StringControl, toJSONObject, toJSONObjectArray, UICompBuilder, withDefault, withExposingConfigs } from 'lowcoder-sdk';
+import { Timeline } from 'primereact/timeline';
+
+const defStaticProps = { align: 'alternate' };
+const defValue = [
+  { status: 'Ordered', date: '15/10/2020 10:30', icon: 'pi pi-shopping-cart', color: '#9C27B0' },
+  { status: 'Processing', date: '15/10/2020 14:00', icon: 'pi pi-cog', color: '#673AB7' },
+  { status: 'Shipped', date: '15/10/2020 16:15', icon: 'pi pi-shopping-cart', color: '#FF9800' },
+  { status: 'Delivered', date: '16/10/2020 10:00', icon: 'pi pi-check', color: '#607D8B' },
+];
 
 let TimelineCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
-    value: jsonControl(toJSONObjectArray, defaultValue),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
+    value: jsonControl(toJSONObjectArray, defValue),
     content: withDefault(StringControl, 'status'),
     subContent: withDefault(StringControl, 'date'),
     icon: withDefault(StringControl, 'icon'),
   };
 
-  return new UICompBuilder(childrenMap, (props: { value: any; icon: any; content: any; subContent: any; staticProps: any[] | null | undefined }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     return (
       <Timeline
         {...props.staticProps}
@@ -56,4 +63,5 @@ let TimelineCompBase = (function () {
     .build();
 })();
 
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value'), new NameConfig('content'), new NameConfig('subContent'), new NameConfig('icon')];
 export default withExposingConfigs(TimelineCompBase, exposingConfigs);

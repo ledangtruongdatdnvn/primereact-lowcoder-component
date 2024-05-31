@@ -1,11 +1,13 @@
-import { booleanExposingStateControl, eventHandlerControl, jsonControl, Section, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-import AppInputSwitch from './base';
-import { defaultChecked, exposingConfigs, staticProps } from './config';
+import { booleanExposingStateControl, eventHandlerControl, jsonControl, NameConfig, Section, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+import { InputSwitch } from 'primereact/inputswitch';
+
+const defStaticProps = { tooltip: 'Switch me!' };
+const defChecked = true;
 
 let InputSwitchCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
-    checked: booleanExposingStateControl('checked', defaultChecked),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
+    checked: booleanExposingStateControl('checked', defChecked),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
@@ -15,13 +17,13 @@ let InputSwitchCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { onEvent: any; checked: any; staticProps: any[] | null | undefined }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     const handleChange = (e: any) => {
       props.checked.onChange(e.target.value);
       props.onEvent('change');
     };
 
-    return <AppInputSwitch {...props.staticProps} checked={props.checked.value} onChange={handleChange}></AppInputSwitch>;
+    return <InputSwitch {...props.staticProps} checked={props.checked.value} onChange={handleChange}></InputSwitch>;
   })
     .setPropertyViewFn((children: any) => {
       return (
@@ -46,5 +48,5 @@ let InputSwitchCompBase = (function () {
     })
     .build();
 })();
-
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('checked')];
 export default withExposingConfigs(InputSwitchCompBase, exposingConfigs);

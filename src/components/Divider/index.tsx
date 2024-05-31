@@ -1,13 +1,18 @@
-import { jsonControl, Section, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-import AppDivider from './base';
-import { exposingConfigs, staticProps } from './config';
+import { jsonControl, Section, toJSONObject, UICompBuilder, withExposingConfigs, NameConfig } from 'lowcoder-sdk';
+import { Divider } from 'primereact/divider';
+
+const defStaticProps = {
+  layout: 'horizontal',
+  type: 'dashed',
+};
+
 let DividerCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
   };
 
-  return new UICompBuilder(childrenMap, (props: { staticProps: any[] | null | undefined }) => {
-    return <AppDivider {...props.staticProps}></AppDivider>;
+  return new UICompBuilder(childrenMap, (props: any) => {
+    return <Divider {...props.staticProps}></Divider>;
   })
     .setPropertyViewFn((children: any) => {
       return (
@@ -28,5 +33,7 @@ let DividerCompBase = (function () {
     })
     .build();
 })();
+
+const exposingConfigs = [new NameConfig('staticProps')];
 
 export default withExposingConfigs(DividerCompBase, exposingConfigs);

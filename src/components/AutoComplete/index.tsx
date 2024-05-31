@@ -1,13 +1,29 @@
-import { eventHandlerControl, jsonControl, jsonExposingStateControl, Section, stringExposingStateControl, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-import AppAutoComplete from './base';
+import {
+  eventHandlerControl,
+  jsonControl,
+  jsonExposingStateControl,
+  NameConfig,
+  Section,
+  stringExposingStateControl,
+  toJSONObject,
+  toJSONObjectArray,
+  UICompBuilder,
+  withExposingConfigs,
+} from 'lowcoder-sdk';
+import { AutoComplete } from 'primereact/autocomplete';
 
-import { defaultSuggestions, defaultValue, exposingConfigs, staticProps } from './config';
+const defStaticProps = { placeholder: 'Enter a country name', field: 'name' };
+const defValue = '';
+const defSuggestions = [
+  { name: 'United Kingdom', code: 'UK' },
+  { name: 'United States', code: 'USA' },
+];
 
 let AutoCompleteCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
-    value: stringExposingStateControl('value', defaultValue),
-    suggestions: jsonExposingStateControl('suggestions', toJSONObjectArray, defaultSuggestions),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
+    value: stringExposingStateControl('value', defValue),
+    suggestions: jsonExposingStateControl('suggestions', toJSONObjectArray, defSuggestions),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
@@ -22,17 +38,17 @@ let AutoCompleteCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { suggestions: any; onEvent: any; value: any; staticProps: any | null | undefined }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     const handleChange = (e: any) => {
       props.value.onChange(e.target.value);
       props.onEvent('change');
     };
 
-    const search = (e: any) => {
+    const search = () => {
       props.onEvent('complete');
     };
 
-    return <AppAutoComplete {...props.staticProps} suggestions={props.suggestions.value} value={props.value.value} completeMethod={search} onChange={handleChange}></AppAutoComplete>;
+    return <AutoComplete {...props.staticProps} suggestions={props.suggestions.value} value={props.value.value} completeMethod={search} onChange={handleChange}></AutoComplete>;
   })
     .setPropertyViewFn((children: any) => {
       return (
@@ -59,4 +75,5 @@ let AutoCompleteCompBase = (function () {
     .build();
 })();
 
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value'), new NameConfig('suggestions')];
 export default withExposingConfigs(AutoCompleteCompBase, exposingConfigs);

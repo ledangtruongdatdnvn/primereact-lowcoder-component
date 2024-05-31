@@ -1,12 +1,13 @@
-import { eventHandlerControl, jsonControl, numberExposingStateControl, Section, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+import { NameConfig, eventHandlerControl, jsonControl, numberExposingStateControl, Section, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+import { Paginator } from 'primereact/paginator';
 
-// Import the CSS file
-import AppPaginator from './base';
-import { exposingConfigs, staticProps } from './config';
+const defStaticProps = {
+  rowsPerPageOptions: [1, 5, 10, 20],
+};
 
 let PaginatorCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
     first: numberExposingStateControl('first', 0),
     rows: numberExposingStateControl('rows', 10),
     totalRecords: numberExposingStateControl('totalRecords', 40),
@@ -19,7 +20,7 @@ let PaginatorCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { value: any; staticProps: any | null | undefined; columns: any[]; rows: any; first: any; totalRecords: any; onEvent: any }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     const handlePageChange = (event: any) => {
       if ((event.rows !== props.rows.value || event.first !== props.first.value) && typeof event.first == 'number' && typeof event.rows == 'number') {
         props.rows.onChange(event.rows);
@@ -28,7 +29,7 @@ let PaginatorCompBase = (function () {
       props.onEvent('change');
     };
 
-    return <AppPaginator {...props.staticProps} first={props.first.value} rows={props.rows.value} totalRecords={props.totalRecords.value} onPageChange={handlePageChange}></AppPaginator>;
+    return <Paginator {...props.staticProps} first={props.first.value} rows={props.rows.value} totalRecords={props.totalRecords.value} onPageChange={handlePageChange}></Paginator>;
   })
     .setPropertyViewFn((children: any) => {
       return (
@@ -55,5 +56,6 @@ let PaginatorCompBase = (function () {
     })
     .build();
 })();
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('first'), new NameConfig('rows'), new NameConfig('totalRecords')];
 
 export default withExposingConfigs(PaginatorCompBase, exposingConfigs);

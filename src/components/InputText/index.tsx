@@ -1,11 +1,13 @@
-import { eventHandlerControl, jsonControl, Section, stringExposingStateControl, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-import AppInputText from './base';
-import { defaultValue, exposingConfigs, staticProps } from './config';
+import { eventHandlerControl, jsonControl, NameConfig, Section, stringExposingStateControl, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+import { InputText } from 'primereact/inputtext';
+
+const defStaticProps = { placeholder: 'Enter a name' };
+const defValue = '';
 
 let InputTextCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
-    value: stringExposingStateControl('value', defaultValue),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
+    value: stringExposingStateControl('value', defValue),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
@@ -15,13 +17,13 @@ let InputTextCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { onEvent: any; value: any; staticProps: any[] | null | undefined }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     const handleChange = (e: any) => {
       props.value.onChange(e.target.value);
       props.onEvent('change');
     };
 
-    return <AppInputText {...props.staticProps} value={props.value.value} onChange={handleChange}></AppInputText>;
+    return <InputText {...props.staticProps} value={props.value.value} onChange={handleChange}></InputText>;
   })
     .setPropertyViewFn((children: any) => {
       return (
@@ -46,5 +48,5 @@ let InputTextCompBase = (function () {
     })
     .build();
 })();
-
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value')];
 export default withExposingConfigs(InputTextCompBase, exposingConfigs);

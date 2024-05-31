@@ -1,13 +1,56 @@
-import { eventHandlerControl, jsonControl, numberExposingStateControl, Section, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-// Import the CSS file
+import { eventHandlerControl, jsonControl, NameConfig, numberExposingStateControl, Section, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
 import AppTable from './base';
-import { columns, defaultValue, exposingConfigs, staticProps } from './config';
+
+const defStaticProps = {
+  stripedRows: true,
+  paginator: true,
+  rowHover: true,
+  responsiveLayout: 'scroll',
+  lazy: false,
+  rowsPerPageOptions: [1, 5, 10, 20],
+  tableStyle: { minWidth: '20rem' },
+};
+
+const defValue = [
+  {
+    id: 'code-1',
+    name: 'row 1',
+    category: 'important',
+    quantity: 1,
+  },
+  {
+    id: 'code-2',
+    name: 'row 2',
+    category: 'very important',
+    quantity: 2,
+  },
+  {
+    id: 'code-3',
+    name: 'row 3',
+    category: 'important',
+    quantity: 3,
+  },
+  {
+    id: 'code-4',
+    name: 'row 4',
+    category: 'less important',
+    quantity: 4,
+  },
+];
+
+const defColumns = [
+  { header: 'Column 1', field: 'id' },
+  {
+    header: 'Column 2',
+    field: 'name',
+  },
+];
 
 let TableCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
-    value: jsonControl(toJSONObjectArray, defaultValue),
-    columns: jsonControl(toJSONObjectArray, columns),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
+    value: jsonControl(toJSONObjectArray, defValue),
+    columns: jsonControl(toJSONObjectArray, defColumns),
     first: numberExposingStateControl('first', 0),
     rows: numberExposingStateControl('rows', 10),
     totalRecords: numberExposingStateControl('totalRecords', 4),
@@ -20,7 +63,7 @@ let TableCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { value: any; staticProps: any | null | undefined; columns: any[]; rows: any; first: any; totalRecords: any; onEvent: any }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     const handlePageChange = (event: any) => {
       if ((event.rows !== props.rows || event.first !== props.first) && typeof event.first == 'number' && typeof event.rows == 'number') {
         props.rows.onChange(event.rows);
@@ -69,4 +112,5 @@ let TableCompBase = (function () {
     .build();
 })();
 
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value'), new NameConfig('columns'), new NameConfig('first'), new NameConfig('rows'), new NameConfig('totalRecords')];
 export default withExposingConfigs(TableCompBase, exposingConfigs);

@@ -1,10 +1,13 @@
-import { eventHandlerControl, jsonControl, Section, stringExposingStateControl, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-import AppInputTextarea from './base';
-import { defaultValue, exposingConfigs, staticProps } from './config';
+import { eventHandlerControl, NameConfig, jsonControl, Section, stringExposingStateControl, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+import { InputTextarea } from 'primereact/inputtextarea';
+
+const defStaticProps = { tooltip: 'Enter a description', variant: 'filled' };
+const defValue = '';
+
 let InputTextareaCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
-    value: stringExposingStateControl('value', defaultValue),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
+    value: stringExposingStateControl('value', defValue),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
@@ -14,13 +17,13 @@ let InputTextareaCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { onEvent: any; value: any; staticProps: any[] | null | undefined }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     const handleChange = (e: any) => {
       props.value.onChange(e.target.value);
       props.onEvent('change');
     };
 
-    return <AppInputTextarea {...props.staticProps} value={props.value.value} onChange={handleChange}></AppInputTextarea>;
+    return <InputTextarea {...props.staticProps} value={props.value.value} onChange={handleChange}></InputTextarea>;
   })
     .setPropertyViewFn((children: any) => {
       return (
@@ -45,5 +48,5 @@ let InputTextareaCompBase = (function () {
     })
     .build();
 })();
-
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value')];
 export default withExposingConfigs(InputTextareaCompBase, exposingConfigs);

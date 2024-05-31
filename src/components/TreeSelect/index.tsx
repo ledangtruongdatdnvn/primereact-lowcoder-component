@@ -1,12 +1,41 @@
-import { eventHandlerControl, jsonControl, Section, stringExposingStateControl, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-import AppMultiSelect from './base';
-import { defaultOptions, defaultValue, exposingConfigs, staticProps } from './config';
+import { eventHandlerControl, jsonControl, NameConfig, Section, stringExposingStateControl, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+
+import { TreeSelect } from 'primereact/treeselect';
+const defStaticProps = { placeholder: 'Select one' };
+const defValue = '0-0';
+const defOptions = [
+  {
+    key: '0',
+    label: 'Documents',
+    data: 'Documents Folder',
+    icon: 'pi pi-fw pi-inbox',
+    children: [
+      {
+        key: '0-0',
+        label: 'Work',
+        data: 'Work Folder',
+        icon: 'pi pi-fw pi-cog',
+        children: [
+          { key: '0-0-0', label: 'Expenses.doc', icon: 'pi pi-fw pi-file', data: 'Expenses Document' },
+          { key: '0-0-1', label: 'Resume.doc', icon: 'pi pi-fw pi-file', data: 'Resume Document' },
+        ],
+      },
+      {
+        key: '0-1',
+        label: 'Home',
+        data: 'Home Folder',
+        icon: 'pi pi-fw pi-home',
+        children: [{ key: '0-1-0', label: 'Invoices.txt', icon: 'pi pi-fw pi-file', data: 'Invoices for this month' }],
+      },
+    ],
+  },
+];
 
 let TreeSelectCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
-    value: stringExposingStateControl('value', defaultValue),
-    options: jsonControl(toJSONObjectArray, defaultOptions),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
+    value: stringExposingStateControl('value', defValue),
+    options: jsonControl(toJSONObjectArray, defOptions),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
@@ -16,13 +45,13 @@ let TreeSelectCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { onEvent: any; options: any[]; value: any; staticProps: any[] | null | undefined }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     const handleChange = (e: any) => {
       props.value.onChange(e.value);
       props.onEvent('change');
     };
 
-    return <AppMultiSelect {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange}></AppMultiSelect>;
+    return <TreeSelect {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange}></TreeSelect>;
   })
     .setPropertyViewFn((children: any) => {
       return (
@@ -49,4 +78,5 @@ let TreeSelectCompBase = (function () {
     .build();
 })();
 
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value'), new NameConfig('options')];
 export default withExposingConfigs(TreeSelectCompBase, exposingConfigs);

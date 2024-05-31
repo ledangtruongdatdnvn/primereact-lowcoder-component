@@ -1,12 +1,17 @@
-import { eventHandlerControl, jsonControl, jsonExposingStateControl, Section, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-import AppCalendar from './base';
+import { eventHandlerControl, jsonControl, jsonObjectExposingStateControl, NameConfig, Section, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
 
-import { defaultValue, exposingConfigs, staticProps } from './config';
+import { Calendar } from 'primereact/calendar';
+
+export const defStaticProps = { placeholder: 'Choose date(s)', selectionMode: 'range', hideOnRangeSelection: true, dateFormat: 'dd/mm/yy' };
+import { useRef } from 'react';
 
 let CalendarCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
-    value: jsonExposingStateControl('value', toJSONObjectArray, defaultValue),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
+    value: jsonObjectExposingStateControl('value', {
+      start: '02/11/2000',
+      end: '02/12/2000',
+    }),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
@@ -16,13 +21,32 @@ let CalendarCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { onEvent: any; value: any; staticProps: any[] | null | undefined }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
+    const isRange = props.staticProps.selectionMode === 'range';
+    const start = props.value.value.start;
+    const end = props.value.value.end;
+    const input = isRange ? [start ? new Date(start) : null, end ? new Date(end) : null] : start ? new Date(start) : null;
+    const ref = useRef(null);
     const handleChange = (e: any) => {
-      props.value.onChange(e.value);
+      if (!isRange) {
+        props.value.onChange({ start: new Date(e.value), end: null });
+      } else {
+        if (!start || (start && end)) {
+          props.value.onChange({ start: new Date(e.value[0]), end: null });
+        } else if (!end) {
+          if (new Date(start).getTime() > new Date(end).getTime()) {
+            props.value.onChange({ start: new Date(e.value[0]), end: start });
+          } else {
+            props.value.onChange({ start: start, end: new Date(e.value[0]) });
+          }
+          ref.current.hide();
+        }
+      }
+
       props.onEvent('change');
     };
 
-    return <AppCalendar {...props.staticProps} value={props.value.value} onChange={handleChange}></AppCalendar>;
+    return <Calendar ref={ref} {...props.staticProps} value={input} onChange={handleChange}></Calendar>;
   })
     .setPropertyViewFn((children: any) => {
       return (
@@ -47,5 +71,5 @@ let CalendarCompBase = (function () {
     })
     .build();
 })();
-
+export const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value')];
 export default withExposingConfigs(CalendarCompBase, exposingConfigs);

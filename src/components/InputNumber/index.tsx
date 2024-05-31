@@ -1,10 +1,13 @@
-import { eventHandlerControl, jsonControl, numberExposingStateControl, Section, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-import AppInputNumber from './base';
-import { defaultValue, exposingConfigs, staticProps } from './config';
+import { NameConfig, eventHandlerControl, jsonControl, numberExposingStateControl, Section, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+import { InputNumber } from 'primereact/inputnumber';
+
+const defStaticProps = { placeholder: 'Enter a number', min: 1, max: 10 };
+const defValue = 1;
+
 let InputNumberCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
-    value: numberExposingStateControl('value', defaultValue),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
+    value: numberExposingStateControl('value', defValue),
     onEvent: eventHandlerControl([
       {
         label: 'onValueChange',
@@ -14,13 +17,13 @@ let InputNumberCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { onEvent: any; value: any; staticProps: any[] | null | undefined }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     const handleValueChange = (e: any) => {
       props.value.onChange(e.target.value);
       props.onEvent('valuechange');
     };
 
-    return <AppInputNumber {...props.staticProps} value={props.value.value} onValueChange={handleValueChange}></AppInputNumber>;
+    return <InputNumber {...props.staticProps} value={props.value.value} onValueChange={handleValueChange}></InputNumber>;
   })
     .setPropertyViewFn((children: any) => {
       return (
@@ -46,4 +49,5 @@ let InputNumberCompBase = (function () {
     .build();
 })();
 
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value')];
 export default withExposingConfigs(InputNumberCompBase, exposingConfigs);

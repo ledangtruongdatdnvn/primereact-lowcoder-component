@@ -1,13 +1,16 @@
-import { jsonControl, Section, StringControl, toJSONObject, UICompBuilder, withDefault, withExposingConfigs } from 'lowcoder-sdk';
-import Tag from './base';
-import { defaultValue, exposingConfigs, staticProps } from './config';
+import { jsonControl, NameConfig, Section, StringControl, toJSONObject, UICompBuilder, withDefault, withExposingConfigs } from 'lowcoder-sdk';
+import { Tag } from 'primereact/tag';
+
+const defStaticProps = { severity: 'success' };
+const defValue = 'Success';
+
 let TagCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
-    value: withDefault(StringControl, defaultValue),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
+    value: withDefault(StringControl, defValue),
   };
 
-  return new UICompBuilder(childrenMap, (props: { value: any; staticProps: any[] | null | undefined }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     return <Tag {...props.staticProps} value={props.value}></Tag>;
   })
     .setPropertyViewFn((children: any) => {
@@ -33,4 +36,5 @@ let TagCompBase = (function () {
     .build();
 })();
 
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value')];
 export default withExposingConfigs(TagCompBase, exposingConfigs);

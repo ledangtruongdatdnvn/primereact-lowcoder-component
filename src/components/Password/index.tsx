@@ -1,10 +1,13 @@
-import { eventHandlerControl, jsonControl, Section, stringExposingStateControl, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-import AppPassword from './base';
-import { defaultValue, exposingConfigs, staticProps } from './config';
+import { eventHandlerControl, jsonControl, NameConfig, Section, stringExposingStateControl, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+import { Password } from 'primereact/password';
+
+const defStaticProps = { tooltip: 'Enter a password' };
+const defValue = '';
+
 let PasswordCompBase = (function () {
   const childrenMap = {
-    staticProps: jsonControl(toJSONObject, staticProps),
-    value: stringExposingStateControl('value', defaultValue),
+    staticProps: jsonControl(toJSONObject, defStaticProps),
+    value: stringExposingStateControl('value', defValue),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
@@ -14,13 +17,13 @@ let PasswordCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: { onEvent: any; value: any; staticProps: any[] | null | undefined }) => {
+  return new UICompBuilder(childrenMap, (props: any) => {
     const handleChange = (e: any) => {
       props.value.onChange(e.target.value);
       props.onEvent('change');
     };
 
-    return <AppPassword {...props.staticProps} value={props.value.value} onChange={handleChange}></AppPassword>;
+    return <Password {...props.staticProps} value={props.value.value} onChange={handleChange}></Password>;
   })
     .setPropertyViewFn((children: any) => {
       return (
@@ -46,4 +49,5 @@ let PasswordCompBase = (function () {
     .build();
 })();
 
+const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value')];
 export default withExposingConfigs(PasswordCompBase, exposingConfigs);
