@@ -1,0 +1,211 @@
+{
+  "name": "@ledangtruongdat/primereact-lowcoder-components",
+  "version": "0.0.27",
+  "type": "module",
+  "license": "MIT",
+  "dependencies": {
+    "@observablehq/runtime": "^5.9.8",
+    "@types/react": "18",
+    "@types/react-dom": "18",
+    "autoprefixer": "^10.4.19",
+    "dayjs": "^1.11.10",
+    "lowcoder-cli": "^0.0.30",
+    "lowcoder-sdk": "^2.3.4",
+    "postcss": "^8.4.38",
+    "primeflex": "^3.3.1",
+    "primeicons": "^7.0.0",
+    "primereact": "^10.6.2",
+    "prop-types": "^15.8.1",
+    "react": "18",
+    "react-dom": "18",
+    "react-resize-detector": "^10.0.1",
+    "styled-components": "^6.1.8",
+    "typescript": "^5.4.3",
+    "vite": "^5.2.7",
+    "vite-plugin-fonts": "^0.7.0"
+  },
+  "lowcoder": {
+    "description": "A Demo Hillchart Component Plugin",
+    "comps": {
+      "button": {
+        "name": "Button",
+        "icon": "./icons/component.svg",
+        "description": "Button Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "timeline": {
+        "name": "Timeline",
+        "icon": "./icons/component.svg",
+        "description": "Timeline Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "tag": {
+        "name": "Tag",
+        "icon": "./icons/component.svg",
+        "description": "Tag Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "dropdown": {
+        "name": "Dropdown",
+        "icon": "./icons/component.svg",
+        "description": "Dropdown Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "table": {
+        "name": "Table",
+        "icon": "./icons/component.svg",
+        "description": "Table Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "inputtext": {
+        "name": "InputText",
+        "icon": "./icons/component.svg",
+        "description": "InputText Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "inputtextarea": {
+        "name": "InputTextArea",
+        "icon": "./icons/component.svg",
+        "description": "InputTextArea Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "inputnumber": {
+        "name": "InputNumber",
+        "icon": "./icons/component.svg",
+        "description": "InputNumber Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "inputswitch": {
+        "name": "InputSwitch",
+        "icon": "./icons/component.svg",
+        "description": "InputSwitch Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "multiselect": {
+        "name": "MultiSelect",
+        "icon": "./icons/component.svg",
+        "description": "MultiSelect Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "treeselect": {
+        "name": "TreeSelect",
+        "icon": "./icons/component.svg",
+        "description": "TreeSelect Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "calendar": {
+        "name": "Calendar",
+        "icon": "./icons/component.svg",
+        "description": "Calendar Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "autocomplete": {
+        "name": "AutoComplete",
+        "icon": "./icons/component.svg",
+        "description": "AutoComplete Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "divider": {
+        "name": "Divider",
+        "icon": "./icons/component.svg",
+        "description": "Divider Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "password": {
+        "name": "Password",
+        "icon": "./icons/component.svg",
+        "description": "Password Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "paginator": {
+        "name": "Paginator",
+        "icon": "./icons/component.svg",
+        "description": "Paginator Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "radiobutton": {
+        "name": "RadioButton",
+        "icon": "./icons/component.svg",
+        "description": "RadioButton Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "label": {
+        "name": "Label",
+        "icon": "./icons/component.svg",
+        "description": "Label Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      },
+      "internalstyle": {
+        "name": "InternalStyle",
+        "icon": "./icons/component.svg",
+        "description": "InternalStyle Component",
+        "layoutInfo": {
+          "w": 12,
+          "h": 36
+        }
+      }
+    }
+  },
+  "scripts": {
+    "start": "vite",
+    "build": "lowcoder-cli build",
+    "build_publish": "lowcoder-cli build --publish"
+  },
+  "devDependencies": {
+    "sass": "^1.72.0"
+  }
+}
