@@ -1,7 +1,15 @@
 import { eventHandlerControl, jsonControl, NameConfig, Section, stringExposingStateControl, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
 import { Password } from 'primereact/password';
 
-const defStaticProps = { tooltip: 'Enter a password' };
+const defStaticProps = {
+  tooltip: 'Enter a password',
+  inputStyle: {
+    width: '100%',
+  },
+  style: {
+    width: '100%',
+  },
+};
 const defValue = '';
 
 let PasswordCompBase = (function () {

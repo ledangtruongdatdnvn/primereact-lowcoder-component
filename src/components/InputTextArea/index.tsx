@@ -1,7 +1,13 @@
 import { eventHandlerControl, NameConfig, jsonControl, Section, stringExposingStateControl, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
 import { InputTextarea } from 'primereact/inputtextarea';
 
-const defStaticProps = { tooltip: 'Enter a description', variant: 'filled' };
+const defStaticProps = {
+  tooltip: 'Enter a description',
+  variant: 'filled',
+  style: {
+    width: '100%',
+  },
+};
 const defValue = '';
 
 let InputTextareaCompBase = (function () {

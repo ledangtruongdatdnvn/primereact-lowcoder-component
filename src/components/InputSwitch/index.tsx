@@ -1,7 +1,9 @@
 import { booleanExposingStateControl, eventHandlerControl, jsonControl, NameConfig, Section, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
 import { InputSwitch } from 'primereact/inputswitch';
 
-const defStaticProps = { tooltip: 'Switch me!' };
+const defStaticProps = {
+  tooltip: 'Switch me!',
+};
 const defChecked = true;
 
 let InputSwitchCompBase = (function () {

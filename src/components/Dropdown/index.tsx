@@ -2,7 +2,13 @@ import { eventHandlerControl, jsonControl, jsonObjectExposingStateControl, Secti
 import { Dropdown } from 'primereact/dropdown';
 
 import { NameConfig } from 'lowcoder-sdk';
-const defStaticProps = { placeholder: 'Select a City', optionLabel: 'name' };
+const defStaticProps = {
+  placeholder: 'Select a City',
+  optionLabel: 'name',
+  style: {
+    width: '100%',
+  },
+};
 
 const defValue = { name: 'New York', code: 'NY' };
 

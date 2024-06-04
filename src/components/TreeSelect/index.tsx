@@ -1,7 +1,7 @@
 import { eventHandlerControl, jsonControl, NameConfig, Section, stringExposingStateControl, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
 
 import { TreeSelect } from 'primereact/treeselect';
-const defStaticProps = { placeholder: 'Select one' };
+const defStaticProps = { placeholder: 'Select one', style: { width: '100%' } };
 const defValue = '0-0';
 const defOptions = [
   {

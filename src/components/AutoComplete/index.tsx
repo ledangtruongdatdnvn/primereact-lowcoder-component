@@ -12,7 +12,16 @@ import {
 } from 'lowcoder-sdk';
 import { AutoComplete } from 'primereact/autocomplete';
 
-const defStaticProps = { placeholder: 'Enter a country name', field: 'name' };
+const defStaticProps = {
+  placeholder: 'Enter a country name',
+  field: 'name',
+  inputStyle: {
+    width: '100%',
+  },
+  style: {
+    width: '100%',
+  },
+};
 const defValue = '';
 const defSuggestions = [
   { name: 'United Kingdom', code: 'UK' },

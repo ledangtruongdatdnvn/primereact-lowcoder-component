@@ -8,7 +8,7 @@ const defStaticProps = {
   responsiveLayout: 'scroll',
   lazy: false,
   rowsPerPageOptions: [1, 5, 10, 20],
-  tableStyle: { minWidth: '20rem' },
+
 };
 
 const defValue = [

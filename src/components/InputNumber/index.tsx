@@ -1,7 +1,14 @@
 import { NameConfig, eventHandlerControl, jsonControl, numberExposingStateControl, Section, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
 import { InputNumber } from 'primereact/inputnumber';
 
-const defStaticProps = { placeholder: 'Enter a number', min: 1, max: 10 };
+const defStaticProps = {
+  placeholder: 'Enter a number',
+  min: 1,
+  max: 10,
+  style: {
+    width: '100%',
+  },
+};
 const defValue = 1;
 
 let InputNumberCompBase = (function () {

@@ -11,6 +11,9 @@ export const defStaticProps = {
   badge: '',
   rounded: false,
   severity: 'success',
+  style: {
+    width: '100%',
+  },
 };
 
 let ButtonCompBase = (function () {

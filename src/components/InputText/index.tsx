@@ -1,7 +1,12 @@
 import { eventHandlerControl, jsonControl, NameConfig, Section, stringExposingStateControl, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
 import { InputText } from 'primereact/inputtext';
 
-const defStaticProps = { placeholder: 'Enter a name' };
+const defStaticProps = {
+  placeholder: 'Enter a name',
+  style: {
+    width: '100%',
+  },
+};
 const defValue = '';
 
 let InputTextCompBase = (function () {

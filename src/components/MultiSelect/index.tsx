@@ -1,7 +1,14 @@
 import { eventHandlerControl, jsonControl, jsonExposingStateControl, NameConfig, Section, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
 import { MultiSelect } from 'primereact/multiselect';
 
-const defStaticProps = { placeholder: 'Select Cities', optionLabel: 'name', filter: true };
+const defStaticProps = {
+  placeholder: 'Select Cities',
+  optionLabel: 'name',
+  filter: true,
+  style: {
+    width: '100%',
+  },
+};
 const defValue = [{ name: 'New York', code: 'NY' }];
 const defOptions = [
   { name: 'New York', code: 'NY' },

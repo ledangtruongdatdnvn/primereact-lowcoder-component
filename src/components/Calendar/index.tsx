@@ -2,7 +2,15 @@ import { eventHandlerControl, jsonControl, jsonObjectExposingStateControl, NameC
 
 import { Calendar } from 'primereact/calendar';
 
-export const defStaticProps = { placeholder: 'Choose date(s)', selectionMode: 'range', hideOnRangeSelection: true, dateFormat: 'dd/mm/yy' };
+export const defStaticProps = {
+  placeholder: 'Choose date(s)',
+  selectionMode: 'range',
+  hideOnRangeSelection: true,
+  dateFormat: 'dd/mm/yy',
+  style: {
+    width: '100%',
+  },
+};
 import { useRef } from 'react';
 
 let CalendarCompBase = (function () {
