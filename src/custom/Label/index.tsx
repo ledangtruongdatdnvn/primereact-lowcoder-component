@@ -1,5 +1,4 @@
-import { dropdownControl, Section, StringControl, stringExposingStateControl, TacoMarkDown, UICompBuilder, withDefault, withExposingConfigs, NameConfig, markdownCompCss } from 'lowcoder-sdk';
-import AppLabel from './base';
+import { dropdownControl, markdownCompCss, NameConfig, Section, StringControl, stringExposingStateControl, TacoMarkDown, UICompBuilder, withDefault, withExposingConfigs } from 'lowcoder-sdk';
 import { styled } from 'styled-components';
 const TextContainer = styled.div`
   ${markdownCompCss};

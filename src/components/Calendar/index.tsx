@@ -1,4 +1,4 @@
-import { eventHandlerControl, jsonControl, jsonObjectExposingStateControl, NameConfig, Section, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+import { eventHandlerControl, jsonControl, jsonObjectExposingStateControl, NameConfig, Section, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
 
 import { Calendar } from 'primereact/calendar';
 
@@ -11,7 +11,6 @@ export const defStaticProps = {
     width: '100%',
   },
 };
-import { useRef } from 'react';
 
 let CalendarCompBase = (function () {
   const childrenMap = {
@@ -34,7 +33,7 @@ let CalendarCompBase = (function () {
     const start = props.value.value.start;
     const end = props.value.value.end;
     const input = isRange ? [start ? new Date(start) : null, end ? new Date(end) : null] : start ? new Date(start) : null;
-    const ref = useRef(null);
+
     const handleChange = (e: any) => {
       if (!isRange) {
         props.value.onChange({ start: new Date(e.value), end: null });
@@ -42,12 +41,14 @@ let CalendarCompBase = (function () {
         if (!start || (start && end)) {
           props.value.onChange({ start: new Date(e.value[0]), end: null });
         } else if (!end) {
-          if (new Date(start).getTime() > new Date(end).getTime()) {
-            props.value.onChange({ start: new Date(e.value[0]), end: start });
+          const firstValue = new Date(e.value[0]);
+          const secondValue = new Date(e.value[1]);
+
+          if (new Date(firstValue).getTime() < new Date(secondValue).getTime()) {
+            props.value.onChange({ start: firstValue, end: secondValue });
           } else {
-            props.value.onChange({ start: start, end: new Date(e.value[0]) });
+            props.value.onChange({ start: secondValue, end: firstValue });
           }
-          (ref.current as any)?.hide();
         }
       }
 
@@ -56,7 +57,7 @@ let CalendarCompBase = (function () {
 
     return (
       <div style={{ padding: '5px' }}>
-        <Calendar ref={ref} {...props.staticProps} value={input} onChange={handleChange}></Calendar>
+        <Calendar  {...props.staticProps} value={input} onChange={handleChange}></Calendar>
       </div>
     );
   })
