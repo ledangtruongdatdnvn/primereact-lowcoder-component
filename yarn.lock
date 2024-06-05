@@ -1134,10 +1134,10 @@ lowcoder-cli@^0.0.30:
     vite-plugin-css-injected-by-js "^2.1.1"
     vite-plugin-svgr "^2.2.2"
 
-lowcoder-sdk@^2.3.4:
-  version "2.3.4"
-  resolved "https://registry.npmjs.org/lowcoder-sdk/-/lowcoder-sdk-2.3.4.tgz"
-  integrity sha512-05MJRdZEjksWzW/cp9TkR7Q6eW0lsnG3NQKPGGjkLfo2auxxfGyO5zPM7hpsC2LlTSfTzkZq3ouqmBIPa7vmVg==
+lowcoder-sdk@^2.4.3:
+  version "2.4.3"
+  resolved "https://registry.npmjs.org/lowcoder-sdk/-/lowcoder-sdk-2.4.3.tgz"
+  integrity sha512-HVZTzyfTHQ6zpG6epv2AvZMI6yNisHyFnhC8KaMExJ36Voqjn8k5G7voskfxMK9a9cuC/n45mXzQcu+bbtUn8A==
   dependencies:
     prettier "^3.1.1"
 
