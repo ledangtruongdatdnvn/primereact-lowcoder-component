@@ -30,7 +30,11 @@ let InputNumberCompBase = (function () {
       props.onEvent('valuechange');
     };
 
-    return <InputNumber {...props.staticProps} value={props.value.value} onValueChange={handleValueChange}></InputNumber>;
+    return (
+      <div style={{ padding: '5px' }}>
+        <InputNumber {...props.staticProps} value={props.value.value} onValueChange={handleValueChange}></InputNumber>
+      </div>
+    );
   })
     .setPropertyViewFn((children: any) => {
       return (

@@ -25,7 +25,11 @@ let InputSwitchCompBase = (function () {
       props.onEvent('change');
     };
 
-    return <InputSwitch {...props.staticProps} checked={props.checked.value} onChange={handleChange}></InputSwitch>;
+    return (
+      <div style={{ padding: '5px' }}>
+        <InputSwitch {...props.staticProps} checked={props.checked.value} onChange={handleChange}></InputSwitch>
+      </div>
+    );
   })
     .setPropertyViewFn((children: any) => {
       return (

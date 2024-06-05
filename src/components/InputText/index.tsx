@@ -28,7 +28,11 @@ let InputTextCompBase = (function () {
       props.onEvent('change');
     };
 
-    return <InputText {...props.staticProps} value={props.value.value} onChange={handleChange}></InputText>;
+    return (
+      <div style={{ padding: '5px' }}>
+        <InputText {...props.staticProps} value={props.value.value} onChange={handleChange}></InputText>
+      </div>
+    );
   })
     .setPropertyViewFn((children: any) => {
       return (

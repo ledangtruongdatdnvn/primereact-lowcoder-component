@@ -29,7 +29,11 @@ let InputTextareaCompBase = (function () {
       props.onEvent('change');
     };
 
-    return <InputTextarea {...props.staticProps} value={props.value.value} onChange={handleChange}></InputTextarea>;
+    return (
+      <div style={{ padding: '5px' }}>
+        <InputTextarea {...props.staticProps} value={props.value.value} onChange={handleChange}></InputTextarea>
+      </div>
+    );
   })
     .setPropertyViewFn((children: any) => {
       return (
