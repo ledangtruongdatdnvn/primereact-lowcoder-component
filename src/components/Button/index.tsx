@@ -36,7 +36,11 @@ let ButtonCompBase = (function () {
       props.onEvent('click');
     };
 
-    return <Button {...props.staticProps} disabled={props.disabled.value} loading={props.loading.value} visible={props.visible.value} onClick={handleClick}></Button>;
+    return (
+      <div style={{ padding: '5px' }}>
+        <Button {...props.staticProps} disabled={props.disabled.value} loading={props.loading.value} visible={props.visible.value} onClick={handleClick}></Button>
+      </div>
+    );
   })
     .setPropertyViewFn((children: any) => {
       return (
