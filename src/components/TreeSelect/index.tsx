@@ -51,7 +51,11 @@ let TreeSelectCompBase = (function () {
       props.onEvent('change');
     };
 
-    return <TreeSelect {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange}></TreeSelect>;
+    return (
+      <div style={{ padding: '5px' }}>
+        <TreeSelect {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange}></TreeSelect>
+      </div>
+    );
   })
     .setPropertyViewFn((children: any) => {
       return (

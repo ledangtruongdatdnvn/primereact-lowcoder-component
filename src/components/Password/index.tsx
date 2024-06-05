@@ -31,7 +31,11 @@ let PasswordCompBase = (function () {
       props.onEvent('change');
     };
 
-    return <Password {...props.staticProps} value={props.value.value} onChange={handleChange}></Password>;
+    return (
+      <div style={{ padding: '5px' }}>
+        <Password {...props.staticProps} value={props.value.value} onChange={handleChange}></Password>
+      </div>
+    );
   })
     .setPropertyViewFn((children: any) => {
       return (

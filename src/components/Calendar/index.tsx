@@ -47,14 +47,18 @@ let CalendarCompBase = (function () {
           } else {
             props.value.onChange({ start: start, end: new Date(e.value[0]) });
           }
-          ref.current.hide();
+          (ref.current as any)?.hide();
         }
       }
 
       props.onEvent('change');
     };
 
-    return <Calendar ref={ref} {...props.staticProps} value={input} onChange={handleChange}></Calendar>;
+    return (
+      <div style={{ padding: '5px' }}>
+        <Calendar ref={ref} {...props.staticProps} value={input} onChange={handleChange}></Calendar>
+      </div>
+    );
   })
     .setPropertyViewFn((children: any) => {
       return (

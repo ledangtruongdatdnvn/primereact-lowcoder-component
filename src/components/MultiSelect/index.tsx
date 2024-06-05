@@ -38,7 +38,11 @@ let MultiSelectCompBase = (function () {
       props.onEvent('change');
     };
 
-    return <MultiSelect {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange}></MultiSelect>;
+    return (
+      <div style={{ padding: '5px' }}>
+        <MultiSelect {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange}></MultiSelect>
+      </div>
+    );
   })
     .setPropertyViewFn((children: any) => {
       return (

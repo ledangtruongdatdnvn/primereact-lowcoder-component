@@ -57,7 +57,11 @@ let AutoCompleteCompBase = (function () {
       props.onEvent('complete');
     };
 
-    return <AutoComplete {...props.staticProps} suggestions={props.suggestions.value} value={props.value.value} completeMethod={search} onChange={handleChange}></AutoComplete>;
+    return (
+      <div style={{ padding: '5px' }}>
+        <AutoComplete {...props.staticProps} suggestions={props.suggestions.value} value={props.value.value} completeMethod={search} onChange={handleChange}></AutoComplete>
+      </div>
+    );
   })
     .setPropertyViewFn((children: any) => {
       return (

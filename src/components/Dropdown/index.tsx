@@ -40,7 +40,11 @@ let DropdownCompBase = (function () {
       props.onEvent('change');
     };
 
-    return <Dropdown {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange}></Dropdown>;
+    return (
+      <div style={{ padding: '5px' }}>
+        <Dropdown {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange}></Dropdown>
+      </div>
+    );
   })
     .setPropertyViewFn((children: any) => {
       return (
