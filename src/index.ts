@@ -3,26 +3,25 @@
 // import 'primeflex/primeflex.scss';
 // import 'primereact/resources/themes/lara-light-cyan/theme.css';
 
-import Button from './components/Button';
-import Timeline from './components/Timeline';
-import Table from './components/Table';
-import Tag from './components/Tag';
-import Dropdown from './components/Dropdown';
-import InputText from './components/InputText';
-import InputSwitch from './components/InputSwitch';
-import MultiSelect from './components/MultiSelect';
-import TreeSelect from './components/TreeSelect';
-import Calendar from './components/Calendar';
-import AutoComplete from './components/AutoComplete';
-import InputNumber from './components/InputNumber';
-import Divider from './components/Divider';
-import Password from './components/Password';
-import InputTextArea from './components/InputTextArea';
-import Paginator from './components/Paginator';
-import RadioButton from './components/RadioButton';
-import Label from './custom/Label';
-import InternalStyle from './components/InternalStyle';
-
+import Label from './components/common/Label';
+import AutoComplete from './components/core/AutoComplete';
+import Button from './components/core/Button';
+import Calendar from './components/core/Calendar';
+import Divider from './components/core/Divider';
+import Dropdown from './components/core/Dropdown';
+import InputNumber from './components/core/InputNumber';
+import InputSwitch from './components/core/InputSwitch';
+import InputText from './components/core/InputText';
+import InputTextArea from './components/core/InputTextArea';
+import InternalStyle from './components/core/InternalStyle';
+import MultiSelect from './components/core/MultiSelect';
+import Paginator from './components/core/Paginator';
+import Password from './components/core/Password';
+import RadioButton from './components/core/RadioButton';
+import Table from './components/core/Table';
+import Tag from './components/core/Tag';
+import Timeline from './components/core/Timeline';
+import TreeSelect from './components/core/TreeSelect';
 export default {
   button: Button,
   timeline: Timeline,
