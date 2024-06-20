@@ -1,5 +1,16 @@
-import { eventHandlerControl, jsonControl, NameConfig, Section, stringExposingStateControl, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-
+import {
+  eventHandlerControl,
+  jsonControl,
+  NameConfig,
+  Section,
+  stringExposingStateControl,
+  toJSONObject,
+  toJSONObjectArray,
+  UICompBuilder,
+  withExposingConfigs,
+  booleanExposingStateControl,
+} from 'lowcoder-sdk';
+import LabelWrapper from '../../../components/common/LabelWrapper';
 import { TreeSelect } from 'primereact/treeselect';
 const defStaticProps = { placeholder: 'Select one', style: { width: '100%' } };
 const defValue = '0-0';
@@ -35,6 +46,11 @@ let TreeSelectCompBase = (function () {
   const childrenMap = {
     staticProps: jsonControl(toJSONObject, defStaticProps),
     value: stringExposingStateControl('value', defValue),
+    label: stringExposingStateControl('label', ''),
+    error: stringExposingStateControl('error', ''),
+    caption: stringExposingStateControl('caption', ''),
+    showCaption: booleanExposingStateControl('showCaption', false),
+    required: booleanExposingStateControl('required', false),
     options: jsonControl(toJSONObjectArray, defOptions),
     onEvent: eventHandlerControl([
       {
@@ -53,7 +69,9 @@ let TreeSelectCompBase = (function () {
 
     return (
       <div style={{ padding: '5px' }}>
-        <TreeSelect {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange}></TreeSelect>
+        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+          <TreeSelect {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange} invalid={props.error.value.length > 0}></TreeSelect>{' '}
+        </LabelWrapper>
       </div>
     );
   })
@@ -64,6 +82,13 @@ let TreeSelectCompBase = (function () {
             {children.staticProps.propertyView({ label: 'Static Props' })}
             {children.value.propertyView({ label: 'Value' })}
             {children.options.propertyView({ label: 'Options' })}
+          </Section>
+          <Section name='Form'>
+            {children.label.propertyView({ label: 'Label' })}
+            {children.error.propertyView({ label: 'Error' })}
+            {children.caption.propertyView({ label: 'Caption' })}
+            {children.showCaption.propertyView({ label: 'Show caption' })}
+            {children.required.propertyView({ label: 'Required' })}
           </Section>
           <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
           <Section name='Description'>
@@ -82,5 +107,14 @@ let TreeSelectCompBase = (function () {
     .build();
 })();
 
-const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value'), new NameConfig('options')];
+const exposingConfigs = [
+  new NameConfig('staticProps'),
+  new NameConfig('value'),
+  new NameConfig('options'),
+  new NameConfig('label'),
+  new NameConfig('error'),
+  new NameConfig('caption'),
+  new NameConfig('showCaption'),
+  new NameConfig('required'),
+];
 export default withExposingConfigs(TreeSelectCompBase, exposingConfigs);

@@ -1,4 +1,16 @@
-import { NameConfig, eventHandlerControl, jsonControl, numberExposingStateControl, Section, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+import LabelWrapper from '../../../components/common/LabelWrapper';
+import {
+  NameConfig,
+  eventHandlerControl,
+  jsonControl,
+  numberExposingStateControl,
+  Section,
+  toJSONObject,
+  UICompBuilder,
+  withExposingConfigs,
+  stringExposingStateControl,
+  booleanExposingStateControl,
+} from 'lowcoder-sdk';
 import { InputNumber } from 'primereact/inputnumber';
 
 const defStaticProps = {
@@ -15,6 +27,11 @@ let InputNumberCompBase = (function () {
   const childrenMap = {
     staticProps: jsonControl(toJSONObject, defStaticProps),
     value: numberExposingStateControl('value', defValue),
+    label: stringExposingStateControl('label', ''),
+    error: stringExposingStateControl('error', ''),
+    caption: stringExposingStateControl('caption', ''),
+    showCaption: booleanExposingStateControl('showCaption', false),
+    required: booleanExposingStateControl('required', false),
     onEvent: eventHandlerControl([
       {
         label: 'onValueChange',
@@ -32,7 +49,9 @@ let InputNumberCompBase = (function () {
 
     return (
       <div style={{ padding: '5px' }}>
-        <InputNumber {...props.staticProps} value={props.value.value} onValueChange={handleValueChange}></InputNumber>
+        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+          <InputNumber {...props.staticProps} value={props.value.value} onValueChange={handleValueChange}  invalid={props.error.value.length > 0}></InputNumber>
+        </LabelWrapper>
       </div>
     );
   })
@@ -42,6 +61,13 @@ let InputNumberCompBase = (function () {
           <Section name='Basic'>
             {children.staticProps.propertyView({ label: 'Static Props' })}
             {children.value.propertyView({ label: 'Value' })}
+          </Section>
+          <Section name='Form'>
+            {children.label.propertyView({ label: 'Label' })}
+            {children.error.propertyView({ label: 'Error' })}
+            {children.caption.propertyView({ label: 'Caption' })}
+            {children.showCaption.propertyView({ label: 'Show caption' })}
+            {children.required.propertyView({ label: 'Required' })}
           </Section>
           <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
           <Section name='Description'>
@@ -60,5 +86,13 @@ let InputNumberCompBase = (function () {
     .build();
 })();
 
-const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value')];
+const exposingConfigs = [
+  new NameConfig('staticProps'),
+  new NameConfig('value'),
+  new NameConfig('label'),
+  new NameConfig('error'),
+  new NameConfig('caption'),
+  new NameConfig('showCaption'),
+  new NameConfig('required'),
+];
 export default withExposingConfigs(InputNumberCompBase, exposingConfigs);

@@ -1,5 +1,16 @@
-import { eventHandlerControl, jsonControl, jsonObjectExposingStateControl, NameConfig, Section, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
-
+import {
+  eventHandlerControl,
+  jsonControl,
+  jsonObjectExposingStateControl,
+  NameConfig,
+  Section,
+  toJSONObject,
+  UICompBuilder,
+  withExposingConfigs,
+  stringExposingStateControl,
+  booleanExposingStateControl,
+} from 'lowcoder-sdk';
+import LabelWrapper from '../../../components/common/LabelWrapper';
 import { Calendar } from 'primereact/calendar';
 
 export const defStaticProps = {
@@ -19,6 +30,11 @@ let CalendarCompBase = (function () {
       start: '02/11/2000',
       end: '02/12/2000',
     }),
+    label: stringExposingStateControl('label', ''),
+    error: stringExposingStateControl('error', ''),
+    caption: stringExposingStateControl('caption', ''),
+    showCaption: booleanExposingStateControl('showCaption', false),
+    required: booleanExposingStateControl('required', false),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
@@ -57,7 +73,9 @@ let CalendarCompBase = (function () {
 
     return (
       <div style={{ padding: '5px' }}>
-        <Calendar  {...props.staticProps} value={input} onChange={handleChange}></Calendar>
+        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+          <Calendar {...props.staticProps} value={input} onChange={handleChange} invalid={props.error.value.length > 0}></Calendar>
+        </LabelWrapper>
       </div>
     );
   })
@@ -67,6 +85,13 @@ let CalendarCompBase = (function () {
           <Section name='Basic'>
             {children.staticProps.propertyView({ label: 'Static Props' })}
             {children.value.propertyView({ label: 'Value' })}
+          </Section>
+          <Section name='Form'>
+            {children.label.propertyView({ label: 'Label' })}
+            {children.error.propertyView({ label: 'Error' })}
+            {children.caption.propertyView({ label: 'Caption' })}
+            {children.showCaption.propertyView({ label: 'Show caption' })}
+            {children.required.propertyView({ label: 'Required' })}
           </Section>
           <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
           <Section name='Description'>
@@ -84,5 +109,13 @@ let CalendarCompBase = (function () {
     })
     .build();
 })();
-export const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value')];
+export const exposingConfigs = [
+  new NameConfig('staticProps'),
+  new NameConfig('value'),
+  new NameConfig('label'),
+  new NameConfig('error'),
+  new NameConfig('caption'),
+  new NameConfig('showCaption'),
+  new NameConfig('required'),
+];
 export default withExposingConfigs(CalendarCompBase, exposingConfigs);

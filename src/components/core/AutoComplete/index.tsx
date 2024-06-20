@@ -9,9 +9,10 @@ import {
   toJSONObjectArray,
   UICompBuilder,
   withExposingConfigs,
+  booleanExposingStateControl,
 } from 'lowcoder-sdk';
 import { AutoComplete } from 'primereact/autocomplete';
-
+import LabelWrapper from '../../../components/common/LabelWrapper';
 const defStaticProps = {
   placeholder: 'Enter a country name',
   field: 'name',
@@ -32,6 +33,11 @@ let AutoCompleteCompBase = (function () {
   const childrenMap = {
     staticProps: jsonControl(toJSONObject, defStaticProps),
     value: stringExposingStateControl('value', defValue),
+    label: stringExposingStateControl('label', ''),
+    error: stringExposingStateControl('error', ''),
+    caption: stringExposingStateControl('caption', ''),
+    showCaption: booleanExposingStateControl('showCaption', false),
+    required: booleanExposingStateControl('required', false),
     suggestions: jsonExposingStateControl('suggestions', toJSONObjectArray, defSuggestions),
     onEvent: eventHandlerControl([
       {
@@ -59,7 +65,16 @@ let AutoCompleteCompBase = (function () {
 
     return (
       <div style={{ padding: '5px' }}>
-        <AutoComplete {...props.staticProps} suggestions={props.suggestions.value} value={props.value.value} completeMethod={search} onChange={handleChange}></AutoComplete>
+        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+          <AutoComplete
+            {...props.staticProps}
+            suggestions={props.suggestions.value}
+            value={props.value.value}
+            completeMethod={search}
+            onChange={handleChange}
+            invalid={props.error.value.length > 0}
+          ></AutoComplete>
+        </LabelWrapper>
       </div>
     );
   })
@@ -70,6 +85,13 @@ let AutoCompleteCompBase = (function () {
             {children.staticProps.propertyView({ label: 'Static Props' })}
             {children.value.propertyView({ label: 'Value' })}
             {children.suggestions.propertyView({ label: 'Suggestions' })}
+          </Section>
+          <Section name='Form'>
+            {children.label.propertyView({ label: 'Label' })}
+            {children.error.propertyView({ label: 'Error' })}
+            {children.caption.propertyView({ label: 'Caption' })}
+            {children.showCaption.propertyView({ label: 'Show caption' })}
+            {children.required.propertyView({ label: 'Required' })}
           </Section>
           <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
           <Section name='Description'>
@@ -88,5 +110,14 @@ let AutoCompleteCompBase = (function () {
     .build();
 })();
 
-const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value'), new NameConfig('suggestions')];
+const exposingConfigs = [
+  new NameConfig('staticProps'),
+  new NameConfig('value'),
+  new NameConfig('suggestions'),
+  new NameConfig('label'),
+  new NameConfig('error'),
+  new NameConfig('caption'),
+  new NameConfig('showCaption'),
+  new NameConfig('required'),
+];
 export default withExposingConfigs(AutoCompleteCompBase, exposingConfigs);

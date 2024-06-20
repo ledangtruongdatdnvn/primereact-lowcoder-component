@@ -1,7 +1,18 @@
-import { eventHandlerControl, jsonControl, jsonObjectExposingStateControl, Section, toJSONObject, toJSONObjectArray, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+import {
+  eventHandlerControl,
+  jsonControl,
+  jsonObjectExposingStateControl,
+  NameConfig,
+  Section,
+  toJSONObject,
+  toJSONObjectArray,
+  UICompBuilder,
+  withExposingConfigs,
+  stringExposingStateControl,
+  booleanExposingStateControl
+} from 'lowcoder-sdk';
 import { Dropdown } from 'primereact/dropdown';
-
-import { NameConfig } from 'lowcoder-sdk';
+import LabelWrapper from '../../../components/common/LabelWrapper';
 const defStaticProps = {
   placeholder: 'Select a City',
   optionLabel: 'name',
@@ -24,6 +35,11 @@ let DropdownCompBase = (function () {
   const childrenMap = {
     staticProps: jsonControl(toJSONObject, defStaticProps),
     value: jsonObjectExposingStateControl('value', defValue),
+    label: stringExposingStateControl('label', ''),
+    error: stringExposingStateControl('error', ''),
+    caption: stringExposingStateControl('caption', ''),
+    showCaption: booleanExposingStateControl('showCaption', false),
+    required: booleanExposingStateControl('required', false),
     options: jsonControl(toJSONObjectArray, defOptions),
     onEvent: eventHandlerControl([
       {
@@ -42,7 +58,9 @@ let DropdownCompBase = (function () {
 
     return (
       <div style={{ padding: '5px' }}>
-        <Dropdown {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange}></Dropdown>
+        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+          <Dropdown {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange} invalid={props.error.value.length > 0}></Dropdown>
+        </LabelWrapper>
       </div>
     );
   })
@@ -53,6 +71,13 @@ let DropdownCompBase = (function () {
             {children.staticProps.propertyView({ label: 'Static Props' })}
             {children.value.propertyView({ label: 'Value' })}
             {children.options.propertyView({ label: 'Options' })}
+          </Section>
+          <Section name='Form'>
+            {children.label.propertyView({ label: 'Label' })}
+            {children.error.propertyView({ label: 'Error' })}
+            {children.caption.propertyView({ label: 'Caption' })}
+            {children.showCaption.propertyView({ label: 'Show caption' })}
+            {children.required.propertyView({ label: 'Required' })}
           </Section>
           <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
           <Section name='Description'>
@@ -71,6 +96,15 @@ let DropdownCompBase = (function () {
     .build();
 })();
 
-const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value'), new NameConfig('options')];
+const exposingConfigs = [
+  new NameConfig('staticProps'),
+  new NameConfig('value'),
+  new NameConfig('options'),
+  new NameConfig('label'),
+  new NameConfig('error'),
+  new NameConfig('caption'),
+  new NameConfig('showCaption'),
+  new NameConfig('required'),
+];
 
 export default withExposingConfigs(DropdownCompBase, exposingConfigs);
