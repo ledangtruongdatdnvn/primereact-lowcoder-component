@@ -1,6 +1,55 @@
 import LabelWrapper from '../../../components/common/LabelWrapper';
-import { eventHandlerControl, jsonControl, NameConfig, Section, stringExposingStateControl, toJSONObject, UICompBuilder, withExposingConfigs, booleanExposingStateControl } from 'lowcoder-sdk';
-import { InputText } from 'primereact/inputtext';
+import {
+  eventHandlerControl,
+  jsonControl,
+  NameConfig,
+  Section,
+  stringExposingStateControl,
+  toJSONObject,
+  UICompBuilder,
+  withExposingConfigs,
+  booleanExposingStateControl
+} from 'lowcoder-sdk';
+import {InputText, InputTextProps} from 'primereact/inputtext';
+import {ChangeEvent, useEffect, useRef, useState} from "react";
+import _ from "lodash";
+import {INPUT_DEFAULT_ONCHANGE_DEBOUNCE} from "../../common/constants/perf";
+
+interface InputProps extends InputTextProps {
+  debounce?: number;
+}
+
+function TacoInput(props: InputProps) {
+  const {onChange, value, debounce = INPUT_DEFAULT_ONCHANGE_DEBOUNCE, ...inputProps} = props;
+  const [internalValue, setIntervalValue] = useState(value);
+  const isTypingRef = useRef(0);
+
+  const originOnChangeRef = useRef(onChange);
+  originOnChangeRef.current = onChange;
+
+  const debouncedOnChangeRef = useRef(debounce > 0 ? _.debounce((e: ChangeEvent<HTMLInputElement>) => {
+    window.clearTimeout(isTypingRef.current);
+    isTypingRef.current = window.setTimeout(() => (isTypingRef.current = 0), 100);
+    originOnChangeRef.current?.(e);
+  }, debounce) : (e: ChangeEvent<HTMLInputElement>) => originOnChangeRef.current?.(e));
+
+  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setIntervalValue(e.target.value);
+    debouncedOnChangeRef.current?.(e);
+  };
+
+  useEffect(() => {
+    if (!isTypingRef.current) {
+      setIntervalValue(value);
+    }
+  }, [value]);
+
+  return (<InputText
+      value={internalValue}
+      onChange={(e) => handleChange(e)}
+      {...inputProps}
+    />);
+}
 
 const defStaticProps = {
   placeholder: 'Enter a name',
@@ -37,7 +86,7 @@ let InputTextCompBase = (function () {
     return (
       <div style={{ padding: '5px' }}>
         <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-          <InputText {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></InputText>
+          <TacoInput {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoInput>
         </LabelWrapper>
       </div>
     );

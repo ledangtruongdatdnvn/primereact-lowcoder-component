@@ -1,2 +1,4 @@
 node_modules
 package
+/.idea/vcs.xml
+/.idea/workspace.xml

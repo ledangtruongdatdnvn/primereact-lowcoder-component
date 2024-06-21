@@ -1,6 +1,55 @@
 import LabelWrapper from '../../../components/common/LabelWrapper';
-import { eventHandlerControl, NameConfig, jsonControl, Section, stringExposingStateControl, toJSONObject, UICompBuilder, withExposingConfigs, booleanExposingStateControl } from 'lowcoder-sdk';
-import { InputTextarea } from 'primereact/inputtextarea';
+import {
+  booleanExposingStateControl,
+  eventHandlerControl,
+  jsonControl,
+  NameConfig,
+  Section,
+  stringExposingStateControl,
+  toJSONObject,
+  UICompBuilder,
+  withExposingConfigs
+} from 'lowcoder-sdk';
+import {InputTextarea, InputTextareaProps} from 'primereact/inputtextarea';
+import {INPUT_DEFAULT_ONCHANGE_DEBOUNCE} from "../../common/constants/perf";
+import {ChangeEvent, useEffect, useRef, useState} from "react";
+import _ from "lodash";
+
+export interface TextAreaProps extends InputTextareaProps {
+  debounce?: number;
+}
+
+function TacoTextArea(props: TextAreaProps) {
+  const {onChange, value, debounce = INPUT_DEFAULT_ONCHANGE_DEBOUNCE, ...inputProps} = props;
+  const [internalValue, setIntervalValue] = useState(value);
+  const isTypingRef = useRef(0);
+
+  const originOnChangeRef = useRef(onChange);
+  originOnChangeRef.current = onChange;
+
+  const debouncedOnChangeRef = useRef(debounce > 0 ? _.debounce((e: ChangeEvent<HTMLTextAreaElement>) => {
+    window.clearTimeout(isTypingRef.current);
+    isTypingRef.current = window.setTimeout(() => (isTypingRef.current = 0), 100);
+    originOnChangeRef.current?.(e);
+  }, debounce) : (e: ChangeEvent<HTMLTextAreaElement>) => originOnChangeRef.current?.(e));
+
+  const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setIntervalValue(e.target.value);
+    debouncedOnChangeRef.current?.(e);
+  };
+
+  useEffect(() => {
+    if (!isTypingRef.current) {
+      setIntervalValue(value);
+    }
+  }, [value]);
+
+  return (<InputTextarea
+      value={internalValue}
+      onChange={(e) => handleChange(e)}
+      {...inputProps}
+    />);
+}
 
 const defStaticProps = {
   tooltip: 'Enter a description',
@@ -38,7 +87,7 @@ let InputTextareaCompBase = (function () {
     return (
       <div style={{ padding: '5px' }}>
         <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-          <InputTextarea {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></InputTextarea>
+          <TacoTextArea {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoTextArea>
         </LabelWrapper>
       </div>
     );

@@ -9,8 +9,9 @@
     "@types/react-dom": "18",
     "autoprefixer": "^10.4.19",
     "dayjs": "^1.11.10",
+    "lodash": "^4.17.21",
     "lowcoder-cli": "^0.0.30",
-    "lowcoder-sdk": "^2.4.3",
+    "lowcoder-sdk": "^2.4.4",
     "postcss": "^8.4.38",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
@@ -206,6 +207,7 @@
     "build_publish": "lowcoder-cli build --publish"
   },
   "devDependencies": {
+    "@types/lodash": "^4.17.5",
     "sass": "^1.72.0"
   }
 }
