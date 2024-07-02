@@ -195,8 +195,8 @@
         "icon": "./icons/component.svg",
         "description": "InternalStyle Component",
         "layoutInfo": {
-          "w": 12,
-          "h": 36
+          "w": 0,
+          "h": 0
         }
       }
     }
