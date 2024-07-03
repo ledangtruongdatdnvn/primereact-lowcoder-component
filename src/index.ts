@@ -1,7 +1,7 @@
 // Import the CSS file
-// import 'primeicons/primeicons.css';
-// import 'primeflex/primeflex.scss';
-// import 'primereact/resources/themes/lara-light-cyan/theme.css';
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.scss';
+import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import './global.css';
 import Label from './components/common/Label';
 import AutoComplete from './components/core/AutoComplete';
@@ -22,6 +22,7 @@ import Table from './components/core/Table';
 import Tag from './components/core/Tag';
 import Timeline from './components/core/Timeline';
 import TreeSelect from './components/core/TreeSelect';
+import File from './components/core/File';
 export default {
   button: Button,
   timeline: Timeline,
@@ -42,4 +43,5 @@ export default {
   radiobutton: RadioButton,
   label: Label,
   internalstyle: InternalStyle,
+  file: File,
 };

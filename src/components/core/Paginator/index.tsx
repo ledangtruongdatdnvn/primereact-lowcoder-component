@@ -8,9 +8,9 @@ import {
   Section,
   toJSONObject,
   UICompBuilder,
-  withExposingConfigs
+  withExposingConfigs,
 } from 'lowcoder-sdk';
-import {Paginator} from 'primereact/paginator';
+import { Paginator } from 'primereact/paginator';
 
 const defStaticProps = {
   rowsPerPageOptions: [1, 5, 10, 20],
@@ -22,9 +22,13 @@ let PaginatorCompBase = (function () {
     first: numberExposingStateControl('first', 0),
     rows: numberExposingStateControl('rows', 10),
     totalRecords: numberExposingStateControl('totalRecords', 40),
-    onEvent: eventHandlerControl([{
-      label: 'onChange', value: 'change', description: 'Callback to invoke on pagination.',
-    },]),
+    onEvent: eventHandlerControl([
+      {
+        label: 'onChange',
+        value: 'change',
+        description: 'Callback to invoke on pagination.',
+      },
+    ]),
   };
 
   return new UICompBuilder(childrenMap, (props: any) => {
@@ -36,32 +40,31 @@ let PaginatorCompBase = (function () {
       props.onEvent('change');
     };
 
-    return <Paginator {...props.staticProps} first={props.first.value} rows={props.rows.value}
-                      totalRecords={props.totalRecords.value} onPageChange={handlePageChange}></Paginator>;
+    return <Paginator {...props.staticProps} first={props.first.value} rows={props.rows.value} totalRecords={props.totalRecords.value} onPageChange={handlePageChange}></Paginator>;
   })
     .setPropertyViewFn((children: any) => {
-      return (<>
-        <Section name='Basic'>
-          {children.staticProps.propertyView({label: 'Props'})}
-          {children.first.propertyView({label: 'First'})}
-          {children.rows.propertyView({label: 'Rows'})}
-          {children.totalRecords.propertyView({label: 'Total Records'})}
-        </Section>
-        <Section name='Interaction'>
-          {hiddenPropertyView(children)}
-        </Section>
-        <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
-        <Section name='Description'>
-          <ol className='text-sm p-0 m-0 mx-3'>
-            <li>Static Props area should contain only static props of Primereact Paginator.</li>
-            <li>
-              <a href='https://primereact.org/paginator/' target='_blank'>
-                More information
-              </a>
-            </li>
-          </ol>
-        </Section>
-      </>);
+      return (
+        <>
+          <Section name='Basic'>
+            {children.staticProps.propertyView({ label: 'Props' })}
+            {children.first.propertyView({ label: 'First' })}
+            {children.rows.propertyView({ label: 'Rows' })}
+            {children.totalRecords.propertyView({ label: 'Total Records' })}
+          </Section>
+          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
+          <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
+          <Section name='Description'>
+            <ol className='text-sm p-0 m-0 mx-3'>
+              <li>Static Props area should contain only static props of Primereact Paginator.</li>
+              <li>
+                <a href='https://primereact.org/paginator/' target='_blank'>
+                  More information
+                </a>
+              </li>
+            </ol>
+          </Section>
+        </>
+      );
     })
     .build();
 })();

@@ -1,17 +1,9 @@
-import {
-  hiddenPropertyView,
-  jsonControl,
-  NameConfig,
-  NameConfigHidden,
-  Section,
-  toJSONObject,
-  UICompBuilder,
-  withExposingConfigs
-} from 'lowcoder-sdk';
-import {Divider} from 'primereact/divider';
+import { hiddenPropertyView, jsonControl, NameConfig, NameConfigHidden, Section, toJSONObject, UICompBuilder, withExposingConfigs } from 'lowcoder-sdk';
+import { Divider } from 'primereact/divider';
 
 const defStaticProps = {
-  layout: 'horizontal', type: 'dashed',
+  layout: 'horizontal',
+  type: 'dashed',
 };
 
 let DividerCompBase = (function () {
@@ -23,22 +15,22 @@ let DividerCompBase = (function () {
     return <Divider {...props.staticProps}></Divider>;
   })
     .setPropertyViewFn((children: any) => {
-      return (<>
-        <Section name='Props'>{children.staticProps.propertyView({label: 'Static Props'})}</Section>
-        <Section name='Interaction'>
-          {hiddenPropertyView(children)}
-        </Section>
-        <Section name='Description'>
-          <ol className='text-sm p-0 m-0 mx-3'>
-            <li>Static Props area should contain only static props of Primereact Divider.</li>
-            <li>
-              <a href='https://primereact.org/divider/' target='_blank'>
-                More information
-              </a>
-            </li>
-          </ol>
-        </Section>
-      </>);
+      return (
+        <>
+          <Section name='Props'>{children.staticProps.propertyView({ label: 'Static Props' })}</Section>
+          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
+          <Section name='Description'>
+            <ol className='text-sm p-0 m-0 mx-3'>
+              <li>Static Props area should contain only static props of Primereact Divider.</li>
+              <li>
+                <a href='https://primereact.org/divider/' target='_blank'>
+                  More information
+                </a>
+              </li>
+            </ol>
+          </Section>
+        </>
+      );
     })
     .build();
 })();

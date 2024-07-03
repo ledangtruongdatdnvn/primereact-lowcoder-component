@@ -1,6 +1,7 @@
 import { BooleanStateControl, Section, stringExposingStateControl, UICompBuilder, withDefault, withExposingConfigs } from 'lowcoder-sdk';
 import { LaraDarkBlue } from './lara-dark-blue';
 import { LaraLightBlue } from './lara-light-blue';
+
 let InternalStyleCompBase = (function () {
   const childrenMap = {
     useInternalStyle: withDefault(BooleanStateControl, 'true'),

@@ -7,6 +7,7 @@ interface LabelWrapperProps {
   showCaption?: boolean;
   children?: React.ReactNode;
 }
+
 const LabelWrapper = ({ label, inputId, required, error, caption, showCaption, children }: LabelWrapperProps): React.JSX.Element => {
   return (
     <>
@@ -27,4 +28,5 @@ const LabelWrapper = ({ label, inputId, required, error, caption, showCaption, c
     </>
   );
 };
+
 export default LabelWrapper;

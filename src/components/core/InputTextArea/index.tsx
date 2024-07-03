@@ -10,30 +10,34 @@ import {
   stringExposingStateControl,
   toJSONObject,
   UICompBuilder,
-  withExposingConfigs
+  withExposingConfigs,
 } from 'lowcoder-sdk';
-import {InputTextarea, InputTextareaProps} from 'primereact/inputtextarea';
-import {INPUT_DEFAULT_ONCHANGE_DEBOUNCE} from "../../common/constants/perf";
-import {ChangeEvent, useEffect, useRef, useState} from "react";
-import _ from "lodash";
+import { InputTextarea, InputTextareaProps } from 'primereact/inputtextarea';
+import { INPUT_DEFAULT_ONCHANGE_DEBOUNCE } from '../../common/constants/perf';
+import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import _ from 'lodash';
 
 export interface TextAreaProps extends InputTextareaProps {
   debounce?: number;
 }
 
 function TacoTextArea(props: TextAreaProps) {
-  const {onChange, value, debounce = INPUT_DEFAULT_ONCHANGE_DEBOUNCE, ...inputProps} = props;
+  const { onChange, value, debounce = INPUT_DEFAULT_ONCHANGE_DEBOUNCE, ...inputProps } = props;
   const [internalValue, setIntervalValue] = useState(value);
   const isTypingRef = useRef(0);
 
   const originOnChangeRef = useRef(onChange);
   originOnChangeRef.current = onChange;
 
-  const debouncedOnChangeRef = useRef(debounce > 0 ? _.debounce((e: ChangeEvent<HTMLTextAreaElement>) => {
-    window.clearTimeout(isTypingRef.current);
-    isTypingRef.current = window.setTimeout(() => (isTypingRef.current = 0), 100);
-    originOnChangeRef.current?.(e);
-  }, debounce) : (e: ChangeEvent<HTMLTextAreaElement>) => originOnChangeRef.current?.(e));
+  const debouncedOnChangeRef = useRef(
+    debounce > 0
+      ? _.debounce((e: ChangeEvent<HTMLTextAreaElement>) => {
+          window.clearTimeout(isTypingRef.current);
+          isTypingRef.current = window.setTimeout(() => (isTypingRef.current = 0), 100);
+          originOnChangeRef.current?.(e);
+        }, debounce)
+      : (e: ChangeEvent<HTMLTextAreaElement>) => originOnChangeRef.current?.(e)
+  );
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setIntervalValue(e.target.value);
@@ -46,15 +50,13 @@ function TacoTextArea(props: TextAreaProps) {
     }
   }, [value]);
 
-  return (<InputTextarea
-    value={internalValue}
-    onChange={(e) => handleChange(e)}
-    {...inputProps}
-  />);
+  return <InputTextarea value={internalValue} onChange={(e) => handleChange(e)} {...inputProps} />;
 }
 
 const defStaticProps = {
-  tooltip: 'Enter a description', variant: 'filled', style: {
+  tooltip: 'Enter a description',
+  variant: 'filled',
+  style: {
     width: '100%',
   },
 };
@@ -69,9 +71,13 @@ let InputTextareaCompBase = (function () {
     caption: stringExposingStateControl('caption', ''),
     showCaption: booleanExposingStateControl('showCaption', false),
     required: booleanExposingStateControl('required', false),
-    onEvent: eventHandlerControl([{
-      label: 'onChange', value: 'change', description: 'Triggers when Input Textarea is changed.',
-    },]),
+    onEvent: eventHandlerControl([
+      {
+        label: 'onChange',
+        value: 'change',
+        description: 'Triggers when Input Textarea is changed.',
+      },
+    ]),
   };
 
   return new UICompBuilder(childrenMap, (props: any) => {
@@ -80,29 +86,28 @@ let InputTextareaCompBase = (function () {
       props.onEvent('change');
     };
 
-    return (<div style={{padding: '5px'}}>
-        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value}
-                      caption={props.caption.value} showCaption={props.showCaption.value}>
-          <TacoTextArea {...props.staticProps} value={props.value.value} onChange={handleChange}
-                        invalid={props.error.value.length > 0}></TacoTextArea>
+    return (
+      <div style={{ padding: '5px' }}>
+        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+          <TacoTextArea {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoTextArea>
         </LabelWrapper>
-      </div>);
+      </div>
+    );
   })
     .setPropertyViewFn((children: any) => {
-      return (<>
+      return (
+        <>
           <Section name='Basic'>
-            {children.staticProps.propertyView({label: 'Static Props'})}
-            {children.value.propertyView({label: 'Value'})}
+            {children.staticProps.propertyView({ label: 'Static Props' })}
+            {children.value.propertyView({ label: 'Value' })}
           </Section>
-          <Section name='Interaction'>
-            {hiddenPropertyView(children)}
-          </Section>
+          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
           <Section name='Form'>
-            {children.label.propertyView({label: 'Label'})}
-            {children.error.propertyView({label: 'Error'})}
-            {children.caption.propertyView({label: 'Caption'})}
-            {children.showCaption.propertyView({label: 'Show caption'})}
-            {children.required.propertyView({label: 'Required'})}
+            {children.label.propertyView({ label: 'Label' })}
+            {children.error.propertyView({ label: 'Error' })}
+            {children.caption.propertyView({ label: 'Caption' })}
+            {children.showCaption.propertyView({ label: 'Show caption' })}
+            {children.required.propertyView({ label: 'Required' })}
           </Section>
           <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
           <Section name='Description'>
@@ -115,9 +120,19 @@ let InputTextareaCompBase = (function () {
               </li>
             </ol>
           </Section>
-        </>);
+        </>
+      );
     })
     .build();
 })();
-const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value'), new NameConfig('label'), new NameConfig('error'), new NameConfig('caption'), new NameConfig('showCaption'), new NameConfig('required'), NameConfigHidden,];
+const exposingConfigs = [
+  new NameConfig('staticProps'),
+  new NameConfig('value'),
+  new NameConfig('label'),
+  new NameConfig('error'),
+  new NameConfig('caption'),
+  new NameConfig('showCaption'),
+  new NameConfig('required'),
+  NameConfigHidden,
+];
 export default withExposingConfigs(InputTextareaCompBase, exposingConfigs);
