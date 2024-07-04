@@ -15,7 +15,7 @@ import {
 } from 'lowcoder-sdk';
 import { Dropdown } from 'primereact/dropdown';
 import LabelWrapper from '../../../components/common/LabelWrapper';
-import {useState} from "react";
+import {useDeepCompareEffect, useDeepCompareMemo} from "use-deep-compare";
 
 const defStaticProps = {
   placeholder: 'Select a City',
@@ -41,6 +41,7 @@ const defOptions = [
 let DropdownCompBase = (function () {
   const childrenMap = {
     staticProps: jsonControl(toJSONObject, defStaticProps),
+    defaultValue: jsonObjectExposingStateControl('defaultValue', defValue),
     value: jsonObjectExposingStateControl('value', defValue),
     label: stringExposingStateControl('label', ''),
     error: stringExposingStateControl('error', ''),
@@ -58,18 +59,22 @@ let DropdownCompBase = (function () {
   };
 
   return new UICompBuilder(childrenMap, (props: any) => {
-    const [internalValue, setInternalValue] = useState(props.value.value);
-
     const handleChange = (e: any) => {
-      setInternalValue(e.target.value);
       props.value.onChange(e.target.value);
       props.onEvent('change');
     };
 
+    useDeepCompareEffect(() => {
+      props.value.onChange?.(props.defaultValue?.value)
+    }, [props.defaultValue?.value]);
+
+    const options = useDeepCompareMemo(() => props.options, [props.options]);
+    const staticProps = useDeepCompareMemo(() => props.staticProps, [props.staticProps]);
+
     return (
       <div style={{ padding: '5px' }}>
         <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-          <Dropdown {...props.staticProps} value={internalValue} options={props.options} onChange={handleChange} invalid={props.error.value.length > 0}></Dropdown>
+          <Dropdown {...staticProps} value={props.value.value} options={options} onChange={handleChange} invalid={props.error.value.length > 0}></Dropdown>
         </LabelWrapper>
       </div>
     );
@@ -79,7 +84,7 @@ let DropdownCompBase = (function () {
         <>
           <Section name='Basic'>
             {children.staticProps.propertyView({ label: 'Static Props' })}
-            {children.value.propertyView({ label: 'Default Value' })}
+            {children.defaultValue.propertyView({ label: 'Default Value' })}
             {children.options.propertyView({ label: 'Options' })}
           </Section>
           <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
