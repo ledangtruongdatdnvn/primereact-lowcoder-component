@@ -12,6 +12,7 @@ import {
   toJSONObjectArray,
   UICompBuilder,
   withExposingConfigs,
+  migrateOldData,
 } from 'lowcoder-sdk';
 import { Dropdown } from 'primereact/dropdown';
 import LabelWrapper from '../../../components/common/LabelWrapper';
@@ -124,4 +125,20 @@ const exposingConfigs = [
   NameConfigHidden,
 ];
 
-export default withExposingConfigs(DropdownCompBase, exposingConfigs);
+// separate defaultValue and value for old components
+export function fixOldInputCompData(oldData: any) {
+  if (!oldData) return oldData;
+  if (Boolean(oldData.value) && !Boolean(oldData.defaultValue)) {
+    const value = oldData.value;
+    return {
+      ...oldData,
+      defaultValue: value,
+      value: '',
+    };
+  }
+  return oldData;
+}
+
+const DropDownComp = migrateOldData(DropdownCompBase, fixOldInputCompData);
+
+export default withExposingConfigs(DropDownComp, exposingConfigs);
