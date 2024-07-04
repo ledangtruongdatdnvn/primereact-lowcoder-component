@@ -15,6 +15,7 @@ import {
 } from 'lowcoder-sdk';
 import { Dropdown } from 'primereact/dropdown';
 import LabelWrapper from '../../../components/common/LabelWrapper';
+import {useState} from "react";
 
 const defStaticProps = {
   placeholder: 'Select a City',
@@ -57,7 +58,10 @@ let DropdownCompBase = (function () {
   };
 
   return new UICompBuilder(childrenMap, (props: any) => {
+    const [internalValue, setInternalValue] = useState(props.value.value);
+
     const handleChange = (e: any) => {
+      setInternalValue(e.target.value);
       props.value.onChange(e.target.value);
       props.onEvent('change');
     };
@@ -65,7 +69,7 @@ let DropdownCompBase = (function () {
     return (
       <div style={{ padding: '5px' }}>
         <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-          <Dropdown {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange} invalid={props.error.value.length > 0}></Dropdown>
+          <Dropdown {...props.staticProps} value={internalValue} options={props.options} onChange={handleChange} invalid={props.error.value.length > 0}></Dropdown>
         </LabelWrapper>
       </div>
     );
@@ -75,7 +79,7 @@ let DropdownCompBase = (function () {
         <>
           <Section name='Basic'>
             {children.staticProps.propertyView({ label: 'Static Props' })}
-            {children.value.propertyView({ label: 'Value' })}
+            {children.value.propertyView({ label: 'Default Value' })}
             {children.options.propertyView({ label: 'Options' })}
           </Section>
           <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
