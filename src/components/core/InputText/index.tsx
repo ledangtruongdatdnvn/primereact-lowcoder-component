@@ -19,10 +19,13 @@ import { INPUT_DEFAULT_ONCHANGE_DEBOUNCE } from '../../common/constants/perf';
 
 interface InputProps extends InputTextProps {
   debounce?: number;
+  iconClass?: string;
+
+  showClear?: boolean;
 }
 
 function TacoInput(props: InputProps) {
-  const { onChange, value, debounce = INPUT_DEFAULT_ONCHANGE_DEBOUNCE, ...inputProps } = props;
+  const { onChange, value, debounce = INPUT_DEFAULT_ONCHANGE_DEBOUNCE, iconClass, showClear, disabled, ...inputProps } = props;
   const [internalValue, setIntervalValue] = useState(value);
   const isTypingRef = useRef(0);
 
@@ -44,13 +47,21 @@ function TacoInput(props: InputProps) {
     debouncedOnChangeRef.current?.(e);
   };
 
+  const handleClear = () => {};
+
   useEffect(() => {
     if (!isTypingRef.current) {
       setIntervalValue(value);
     }
   }, [value]);
 
-  return <InputText value={internalValue} onChange={(e) => handleChange(e)} {...inputProps} />;
+  return (
+    <span className={iconClass && iconClass?.length > 0 ? `p-input-icon-left` : '' + (showClear && value && value?.length > 0) ? ` p-input-icon-right` : ''}>
+      {iconClass && <i className={iconClass}></i>}
+      <InputText value={internalValue} onChange={(e) => handleChange(e)} {...inputProps} />
+      {showClear && internalValue && internalValue?.length > 0 && !disabled && <i className='pi pi-times cursor-pointer' onClick={handleClear}></i>}
+    </span>
+  );
 }
 
 const defStaticProps = {
@@ -65,6 +76,7 @@ let InputTextCompBase = (function () {
   const childrenMap = {
     staticProps: jsonControl(toJSONObject, defStaticProps),
     value: stringExposingStateControl('value', defValue),
+    iconClass: stringExposingStateControl('value', ''),
     label: stringExposingStateControl('label', ''),
     error: stringExposingStateControl('error', ''),
     caption: stringExposingStateControl('caption', ''),

@@ -19,12 +19,12 @@ const LabelWrapper = ({ label, inputId, required, error, caption, showCaption, c
         )}
         {children}
       </div>
-      {error && error?.length > 0 && <div className='p-error mt-1'>{error}</div>}
       {caption && caption?.length > 0 && showCaption && (
         <div className='mt-1' style={{ color: 'var(--text-color-secondary)' }}>
           {caption}
         </div>
       )}
+      {error && error?.length > 0 && <div className='p-error mt-1'>{error}</div>}
     </>
   );
 };
