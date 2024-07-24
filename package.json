@@ -22,6 +22,7 @@
     "react-resize-detector": "^10.0.1",
     "styled-components": "^6.1.8",
     "typescript": "^5.4.3",
+    "use-deep-compare": "^1.2.1",
     "vite": "^5.2.7",
     "vite-plugin-fonts": "^0.7.0"
   },
