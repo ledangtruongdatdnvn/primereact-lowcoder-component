@@ -15,6 +15,7 @@ import {
 } from 'lowcoder-sdk';
 import { AutoComplete } from 'primereact/autocomplete';
 import LabelWrapper from '../../../components/common/LabelWrapper';
+import { ChangeEvent } from 'react';
 
 const defStaticProps = {
   placeholder: 'Enter a country name',
@@ -25,6 +26,8 @@ const defStaticProps = {
   style: {
     width: '100%',
   },
+  showClear: true,
+  iconClass: 'pi pi-search',
 };
 const defValue = '';
 const defSuggestions = [
@@ -66,17 +69,37 @@ let AutoCompleteCompBase = (function () {
       props.onEvent('complete');
     };
 
+    const handleClear = (e: any) => {
+      handleChange?.({ target: { value: '' } } as ChangeEvent<HTMLInputElement>); // clear value
+    };
+
+    const classNames = [
+      props.staticProps.iconClass && props.staticProps.iconClass.length > 0 && 'p-input-icon-left',
+      props.staticProps.showClear && props.value.value && props.value.value.length > 0 && 'p-input-icon-right',
+    ]
+      .filter(Boolean)
+      .join(' ');
+
     return (
       <div style={{ padding: '5px' }}>
         <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-          <AutoComplete
-            {...props.staticProps}
-            suggestions={props.suggestions.value}
-            value={props.value.value}
-            completeMethod={search}
-            onChange={handleChange}
-            invalid={props.error.value.length > 0}
-          ></AutoComplete>
+          <span className={classNames}>
+            {props.staticProps.iconClass && <i className={props.staticProps.iconClass} style={{ zIndex: 9 }}></i>}
+            <AutoComplete
+              {...props.staticProps}
+              suggestions={props.suggestions.value}
+              value={props.value.value}
+              completeMethod={search}
+              onChange={handleChange}
+              inputStyle={{
+                paddingLeft: props.staticProps.iconClass ? '40px' : '12px',
+                paddingRight: props.staticProps.showClear && props.value.value && props.value.value?.length > 0 && !props.staticProps.disabled ? '40px' : '12px',
+                width: '100%',
+              }}
+              invalid={props.error.value.length > 0}
+            ></AutoComplete>
+            {props.staticProps.showClear && props.value.value && props.value.value?.length > 0 && !props.staticProps.disabled && <i className='pi pi-times cursor-pointer' onClick={handleClear}></i>}
+          </span>
         </LabelWrapper>
       </div>
     );

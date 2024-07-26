@@ -1,6 +1,6 @@
 {
   "name": "@ledangtruongdat/primereact-lowcoder-components",
-  "version": "0.0.35",
+  "version": "0.0.43",
   "type": "module",
   "license": "MIT",
   "dependencies": {

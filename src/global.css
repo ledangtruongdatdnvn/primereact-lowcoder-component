@@ -2,3 +2,7 @@
   content: ' *';
   color: red;
 }
+
+.p-autocomplete-loader {
+  display: none;
+}

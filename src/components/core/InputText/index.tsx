@@ -20,7 +20,6 @@ import { INPUT_DEFAULT_ONCHANGE_DEBOUNCE } from '../../common/constants/perf';
 interface InputProps extends InputTextProps {
   debounce?: number;
   iconClass?: string;
-
   showClear?: boolean;
 }
 
@@ -47,7 +46,11 @@ function TacoInput(props: InputProps) {
     debouncedOnChangeRef.current?.(e);
   };
 
-  const handleClear = () => {};
+  const handleClear = (e: any) => {
+    onChange?.({ target: { value: '' } } as ChangeEvent<HTMLInputElement>); // clear value
+  };
+
+  const classNames = [iconClass && iconClass.length > 0 && 'p-input-icon-left', showClear && internalValue && internalValue.length > 0 && 'p-input-icon-right'].filter(Boolean).join(' ');
 
   useEffect(() => {
     if (!isTypingRef.current) {
@@ -56,9 +59,9 @@ function TacoInput(props: InputProps) {
   }, [value]);
 
   return (
-    <span className={iconClass && iconClass?.length > 0 ? `p-input-icon-left` : '' + (showClear && value && value?.length > 0) ? ` p-input-icon-right` : ''}>
+    <span className={classNames} style={{ overflow: 'hidden', padding: '5px' }}>
       {iconClass && <i className={iconClass}></i>}
-      <InputText value={internalValue} onChange={(e) => handleChange(e)} {...inputProps} />
+      <InputText value={internalValue} onChange={(e) => handleChange(e)} disabled={disabled} {...inputProps} />
       {showClear && internalValue && internalValue?.length > 0 && !disabled && <i className='pi pi-times cursor-pointer' onClick={handleClear}></i>}
     </span>
   );
@@ -69,6 +72,8 @@ const defStaticProps = {
   style: {
     width: '100%',
   },
+  iconClass: 'pi pi-search',
+  showClear: true,
 };
 const defValue = '';
 
@@ -98,11 +103,9 @@ let InputTextCompBase = (function () {
     };
 
     return (
-      <div style={{ padding: '5px' }}>
-        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-          <TacoInput {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoInput>
-        </LabelWrapper>
-      </div>
+      <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+        <TacoInput {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoInput>
+      </LabelWrapper>
     );
   })
     .setPropertyViewFn((children: any) => {

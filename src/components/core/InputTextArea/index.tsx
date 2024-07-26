@@ -19,10 +19,12 @@ import _ from 'lodash';
 
 export interface TextAreaProps extends InputTextareaProps {
   debounce?: number;
+  iconClass?: string;
+  showClear?: boolean;
 }
 
 function TacoTextArea(props: TextAreaProps) {
-  const { onChange, value, debounce = INPUT_DEFAULT_ONCHANGE_DEBOUNCE, ...inputProps } = props;
+  const { onChange, value, debounce = INPUT_DEFAULT_ONCHANGE_DEBOUNCE, iconClass, showClear, disabled, ...inputProps } = props;
   const [internalValue, setIntervalValue] = useState(value);
   const isTypingRef = useRef(0);
 
@@ -44,13 +46,25 @@ function TacoTextArea(props: TextAreaProps) {
     debouncedOnChangeRef.current?.(e);
   };
 
+  const handleClear = (e: any) => {
+    onChange?.({ target: { value: '' } } as ChangeEvent<HTMLTextAreaElement>); // clear value
+  };
+
+  const classNames = [iconClass && iconClass.length > 0 && 'p-input-icon-left', showClear && internalValue && internalValue.length > 0 && 'p-input-icon-right'].filter(Boolean).join(' ');
+
   useEffect(() => {
     if (!isTypingRef.current) {
       setIntervalValue(value);
     }
   }, [value]);
 
-  return <InputTextarea value={internalValue} onChange={(e) => handleChange(e)} {...inputProps} />;
+  return (
+    <span className={classNames} style={{ overflow: 'hidden', padding: '5px' }}>
+      {iconClass && <i className={iconClass}></i>}
+      <InputTextarea value={internalValue} onChange={(e) => handleChange(e)} disabled={disabled} {...inputProps} />
+      {showClear && internalValue && internalValue?.length > 0 && !disabled && <i className='pi pi-times cursor-pointer' onClick={handleClear}></i>}
+    </span>
+  );
 }
 
 const defStaticProps = {
@@ -59,6 +73,7 @@ const defStaticProps = {
   style: {
     width: '100%',
   },
+  showClear: true,
 };
 const defValue = '';
 
@@ -87,11 +102,9 @@ let InputTextareaCompBase = (function () {
     };
 
     return (
-      <div style={{ padding: '5px' }}>
-        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-          <TacoTextArea {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoTextArea>
-        </LabelWrapper>
-      </div>
+      <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+        <TacoTextArea {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoTextArea>
+      </LabelWrapper>
     );
   })
     .setPropertyViewFn((children: any) => {

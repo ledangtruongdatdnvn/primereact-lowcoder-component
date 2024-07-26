@@ -16,7 +16,7 @@ import {
 } from 'lowcoder-sdk';
 import { Dropdown } from 'primereact/dropdown';
 import LabelWrapper from '../../../components/common/LabelWrapper';
-import {useDeepCompareEffect, useDeepCompareMemo} from "use-deep-compare";
+import { useDeepCompareEffect, useDeepCompareMemo } from 'use-deep-compare';
 
 const defStaticProps = {
   placeholder: 'Select a City',
@@ -24,6 +24,7 @@ const defStaticProps = {
   style: {
     width: '100%',
   },
+  showClear: true,
 };
 
 const defValue = { name: 'New York', code: 'NY' };
@@ -66,7 +67,7 @@ let DropdownCompBase = (function () {
     };
 
     useDeepCompareEffect(() => {
-      props.value.onChange?.(props.defaultValue?.value)
+      props.value.onChange?.(props.defaultValue?.value);
     }, [props.defaultValue?.value]);
 
     const options = useDeepCompareMemo(() => props.options, [props.options]);
