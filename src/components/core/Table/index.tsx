@@ -23,7 +23,9 @@ const defStaticProps = {
   rowHover: true,
   responsiveLayout: 'scroll',
   lazy: true,
-  rowsPerPageOptions: [1, 5, 10, 20],
+  rowsPerPageOptions: [10, 20],
+  pageLinkSize: 3,
+  paginatorTemplate: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown',
 };
 
 const defButtonGroups = [
@@ -96,7 +98,7 @@ let TableCompBase = (function () {
     columns: jsonControl(toJSONObjectArray, defColumns),
     first: numberExposingStateControl('first', 0),
     rows: numberExposingStateControl('rows', 10),
-    totalRecords: numberExposingStateControl('totalRecords', 4),
+    totalRecords: numberExposingStateControl('totalRecords', defValue.length),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
