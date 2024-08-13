@@ -80,10 +80,11 @@ const defValue = [
 ];
 
 const defColumns = [
-  { header: 'Column 1', field: 'id' },
+  { header: 'Column 1', field: 'id', align: 'right' },
   {
     header: 'Column 2',
     field: 'name',
+    align: 'center',
   },
 ];
 
@@ -145,7 +146,7 @@ let TableCompBase = (function () {
     return (
       <DataTable {...props.staticProps} value={props.value} first={props.first.value} rows={props.rows.value} totalRecords={props.totalRecords.value} onPage={(event) => handleChange(event)}>
         {props.columns.map((column: any, index: any) => (
-          <Column key={index} field={column.field} header={column.header}></Column>
+          <Column key={index} field={column.field} header={column.header} align={column.align}></Column>
         ))}
         {props.buttonGroups && props.buttonGroups.length > 0 && <Column header={props.actionsColumnLabel.value} align='center' body={bodyTemplate}></Column>}
       </DataTable>
