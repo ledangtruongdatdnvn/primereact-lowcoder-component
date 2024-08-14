@@ -80,7 +80,11 @@ const defValue = [
 ];
 
 const defColumns = [
-  { header: 'Column 1', field: 'id', align: 'right' },
+  {
+    header: 'Column 1',
+    field: 'id',
+    align: 'right',
+  },
   {
     header: 'Column 2',
     field: 'name',

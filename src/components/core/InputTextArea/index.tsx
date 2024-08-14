@@ -102,7 +102,14 @@ let InputTextareaCompBase = (function () {
     };
 
     return (
-      <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+      <LabelWrapper
+        label={props.label.value}
+        required={props.required.value}
+        error={props.error.value}
+        caption={props.caption.value}
+        showCaption={props.showCaption.value}
+        underRightContent={props.staticProps.maxLength ? `${props.value.value.length}/${props.staticProps.maxLength}` : ''}
+      >
         <TacoTextArea {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoTextArea>
       </LabelWrapper>
     );

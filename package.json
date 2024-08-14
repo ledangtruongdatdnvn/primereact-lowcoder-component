@@ -34,8 +34,8 @@
         "icon": "./icons/component.svg",
         "description": "Button Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "timeline": {
@@ -43,8 +43,8 @@
         "icon": "./icons/component.svg",
         "description": "Timeline Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "tag": {
@@ -52,8 +52,8 @@
         "icon": "./icons/component.svg",
         "description": "Tag Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "dropdown": {
@@ -61,8 +61,8 @@
         "icon": "./icons/component.svg",
         "description": "Dropdown Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "table": {
@@ -70,8 +70,8 @@
         "icon": "./icons/component.svg",
         "description": "Table Component",
         "layoutInfo": {
-          "w": 24,
-          "h": 24
+          "w": 6,
+          "h": 6
         }
       },
       "inputtext": {
@@ -79,8 +79,8 @@
         "icon": "./icons/component.svg",
         "description": "InputText Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "inputtextarea": {
@@ -88,8 +88,8 @@
         "icon": "./icons/component.svg",
         "description": "InputTextArea Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "inputnumber": {
@@ -97,8 +97,8 @@
         "icon": "./icons/component.svg",
         "description": "InputNumber Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "inputswitch": {
@@ -106,8 +106,8 @@
         "icon": "./icons/component.svg",
         "description": "InputSwitch Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "multiselect": {
@@ -115,8 +115,8 @@
         "icon": "./icons/component.svg",
         "description": "MultiSelect Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "treeselect": {
@@ -124,8 +124,8 @@
         "icon": "./icons/component.svg",
         "description": "TreeSelect Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "calendar": {
@@ -133,8 +133,8 @@
         "icon": "./icons/component.svg",
         "description": "Calendar Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "autocomplete": {
@@ -142,8 +142,8 @@
         "icon": "./icons/component.svg",
         "description": "AutoComplete Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "divider": {
@@ -151,8 +151,8 @@
         "icon": "./icons/component.svg",
         "description": "Divider Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "password": {
@@ -160,8 +160,8 @@
         "icon": "./icons/component.svg",
         "description": "Password Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "paginator": {
@@ -169,8 +169,8 @@
         "icon": "./icons/component.svg",
         "description": "Paginator Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "radiobutton": {
@@ -178,8 +178,8 @@
         "icon": "./icons/component.svg",
         "description": "RadioButton Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "label": {
@@ -187,8 +187,8 @@
         "icon": "./icons/component.svg",
         "description": "Label Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       },
       "internalstyle": {
@@ -196,8 +196,8 @@
         "icon": "./icons/component.svg",
         "description": "InternalStyle Component",
         "layoutInfo": {
-          "w": 0,
-          "h": 0
+          "w": 6,
+          "h": 6
         }
       },
       "file": {
@@ -205,8 +205,8 @@
         "icon": "./icons/component.svg",
         "description": "File Component",
         "layoutInfo": {
-          "w": 3,
-          "h": 3
+          "w": 6,
+          "h": 6
         }
       }
     }

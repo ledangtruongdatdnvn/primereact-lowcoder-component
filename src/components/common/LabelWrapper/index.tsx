@@ -5,10 +5,11 @@ interface LabelWrapperProps {
   error?: string;
   caption?: string;
   showCaption?: boolean;
+  underRightContent?: string;
   children?: React.ReactNode;
 }
 
-const LabelWrapper = ({ label, inputId, required, error, caption, showCaption, children }: LabelWrapperProps): React.JSX.Element => {
+const LabelWrapper = ({ label, inputId, required, error, caption, showCaption, underRightContent, children }: LabelWrapperProps): React.JSX.Element => {
   return (
     <>
       <div className='flex flex-column gap-2'>
@@ -19,9 +20,10 @@ const LabelWrapper = ({ label, inputId, required, error, caption, showCaption, c
         )}
         {children}
       </div>
-      {caption && caption?.length > 0 && showCaption && (
-        <div className='mt-1' style={{ color: 'var(--text-color-secondary)' }}>
-          {caption}
+      {showCaption && (
+        <div className='flex justify-content-between gap-2 mt-1'>
+          {caption && caption?.length > 0 ? <div style={{ color: 'var(--text-color-secondary)', whiteSpace: 'normal', wordBreak: 'break-word' }}>{caption}</div> : <div></div>}
+          {underRightContent && underRightContent.length > 0 && <div style={{ color: 'var(--text-color-secondary)' }}>{underRightContent}</div>}
         </div>
       )}
       {error && error?.length > 0 && <div className='p-error mt-1'>{error}</div>}
