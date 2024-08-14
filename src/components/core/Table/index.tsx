@@ -138,7 +138,7 @@ let TableCompBase = (function () {
     first: numberExposingStateControl('first', 0),
     rows: numberExposingStateControl('rows', 10),
     totalRecords: numberExposingStateControl('totalRecords', 100),
-    mobile: withDefault(BoolControl, true),
+    mobile: withDefault(BoolControl, false),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
