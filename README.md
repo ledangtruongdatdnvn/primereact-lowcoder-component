@@ -1,6 +1,6 @@
 <!-- unrar -->
 
-tar -xvzf ledangtruongdat-primereact-lowcoder-components-0.0.20.tgz
+tar -xvzf ledangtruongdat-primereact-lowcoder-components-0.0.50.tgz
 
 # lowcoder comp lib
 

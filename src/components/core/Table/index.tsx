@@ -1,4 +1,5 @@
 import {
+  BoolControl,
   eventHandlerControl,
   hiddenPropertyView,
   jsonControl,
@@ -11,13 +12,16 @@ import {
   toJSONObject,
   toJSONObjectArray,
   UICompBuilder,
+  withDefault,
   withExposingConfigs,
 } from 'lowcoder-sdk';
-import { DataTable } from 'primereact/datatable';
-import { Column } from 'primereact/column';
 import { Button } from 'primereact/button';
+import { Column } from 'primereact/column';
+import { DataTable } from 'primereact/datatable';
+import { useEffect } from 'react';
 
 const defStaticProps = {
+  id: 'my-table-id',
   stripedRows: true,
   paginator: true,
   rowHover: true,
@@ -25,6 +29,7 @@ const defStaticProps = {
   lazy: true,
   rowsPerPageOptions: [10, 20],
   pageLinkSize: 3,
+  scrollHeight: '400px',
   paginatorTemplate: 'FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink RowsPerPageDropdown',
 };
 
@@ -52,43 +57,72 @@ const defButtonGroups = [
   },
 ];
 
-const defValue = [
-  {
-    id: 'code-1',
-    name: 'row 1',
-    category: 'important',
-    quantity: 1,
+const CarService = {
+  brands: ['Vapid', 'Carson', 'Kitano', 'Dabver', 'Ibex', 'Morello', 'Akira', 'Titan', 'Dover', 'Norma'],
+
+  colors: ['Black', 'White', 'Red', 'Blue', 'Silver', 'Green', 'Yellow'],
+
+  generateCar(id: any) {
+    return {
+      id,
+      vin: this.generateVin(),
+      brand: this.generateBrand(),
+      color: this.generateColor(),
+      year: this.generateYear(),
+    };
   },
-  {
-    id: 'code-2',
-    name: 'row 2',
-    category: 'very important',
-    quantity: 2,
+
+  generateVin() {
+    let text = '';
+    let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+
+    for (let i = 0; i < 5; i++) {
+      text += possible.charAt(Math.floor(Math.random() * possible.length));
+    }
+
+    return text;
   },
-  {
-    id: 'code-3',
-    name: 'row 3',
-    category: 'important',
-    quantity: 3,
+
+  generateBrand() {
+    return this.brands[Math.floor(Math.random() * Math.floor(10))];
   },
-  {
-    id: 'code-4',
-    name: 'row 4',
-    category: 'less important',
-    quantity: 4,
+
+  generateColor() {
+    return this.colors[Math.floor(Math.random() * Math.floor(7))];
   },
-];
+
+  generateYear() {
+    return 2000 + Math.floor(Math.random() * Math.floor(19));
+  },
+};
+
+const defValue = Array.from({ length: 20 }).map((_, i) => CarService.generateCar(i + 1));
 
 const defColumns = [
   {
-    header: 'Column 1',
+    header: 'Id',
     field: 'id',
-    align: 'right',
+    align: 'center',
   },
   {
-    header: 'Column 2',
-    field: 'name',
+    header: 'Vin',
+    field: 'vin',
     align: 'center',
+  },
+  {
+    header: 'Year',
+    field: 'year',
+    align: 'center',
+  },
+  {
+    header: 'Brand',
+    field: 'brand',
+    align: 'left',
+  },
+  {
+    header: 'Color',
+    field: 'color',
+    align: 'left',
   },
 ];
 
@@ -103,7 +137,8 @@ let TableCompBase = (function () {
     columns: jsonControl(toJSONObjectArray, defColumns),
     first: numberExposingStateControl('first', 0),
     rows: numberExposingStateControl('rows', 10),
-    totalRecords: numberExposingStateControl('totalRecords', defValue.length),
+    totalRecords: numberExposingStateControl('totalRecords', 100),
+    mobile: withDefault(BoolControl, true),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
@@ -147,8 +182,43 @@ let TableCompBase = (function () {
       );
     };
 
+    useEffect(() => {
+      if (props.mobile) {
+        const tableElement = document.getElementById(props.staticProps.id);
+        if (tableElement) {
+          const wrapperElement = tableElement.getElementsByClassName('p-datatable-wrapper')[0];
+          const eventHandler = (event: Event) => {
+            const myDiv = event.target as HTMLDivElement;
+            const x = myDiv.offsetHeight + myDiv.scrollTop;
+            const y = myDiv.scrollHeight;
+            const z = x - y;
+            if (z >= 0) {
+              if (props.totalRecords.value - (props.first.value + props.rows.value) > 0) {
+                props.first.onChange(props.first.value + props.rows.value);
+              }
+              props.selectedButtonType.onChange('mobile-paging');
+              props.onEvent('change');
+            }
+          };
+          wrapperElement?.addEventListener('scroll', eventHandler);
+          return () => {
+            wrapperElement?.removeEventListener('scroll', eventHandler);
+          };
+        }
+      }
+    }, [props.first.value]);
+
     return (
-      <DataTable {...props.staticProps} value={props.value} first={props.first.value} rows={props.rows.value} totalRecords={props.totalRecords.value} onPage={(event) => handleChange(event)}>
+      <DataTable
+        {...props.staticProps}
+        paginator={!props.mobile && props.staticProps.paginator}
+        value={props.value}
+        first={props.first.value}
+        rows={props.rows.value}
+        totalRecords={props.totalRecords.value}
+        onPage={(event) => handleChange(event)}
+        scrollable={props.mobile}
+      >
         {props.columns.map((column: any, index: any) => (
           <Column key={index} field={column.field} header={column.header} align={column.align}></Column>
         ))}
@@ -162,6 +232,7 @@ let TableCompBase = (function () {
           {JSON.stringify(children.staticProps.midValue)}
           <Section name='Basic'>
             {children.staticProps.propertyView({ label: 'Props' })}
+            {children.mobile.propertyView({ label: 'Mobile' })}
             {children.value.propertyView({ label: 'Value' })}
             {children.actionsColumnLabel.propertyView({ label: 'Actions Column Label' })}
             {children.buttonGroups.propertyView({ label: 'Button Groups' })}
@@ -201,6 +272,7 @@ const exposingConfigs = [
   new NameConfig('columns'),
   new NameConfig('first'),
   new NameConfig('rows'),
+  new NameConfig('mobile'),
   new NameConfig('totalRecords'),
   new NameConfig('selectedRow'),
   new NameConfig('selectedButtonType'),

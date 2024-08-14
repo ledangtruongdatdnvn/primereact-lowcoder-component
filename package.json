@@ -1,6 +1,6 @@
 {
   "name": "@ledangtruongdat/primereact-lowcoder-components",
-  "version": "0.0.43",
+  "version": "0.0.50",
   "type": "module",
   "license": "MIT",
   "dependencies": {
@@ -70,8 +70,8 @@
         "icon": "./icons/component.svg",
         "description": "Table Component",
         "layoutInfo": {
-          "w": 6,
-          "h": 6
+          "w": 18,
+          "h": 18
         }
       },
       "inputtext": {
