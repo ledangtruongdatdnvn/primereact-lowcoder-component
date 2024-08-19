@@ -115,7 +115,7 @@ let DropdownCompBase = (function () {
 })();
 
 const exposingConfigs = [
-  new NameConfig('staticProps'),
+  // new NameConfig('staticProps'),
   new NameConfig('value'),
   new NameConfig('options'),
   new NameConfig('label'),
