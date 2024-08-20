@@ -1,7 +1,6 @@
 import LabelWrapper from '../../../components/common/LabelWrapper';
 import {
   booleanExposingStateControl,
-  eventHandlerControl,
   hiddenPropertyView,
   jsonControl,
   NameConfig,
@@ -11,9 +10,10 @@ import {
   toJSONObject,
   UICompBuilder,
   withExposingConfigs,
+  InputEventHandlerControl
 } from 'lowcoder-sdk';
 import { InputText, InputTextProps } from 'primereact/inputtext';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import {ChangeEvent, KeyboardEvent, useEffect, useRef, useState} from 'react';
 import _ from 'lodash';
 import { INPUT_DEFAULT_ONCHANGE_DEBOUNCE } from '../../common/constants/perf';
 
@@ -77,6 +77,16 @@ const defStaticProps = {
 };
 const defValue = '';
 
+export const textInputProps = (props: any) => ({
+  onFocus: () => props.onEvent("focus"),
+  onBlur: () => props.onEvent("blur"),
+  onKeyUp: (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Enter") {
+      props.onEvent("submit")
+    }
+  },
+});
+
 let InputTextCompBase = (function () {
   const childrenMap = {
     staticProps: jsonControl(toJSONObject, defStaticProps),
@@ -87,13 +97,7 @@ let InputTextCompBase = (function () {
     caption: stringExposingStateControl('caption', ''),
     showCaption: booleanExposingStateControl('showCaption', false),
     required: booleanExposingStateControl('required', false),
-    onEvent: eventHandlerControl([
-      {
-        label: 'onChange',
-        value: 'change',
-        description: 'Triggers when Input Text is changed.',
-      },
-    ]),
+    onEvent: InputEventHandlerControl
   };
 
   return new UICompBuilder(childrenMap, (props: any) => {
@@ -111,7 +115,7 @@ let InputTextCompBase = (function () {
         showCaption={props.showCaption.value}
         underRightContent={props.staticProps.maxLength ? `${props.value.value.length}/${props.staticProps.maxLength}` : ''}
       >
-        <TacoInput {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoInput>
+        <TacoInput {...props.staticProps} {...textInputProps(props)} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoInput>
       </LabelWrapper>
     );
   })

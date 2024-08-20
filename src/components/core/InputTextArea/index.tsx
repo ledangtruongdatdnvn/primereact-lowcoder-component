@@ -1,7 +1,6 @@
 import LabelWrapper from '../../../components/common/LabelWrapper';
 import {
   booleanExposingStateControl,
-  eventHandlerControl,
   hiddenPropertyView,
   jsonControl,
   NameConfig,
@@ -11,11 +10,13 @@ import {
   toJSONObject,
   UICompBuilder,
   withExposingConfigs,
+  InputEventHandlerControl
 } from 'lowcoder-sdk';
 import { InputTextarea, InputTextareaProps } from 'primereact/inputtextarea';
 import { INPUT_DEFAULT_ONCHANGE_DEBOUNCE } from '../../common/constants/perf';
 import { ChangeEvent, useEffect, useRef, useState } from 'react';
 import _ from 'lodash';
+import {textInputProps} from "../InputText";
 
 export interface TextAreaProps extends InputTextareaProps {
   debounce?: number;
@@ -86,13 +87,7 @@ let InputTextareaCompBase = (function () {
     caption: stringExposingStateControl('caption', ''),
     showCaption: booleanExposingStateControl('showCaption', false),
     required: booleanExposingStateControl('required', false),
-    onEvent: eventHandlerControl([
-      {
-        label: 'onChange',
-        value: 'change',
-        description: 'Triggers when Input Textarea is changed.',
-      },
-    ]),
+    onEvent: InputEventHandlerControl
   };
 
   return new UICompBuilder(childrenMap, (props: any) => {
@@ -110,7 +105,7 @@ let InputTextareaCompBase = (function () {
         showCaption={props.showCaption.value}
         underRightContent={props.staticProps.maxLength ? `${props.value.value.length}/${props.staticProps.maxLength}` : ''}
       >
-        <TacoTextArea {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoTextArea>
+        <TacoTextArea {...props.staticProps} {...textInputProps(props)} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoTextArea>
       </LabelWrapper>
     );
   })
