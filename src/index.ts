@@ -1,7 +1,6 @@
 // Import the CSS file
 import 'primeicons/primeicons.css';
 import 'primeflex/primeflex.scss';
-import 'primereact/resources/themes/lara-light-cyan/theme.css';
 import './global.css';
 import Label from './components/common/Label';
 import AutoComplete from './components/core/AutoComplete';

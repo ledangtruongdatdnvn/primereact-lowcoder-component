@@ -59,7 +59,7 @@ function TacoInput(props: InputProps) {
   }, [value]);
 
   return (
-    <span className={classNames} style={{ overflow: 'hidden', padding: '5px' }}>
+    <span className={classNames} style={{ overflow: 'hidden', width: '100%' }}>
       {iconClass && <i className={iconClass}></i>}
       <InputText value={internalValue} onChange={(e) => handleChange(e)} disabled={disabled} {...inputProps} />
       {showClear && internalValue && internalValue?.length > 0 && !disabled && <i className='pi pi-times cursor-pointer' onClick={handleClear}></i>}

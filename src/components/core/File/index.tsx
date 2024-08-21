@@ -127,43 +127,41 @@ let FileCompBase = (function () {
     };
 
     return (
-      <div style={{ padding: '5px' }}>
-        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-          <button
-            ref={buttonFileInput}
-            className={`p-inputtext cursor-pointer ${props.error.value || internalError ? 'ng-invalid ng-dirty' : ''}`}
-            onClick={() => (fileInput?.current as any)?.click()}
-            onDragOver={handleDragOver}
-            onDragLeave={handleDragLeave}
-            onDrop={handleDrop}
-          >
-            <div className='relative'>
-              <div className='text-lg text-center'>
-                Kéo thả file hoặc <b>Chọn file</b> để tải lên
-              </div>
-              <div className='text-center mt-2'>
-                (Cho phép dung lượng tối đa {props.size.value}MB và chỉ chấp nhận định dạng {props.accept.value})
-              </div>
+      <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+        <button
+          ref={buttonFileInput}
+          className={`p-inputtext cursor-pointer ${props.error.value || internalError ? 'ng-invalid ng-dirty' : ''}`}
+          onClick={() => (fileInput?.current as any)?.click()}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
+          <div className='relative'>
+            <div className='text-lg text-center'>
+              Kéo thả file hoặc <b>Chọn file</b> để tải lên
             </div>
-          </button>
-          <input ref={fileInput} type='file' accept={props.accept.value} required={props.required.value} onChange={handleChange} hidden multiple={props.multiple.value} />
-
-          {!props.multiple.value && props.files.value.length > 0 && (
-            <div className='flex justify-content-between align-items-center pt-2 pb-2 custom-file'>
-              <div className='custom-file-name'>{props.files.value[0].name}</div>
+            <div className='text-center mt-2'>
+              (Cho phép dung lượng tối đa {props.size.value}MB và chỉ chấp nhận định dạng {props.accept.value})
             </div>
-          )}
+          </div>
+        </button>
+        <input ref={fileInput} type='file' accept={props.accept.value} required={props.required.value} onChange={handleChange} hidden multiple={props.multiple.value} />
 
-          {props.multiple.value &&
-            props.files.value.length > 0 &&
-            props.files.value.map((file: any, index: any) => (
-              <div key={index} className='flex justify-content-between align-items-center pt-2 pb-2 custom-file'>
-                <div className='custom-file-name'>{(file as any)?.name}</div>
-                {/* <Button styleClass='p-button-sm p-button-rounded p-button-text' icon='pi pi-trash' onClick={() => handleDeleteFile(file)} /> */}
-              </div>
-            ))}
-        </LabelWrapper>
-      </div>
+        {!props.multiple.value && props.files.value.length > 0 && (
+          <div className='flex justify-content-between align-items-center pt-2 pb-2 custom-file'>
+            <div className='custom-file-name'>{props.files.value[0].name}</div>
+          </div>
+        )}
+
+        {props.multiple.value &&
+          props.files.value.length > 0 &&
+          props.files.value.map((file: any, index: any) => (
+            <div key={index} className='flex justify-content-between align-items-center pt-2 pb-2 custom-file'>
+              <div className='custom-file-name'>{(file as any)?.name}</div>
+              {/* <Button styleClass='p-button-sm p-button-rounded p-button-text' icon='pi pi-trash' onClick={() => handleDeleteFile(file)} /> */}
+            </div>
+          ))}
+      </LabelWrapper>
     );
   })
     .setPropertyViewFn((children: any) => {

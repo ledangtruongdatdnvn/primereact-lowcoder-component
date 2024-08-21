@@ -50,11 +50,9 @@ let InputNumberCompBase = (function () {
     };
 
     return (
-      <div style={{ padding: '5px' }}>
-        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-          <InputNumber {...props.staticProps} value={props.value.value} onValueChange={handleValueChange} invalid={props.error.value.length > 0}></InputNumber>
-        </LabelWrapper>
-      </div>
+      <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+        <InputNumber {...props.staticProps} value={props.value.value} onValueChange={handleValueChange} invalid={props.error.value.length > 0}></InputNumber>
+      </LabelWrapper>
     );
   })
     .setPropertyViewFn((children: any) => {

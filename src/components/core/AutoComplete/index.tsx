@@ -81,27 +81,25 @@ let AutoCompleteCompBase = (function () {
       .join(' ');
 
     return (
-      <div style={{ padding: '5px' }}>
-        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-          <span className={classNames}>
-            {props.staticProps.iconClass && <i className={props.staticProps.iconClass} style={{ zIndex: 9 }}></i>}
-            <AutoComplete
-              {...props.staticProps}
-              suggestions={props.suggestions.value}
-              value={props.value.value}
-              completeMethod={search}
-              onChange={handleChange}
-              inputStyle={{
-                paddingLeft: props.staticProps.iconClass ? '40px' : '12px',
-                paddingRight: props.staticProps.showClear && props.value.value && props.value.value?.length > 0 && !props.staticProps.disabled ? '40px' : '12px',
-                width: '100%',
-              }}
-              invalid={props.error.value.length > 0}
-            ></AutoComplete>
-            {props.staticProps.showClear && props.value.value && props.value.value?.length > 0 && !props.staticProps.disabled && <i className='pi pi-times cursor-pointer' onClick={handleClear}></i>}
-          </span>
-        </LabelWrapper>
-      </div>
+      <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+        <span className={classNames}>
+          {props.staticProps.iconClass && <i className={props.staticProps.iconClass} style={{ zIndex: 9 }}></i>}
+          <AutoComplete
+            {...props.staticProps}
+            suggestions={props.suggestions.value}
+            value={props.value.value}
+            completeMethod={search}
+            onChange={handleChange}
+            inputStyle={{
+              paddingLeft: props.staticProps.iconClass ? '40px' : '12px',
+              paddingRight: props.staticProps.showClear && props.value.value && props.value.value?.length > 0 && !props.staticProps.disabled ? '40px' : '12px',
+              width: '100%',
+            }}
+            invalid={props.error.value.length > 0}
+          ></AutoComplete>
+          {props.staticProps.showClear && props.value.value && props.value.value?.length > 0 && !props.staticProps.disabled && <i className='pi pi-times cursor-pointer' onClick={handleClear}></i>}
+        </span>
+      </LabelWrapper>
     );
   })
     .setPropertyViewFn((children: any) => {

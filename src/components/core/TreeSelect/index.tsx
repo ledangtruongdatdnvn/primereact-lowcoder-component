@@ -76,11 +76,9 @@ let TreeSelectCompBase = (function () {
     };
 
     return (
-      <div style={{ padding: '5px' }}>
-        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-          <TreeSelect {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange} invalid={props.error.value.length > 0}></TreeSelect>{' '}
-        </LabelWrapper>
-      </div>
+      <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+        <TreeSelect {...props.staticProps} value={props.value.value} options={props.options} onChange={handleChange} invalid={props.error.value.length > 0}></TreeSelect>{' '}
+      </LabelWrapper>
     );
   })
     .setPropertyViewFn((children: any) => {

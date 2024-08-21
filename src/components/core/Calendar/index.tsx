@@ -90,11 +90,9 @@ let CalendarCompBase = (function () {
     }, []);
 
     return (
-      <div style={{ padding: '5px' }}>
-        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-          <Calendar {...props.staticProps} value={input} onChange={handleChange} invalid={props.error.value.length > 0}></Calendar>
-        </LabelWrapper>
-      </div>
+      <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+        <Calendar {...props.staticProps} value={input} onChange={handleChange} invalid={props.error.value.length > 0}></Calendar>
+      </LabelWrapper>
     );
   })
     .setPropertyViewFn((children: any) => {

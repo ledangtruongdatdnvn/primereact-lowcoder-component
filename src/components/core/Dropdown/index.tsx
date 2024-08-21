@@ -74,11 +74,9 @@ let DropdownCompBase = (function () {
     const staticProps = useDeepCompareMemo(() => props.staticProps, [props.staticProps]);
 
     return (
-      <div style={{ padding: '5px' }}>
-        <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-          <Dropdown {...staticProps} value={props.value.value} options={options} onChange={handleChange} invalid={props.error.value.length > 0}></Dropdown>
-        </LabelWrapper>
-      </div>
+      <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+        <Dropdown {...staticProps} value={props.value.value} options={options} onChange={handleChange} invalid={props.error.value.length > 0}></Dropdown>
+      </LabelWrapper>
     );
   })
     .setPropertyViewFn((children: any) => {
