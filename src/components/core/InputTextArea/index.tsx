@@ -10,11 +10,14 @@ import {
   toJSONObject,
   UICompBuilder,
   withExposingConfigs,
-  InputEventHandlerControl
+  InputEventHandlerControl,
+  refMethods,
+  focusWithOptions,
+  blurMethod, RefControl
 } from 'lowcoder-sdk';
 import { InputTextarea, InputTextareaProps } from 'primereact/inputtextarea';
 import { INPUT_DEFAULT_ONCHANGE_DEBOUNCE } from '../../common/constants/perf';
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import {ChangeEvent, ForwardedRef, forwardRef, useEffect, useRef, useState} from 'react';
 import _ from 'lodash';
 import {textInputProps} from "../InputText";
 
@@ -24,7 +27,7 @@ export interface TextAreaProps extends InputTextareaProps {
   showClear?: boolean;
 }
 
-function TacoTextArea(props: TextAreaProps) {
+const TacoTextArea = forwardRef(function (props: TextAreaProps, ref: ForwardedRef<HTMLTextAreaElement>) {
   const { onChange, value, debounce = INPUT_DEFAULT_ONCHANGE_DEBOUNCE, iconClass, showClear, disabled, ...inputProps } = props;
   const [internalValue, setIntervalValue] = useState(value);
   const isTypingRef = useRef(0);
@@ -62,11 +65,11 @@ function TacoTextArea(props: TextAreaProps) {
   return (
     <span className={classNames} style={{ width: '100%' }}>
       {iconClass && <i className={iconClass}></i>}
-      <InputTextarea value={internalValue} onChange={(e) => handleChange(e)} disabled={disabled} {...inputProps} />
+      <InputTextarea ref={ref} value={internalValue} onChange={(e) => handleChange(e)} disabled={disabled} {...inputProps} />
       {showClear && internalValue && internalValue?.length > 0 && !disabled && <i className='pi pi-times cursor-pointer' onClick={handleClear}></i>}
     </span>
   );
-}
+});
 
 const defStaticProps = {
   tooltip: 'Enter a description',
@@ -80,6 +83,7 @@ const defValue = '';
 
 let InputTextareaCompBase = (function () {
   const childrenMap = {
+    viewRef: RefControl,
     staticProps: jsonControl(toJSONObject, defStaticProps),
     value: stringExposingStateControl('value', defValue),
     label: stringExposingStateControl('label', ''),
@@ -105,7 +109,7 @@ let InputTextareaCompBase = (function () {
         showCaption={props.showCaption.value}
         underRightContent={props.staticProps.maxLength ? `${props.value.value.length}/${props.staticProps.maxLength}` : ''}
       >
-        <TacoTextArea {...props.staticProps} {...textInputProps(props)} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoTextArea>
+        <TacoTextArea ref={props.viewRef} {...props.staticProps} {...textInputProps(props)} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoTextArea>
       </LabelWrapper>
     );
   })
@@ -138,6 +142,7 @@ let InputTextareaCompBase = (function () {
         </>
       );
     })
+    .setExposeMethodConfigs(refMethods([focusWithOptions, blurMethod]))
     .build();
 })();
 const exposingConfigs = [

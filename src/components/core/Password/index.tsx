@@ -1,10 +1,14 @@
 import {
+  blurMethod,
   booleanExposingStateControl,
   eventHandlerControl,
+  focusWithOptions,
   hiddenPropertyView,
   jsonControl,
   NameConfig,
   NameConfigHidden,
+  RefControl,
+  refMethods,
   Section,
   stringExposingStateControl,
   toJSONObject,
@@ -27,6 +31,7 @@ const defValue = '';
 
 let PasswordCompBase = (function () {
   const childrenMap = {
+    viewRef: RefControl,
     staticProps: jsonControl(toJSONObject, defStaticProps),
     value: stringExposingStateControl('value', defValue),
     label: stringExposingStateControl('label', ''),
@@ -51,7 +56,7 @@ let PasswordCompBase = (function () {
 
     return (
       <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-        <Password {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></Password>
+        <Password ref={props.viewRef} {...props.staticProps} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></Password>
       </LabelWrapper>
     );
   })
@@ -84,6 +89,7 @@ let PasswordCompBase = (function () {
         </>
       );
     })
+    .setExposeMethodConfigs(refMethods([focusWithOptions, blurMethod]))
     .build();
 })();
 

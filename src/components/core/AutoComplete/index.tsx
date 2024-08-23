@@ -1,11 +1,12 @@
 import {
+  blurMethod,
   booleanExposingStateControl,
-  eventHandlerControl,
+  eventHandlerControl, focusWithOptions,
   hiddenPropertyView,
   jsonControl,
   jsonExposingStateControl,
   NameConfig,
-  NameConfigHidden,
+  NameConfigHidden, RefControl, refMethods,
   Section,
   stringExposingStateControl,
   toJSONObject,
@@ -37,6 +38,7 @@ const defSuggestions = [
 
 let AutoCompleteCompBase = (function () {
   const childrenMap = {
+    viewRef: RefControl,
     staticProps: jsonControl(toJSONObject, defStaticProps),
     value: stringExposingStateControl('value', defValue),
     label: stringExposingStateControl('label', ''),
@@ -85,6 +87,7 @@ let AutoCompleteCompBase = (function () {
         <span className={classNames}>
           {props.staticProps.iconClass && <i className={props.staticProps.iconClass} style={{ zIndex: 9 }}></i>}
           <AutoComplete
+            ref={props.viewRef}
             {...props.staticProps}
             suggestions={props.suggestions.value}
             value={props.value.value}
@@ -132,6 +135,7 @@ let AutoCompleteCompBase = (function () {
         </>
       );
     })
+    .setExposeMethodConfigs(refMethods([focusWithOptions, blurMethod]))
     .build();
 })();
 

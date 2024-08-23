@@ -1,12 +1,16 @@
 import LabelWrapper from '../../../components/common/LabelWrapper';
 import {
+  blurMethod,
   booleanExposingStateControl,
   eventHandlerControl,
+  focusWithOptions,
   hiddenPropertyView,
   jsonControl,
   NameConfig,
   NameConfigHidden,
   numberExposingStateControl,
+  RefControl,
+  refMethods,
   Section,
   stringExposingStateControl,
   toJSONObject,
@@ -27,6 +31,7 @@ const defValue = 1;
 
 let InputNumberCompBase = (function () {
   const childrenMap = {
+    viewRef: RefControl,
     staticProps: jsonControl(toJSONObject, defStaticProps),
     value: numberExposingStateControl('value', defValue),
     label: stringExposingStateControl('label', ''),
@@ -51,7 +56,7 @@ let InputNumberCompBase = (function () {
 
     return (
       <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-        <InputNumber {...props.staticProps} value={props.value.value} onValueChange={handleValueChange} invalid={props.error.value.length > 0}></InputNumber>
+        <InputNumber ref={props.viewRef} {...props.staticProps} value={props.value.value} onValueChange={handleValueChange} invalid={props.error.value.length > 0}></InputNumber>
       </LabelWrapper>
     );
   })
@@ -84,6 +89,7 @@ let InputNumberCompBase = (function () {
         </>
       );
     })
+    .setExposeMethodConfigs(refMethods([focusWithOptions, blurMethod]))
     .build();
 })();
 

@@ -10,10 +10,14 @@ import {
   toJSONObject,
   UICompBuilder,
   withExposingConfigs,
-  InputEventHandlerControl
+  InputEventHandlerControl,
+  refMethods,
+  RefControl,
+  focusWithOptions,
+  blurMethod,
 } from 'lowcoder-sdk';
 import { InputText, InputTextProps } from 'primereact/inputtext';
-import {ChangeEvent, KeyboardEvent, useEffect, useRef, useState} from 'react';
+import {ChangeEvent, ForwardedRef, forwardRef, KeyboardEvent, useEffect, useRef, useState} from 'react';
 import _ from 'lodash';
 import { INPUT_DEFAULT_ONCHANGE_DEBOUNCE } from '../../common/constants/perf';
 
@@ -23,7 +27,7 @@ interface InputProps extends InputTextProps {
   showClear?: boolean;
 }
 
-function TacoInput(props: InputProps) {
+const TacoInput = forwardRef(function (props: InputProps, ref: ForwardedRef<HTMLInputElement>) {
   const { onChange, value, debounce = INPUT_DEFAULT_ONCHANGE_DEBOUNCE, iconClass, showClear, disabled, ...inputProps } = props;
   const [internalValue, setIntervalValue] = useState(value);
   const isTypingRef = useRef(0);
@@ -61,11 +65,11 @@ function TacoInput(props: InputProps) {
   return (
     <span className={classNames} style={{ width: '100%' }}>
       {iconClass && <i className={iconClass}></i>}
-      <InputText value={internalValue} onChange={(e) => handleChange(e)} disabled={disabled} {...inputProps} />
+      <InputText ref={ref} value={internalValue} onChange={(e) => handleChange(e)} disabled={disabled} {...inputProps} />
       {showClear && internalValue && internalValue?.length > 0 && !disabled && <i className='pi pi-times cursor-pointer' onClick={handleClear}></i>}
     </span>
   );
-}
+});
 
 const defStaticProps = {
   placeholder: 'Enter a name',
@@ -89,6 +93,7 @@ export const textInputProps = (props: any) => ({
 
 let InputTextCompBase = (function () {
   const childrenMap = {
+    viewRef: RefControl,
     staticProps: jsonControl(toJSONObject, defStaticProps),
     value: stringExposingStateControl('value', defValue),
     iconClass: stringExposingStateControl('value', ''),
@@ -115,7 +120,7 @@ let InputTextCompBase = (function () {
         showCaption={props.showCaption.value}
         underRightContent={props.staticProps.maxLength ? `${props.value.value.length}/${props.staticProps.maxLength}` : ''}
       >
-        <TacoInput {...props.staticProps} {...textInputProps(props)} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoInput>
+        <TacoInput ref={props.viewRef} {...props.staticProps} {...textInputProps(props)} value={props.value.value} onChange={handleChange} invalid={props.error.value.length > 0}></TacoInput>
       </LabelWrapper>
     );
   })
@@ -148,6 +153,7 @@ let InputTextCompBase = (function () {
         </>
       );
     })
+    .setExposeMethodConfigs(refMethods([focusWithOptions, blurMethod]))
     .build();
 })();
 const exposingConfigs = [
