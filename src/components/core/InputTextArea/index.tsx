@@ -60,7 +60,7 @@ function TacoTextArea(props: TextAreaProps) {
   }, [value]);
 
   return (
-    <span className={classNames} style={{ overflow: 'hidden', width: '100%' }}>
+    <span className={classNames} style={{ width: '100%' }}>
       {iconClass && <i className={iconClass}></i>}
       <InputTextarea value={internalValue} onChange={(e) => handleChange(e)} disabled={disabled} {...inputProps} />
       {showClear && internalValue && internalValue?.length > 0 && !disabled && <i className='pi pi-times cursor-pointer' onClick={handleClear}></i>}

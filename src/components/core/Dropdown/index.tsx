@@ -75,7 +75,7 @@ let DropdownCompBase = (function () {
 
     return (
       <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-        <Dropdown {...staticProps} value={props.value.value} options={options} onChange={handleChange} invalid={props.error.value.length > 0}></Dropdown>
+        <Dropdown style={{width: '100%'}} {...staticProps} value={props.value.value} options={options} onChange={handleChange} invalid={props.error.value.length > 0}></Dropdown>
       </LabelWrapper>
     );
   })
