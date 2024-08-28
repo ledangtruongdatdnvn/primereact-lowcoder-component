@@ -65,7 +65,8 @@ const TacoTextArea = forwardRef(function (props: TextAreaProps, ref: ForwardedRe
   return (
     <span className={classNames} style={{ width: '100%' }}>
       {iconClass && <i className={iconClass}></i>}
-      <InputTextarea ref={ref} value={internalValue} onChange={(e) => handleChange(e)} disabled={disabled} {...inputProps} />
+      <InputTextarea ref={ref} value={internalValue} onChange={(e) => handleChange(e)}
+                     disabled={disabled} {..._.merge(inputProps, {style: {display: "block"}})}/>
       {showClear && internalValue && internalValue?.length > 0 && !disabled && <i className='pi pi-times cursor-pointer' onClick={handleClear}></i>}
     </span>
   );

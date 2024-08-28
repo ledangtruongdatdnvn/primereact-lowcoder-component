@@ -17,6 +17,7 @@ import {
 import { Dropdown } from 'primereact/dropdown';
 import LabelWrapper from '../../../components/common/LabelWrapper';
 import { useDeepCompareEffect, useDeepCompareMemo } from 'use-deep-compare';
+import _ from "lodash";
 
 const defStaticProps = {
   placeholder: 'Select a City',
@@ -75,7 +76,7 @@ let DropdownCompBase = (function () {
 
     return (
       <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-        <Dropdown style={{width: '100%'}} {...staticProps} value={props.value.value} options={options} onChange={handleChange} invalid={props.error.value.length > 0}></Dropdown>
+        <Dropdown {..._.merge(staticProps, {style: {width: '100%'}})} value={props.value.value} options={options} onChange={handleChange} invalid={props.error.value.length > 0}></Dropdown>
       </LabelWrapper>
     );
   })
