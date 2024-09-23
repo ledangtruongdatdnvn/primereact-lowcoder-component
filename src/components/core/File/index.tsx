@@ -13,7 +13,6 @@ import {
   toJSONObjectArray,
   withExposingConfigs,
 } from 'lowcoder-sdk';
-import { Button } from 'primereact/button';
 import { useRef, useState } from 'react';
 import LabelWrapper from '../../../components/common/LabelWrapper';
 

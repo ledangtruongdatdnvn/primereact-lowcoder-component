@@ -22,6 +22,11 @@ import Tag from './components/core/Tag';
 import Timeline from './components/core/Timeline';
 import TreeSelect from './components/core/TreeSelect';
 import File from './components/core/File';
+import CascadeSelect from './components/p-core/CascadeSelect';
+import Checkbox from './components/p-core/Checkbox';
+import Chips from './components/p-core/Chips';
+import ColorPicker from './components/p-core/ColorPicker';
+import InputOtp from './components/p-core/InputOtp';
 export default {
   button: Button,
   timeline: Timeline,
@@ -43,4 +48,9 @@ export default {
   label: Label,
   internalstyle: InternalStyle,
   file: File,
+  cascadeselect: CascadeSelect,
+  checkbox: Checkbox,
+  chips: Chips,
+  colorpicker: ColorPicker,
+  inputotp: InputOtp,
 };

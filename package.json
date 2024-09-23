@@ -15,7 +15,7 @@
     "postcss": "^8.4.38",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
-    "primereact": "^10.6.2",
+    "primereact": "^10.8.3",
     "prop-types": "^15.8.1",
     "react": "18",
     "react-dom": "18",
@@ -204,6 +204,51 @@
         "name": "File",
         "icon": "./icons/component.svg",
         "description": "File Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "cascadeselect": {
+        "name": "CascadeSelect",
+        "icon": "./icons/component.svg",
+        "description": "CascadeSelect Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "checkbox": {
+        "name": "Checkbox",
+        "icon": "./icons/component.svg",
+        "description": "Checkbox Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "chips": {
+        "name": "Chips",
+        "icon": "./icons/component.svg",
+        "description": "Chips Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "colorpicker": {
+        "name": "ColorPicker",
+        "icon": "./icons/component.svg",
+        "description": "ColorPicker Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "inputotp": {
+        "name": "InputOtp",
+        "icon": "./icons/component.svg",
+        "description": "InputOtp Component",
         "layoutInfo": {
           "w": 6,
           "h": 6
