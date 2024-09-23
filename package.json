@@ -17,6 +17,7 @@
     "primeicons": "^7.0.0",
     "primereact": "^10.8.3",
     "prop-types": "^15.8.1",
+    "quill": "^2.0.2",
     "react": "18",
     "react-dom": "18",
     "react-resize-detector": "^10.0.1",
@@ -249,6 +250,60 @@
         "name": "InputOtp",
         "icon": "./icons/component.svg",
         "description": "InputOtp Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "editor": {
+        "name": "Editor",
+        "icon": "./icons/component.svg",
+        "description": "Editor Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "knob": {
+        "name": "Knob",
+        "icon": "./icons/component.svg",
+        "description": "Knob Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "listbox": {
+        "name": "ListBox",
+        "icon": "./icons/component.svg",
+        "description": "ListBox Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "rating": {
+        "name": "Rating",
+        "icon": "./icons/component.svg",
+        "description": "Rating Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "selectbutton": {
+        "name": "SelectButton",
+        "icon": "./icons/component.svg",
+        "description": "SelectButton Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "slider": {
+        "name": "Slider",
+        "icon": "./icons/component.svg",
+        "description": "Slider Component",
         "layoutInfo": {
           "w": 6,
           "h": 6

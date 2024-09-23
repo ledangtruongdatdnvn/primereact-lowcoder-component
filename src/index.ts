@@ -27,6 +27,12 @@ import Checkbox from './components/p-core/Checkbox';
 import Chips from './components/p-core/Chips';
 import ColorPicker from './components/p-core/ColorPicker';
 import InputOtp from './components/p-core/InputOtp';
+import Editor from './components/p-core/Editor';
+import Knob from './components/p-core/Knob';
+import ListBox from './components/p-core/ListBox';
+import Rating from './components/p-core/Rating';
+import SelectButton from './components/p-core/SelectButton';
+import Slider from './components/p-core/Slider';
 export default {
   button: Button,
   timeline: Timeline,
@@ -53,4 +59,10 @@ export default {
   chips: Chips,
   colorpicker: ColorPicker,
   inputotp: InputOtp,
+  editor: Editor,
+  knob: Knob,
+  listbox: ListBox,
+  rating: Rating,
+  selectbutton: SelectButton,
+  slider: Slider,
 };
