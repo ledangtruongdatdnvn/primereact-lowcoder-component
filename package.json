@@ -318,10 +318,55 @@
           "h": 6
         }
       },
-      "select":{
+      "select": {
         "name": "Select",
         "icon": "./icons/component.svg",
         "description": "Select Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "organizationchart": {
+        "name": "Organization Chart",
+        "icon": "./icons/component.svg",
+        "description": "OrganizationChart Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "avatar": {
+        "name": "Avatar",
+        "icon": "./icons/component.svg",
+        "description": "Avatar Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "progressbar": {
+        "name": "ProgressBar",
+        "icon": "./icons/component.svg",
+        "description": "ProgressBar Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "badge": {
+        "name": "Badge",
+        "icon": "./icons/component.svg",
+        "description": "Badge Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
+      "skeleton": {
+        "name": "Skeleton",
+        "icon": "./icons/component.svg",
+        "description": "Skeleton Component",
         "layoutInfo": {
           "w": 6,
           "h": 6
