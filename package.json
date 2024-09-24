@@ -308,6 +308,15 @@
           "w": 6,
           "h": 6
         }
+      },
+      "speeddial": {
+        "name": "SpeedDial",
+        "icon": "./icons/component.svg",
+        "description": "SpeedDial Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
       }
     }
   },

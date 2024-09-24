@@ -33,6 +33,7 @@ import ListBox from './components/p-core/ListBox';
 import Rating from './components/p-core/Rating';
 import SelectButton from './components/p-core/SelectButton';
 import Slider from './components/p-core/Slider';
+import SpeedDial from './components/p-core/SpeedDial';
 export default {
   button: Button,
   timeline: Timeline,
@@ -65,4 +66,5 @@ export default {
   rating: Rating,
   selectbutton: SelectButton,
   slider: Slider,
+  speeddial: SpeedDial,
 };
