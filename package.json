@@ -317,6 +317,15 @@
           "w": 6,
           "h": 6
         }
+      },
+      "select":{
+        "name": "Select",
+        "icon": "./icons/component.svg",
+        "description": "Select Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
       }
     }
   },
