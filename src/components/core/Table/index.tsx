@@ -220,7 +220,7 @@ let TableCompBase = (function () {
         scrollable={props.mobile}
       >
         {props.columns.map((column: any, index: any) => (
-          <Column key={index} field={column.field} header={column.header} align={column.align}></Column>
+          <Column key={index} {...column}></Column>
         ))}
         {props.buttonGroups && props.buttonGroups.length > 0 && <Column header={props.actionsColumnLabel.value} align='center' body={bodyTemplate}></Column>}
       </DataTable>
