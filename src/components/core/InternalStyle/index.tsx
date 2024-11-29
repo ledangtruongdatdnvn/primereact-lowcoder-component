@@ -1,20 +1,28 @@
 import { BooleanStateControl, Section, stringExposingStateControl, UICompBuilder, withDefault, withExposingConfigs } from 'lowcoder-sdk';
-import { IocDark } from './ioc-dark';
-import { IocLight } from './ioc-light';
+import {useEffect} from "react";
 
 let InternalStyleCompBase = (function () {
   const childrenMap = {
     useInternalStyle: withDefault(BooleanStateControl, 'true'),
-    theme: stringExposingStateControl('theme', 'ioc-light'),
+    theme: stringExposingStateControl('theme', 'light'),
   };
 
   return new UICompBuilder(childrenMap, (props: { useInternalStyle: any; theme: any }) => {
-    return (
-      <>
-        {props.useInternalStyle.value && (props.theme.value === 'lara-light-blue' || props.theme.value === 'ioc-light') && <IocLight />}
-        {props.useInternalStyle.value && (props.theme.value === 'lara-dark-blue' || props.theme.value === 'ioc-dark') && <IocDark />}
-      </>
-    );
+    useEffect(() => {
+      if (!props.useInternalStyle.value) return;
+      const styleSheet = document.createElement("style");
+      styleSheet.id = 'ioc-theme-css'
+      document.head.appendChild(styleSheet)
+      styleSheet.textContent = `
+    @import url('https://cdn.jsdelivr.net/npm/@vietdanh1899/ioc@latest/styles.css');
+    @import url('https://cdn.jsdelivr.net/npm/@vietdanh1899/ioc@latest/theme/ioc-${(props.theme.value === 'lara-light-blue' || props.theme.value === 'ioc-light' || props.theme.value === 'light') ? 'light' : 'dark'}/theme.css');
+`;
+      return () => {
+        document.head.removeChild(styleSheet);
+      }
+    }, [props.theme.value, props.useInternalStyle.value]);
+    return (<>
+    </>);
   })
     .setPropertyViewFn((children: any) => {
       return (
