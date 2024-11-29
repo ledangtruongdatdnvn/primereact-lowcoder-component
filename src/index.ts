@@ -1,7 +1,3 @@
-// Import the CSS file
-import 'primeicons/primeicons.css';
-import 'primeflex/primeflex.scss';
-import './global.css';
 import Label from './components/common/Label';
 import AutoComplete from './components/core/AutoComplete';
 import Button from './components/core/Button';

@@ -1,18 +1,18 @@
 import { BooleanStateControl, Section, stringExposingStateControl, UICompBuilder, withDefault, withExposingConfigs } from 'lowcoder-sdk';
-import { LaraDarkBlue } from './lara-dark-blue';
-import { LaraLightBlue } from './lara-light-blue';
+import { IocDark } from './ioc-dark';
+import { IocLight } from './ioc-light';
 
 let InternalStyleCompBase = (function () {
   const childrenMap = {
     useInternalStyle: withDefault(BooleanStateControl, 'true'),
-    theme: stringExposingStateControl('theme', 'lara-light-blue'),
+    theme: stringExposingStateControl('theme', 'ioc-light'),
   };
 
   return new UICompBuilder(childrenMap, (props: { useInternalStyle: any; theme: any }) => {
     return (
       <>
-        {props.useInternalStyle.value && props.theme.value === 'lara-light-blue' && <LaraLightBlue />}
-        {props.useInternalStyle.value && props.theme.value === 'lara-dark-blue' && <LaraDarkBlue />}
+        {props.useInternalStyle.value && (props.theme.value === 'lara-light-blue' || props.theme.value === 'ioc-light') && <IocLight />}
+        {props.useInternalStyle.value && (props.theme.value === 'lara-dark-blue' || props.theme.value === 'ioc-dark') && <IocDark />}
       </>
     );
   })

@@ -2,27 +2,32 @@ import {
   eventHandlerControl,
   hiddenPropertyView,
   jsonControl,
-  jsonObjectExposingStateControl,
+  jsonValueExposingStateControl,
   NameConfig,
   NameConfigHidden,
   Section,
   toJSONObject,
   UICompBuilder,
   withExposingConfigs,
-  arrayStringExposingStateControl,
+  ArrayControl,
+  withDefault
 } from 'lowcoder-sdk';
 
 import { SelectButton } from 'primereact/selectbutton';
 
 export const defStaticProps = { optionLabel: 'name' };
 
-export const defOptions = ['Off', 'On'];
+export const defOptions = "[\n" +
+  "        { name: 'Option 1', value: 1 },\n" +
+  "        { name: 'Option 2', value: 2 },\n" +
+  "        { name: 'Option 3', value: 3 }\n" +
+  "    ]";
 
 let SelectButtonCompBase = (function () {
   const childrenMap = {
     staticProps: jsonControl(toJSONObject, defStaticProps),
-    options: arrayStringExposingStateControl('options', defOptions),
-    value: jsonObjectExposingStateControl('value', null),
+    options:  withDefault(ArrayControl, defOptions),
+    value: jsonValueExposingStateControl('value', null),
     onEvent: eventHandlerControl([
       {
         label: 'onChange',
@@ -37,7 +42,8 @@ let SelectButtonCompBase = (function () {
       <SelectButton
         value={props.value.value}
         onChange={(e) => props.value.onChange(e.value)}
-        options={props.options.value }
+        options={props.options }
+        {...props.staticProps}
       />
     );
   })
@@ -47,6 +53,7 @@ let SelectButtonCompBase = (function () {
           <Section name='Basic'>
             {children.staticProps.propertyView({ label: 'Static Props' })}
             {children.value.propertyView({ label: 'Value' })}
+            {children.options.propertyView({ label: 'Options' })}
           </Section>
           <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
 
