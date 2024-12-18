@@ -18,7 +18,7 @@ const LabelWrapper = ({ label, inputId, required, error, caption, showCaption, u
             {label}
           </label>
         )}
-        <div style={{padding: '5px'}}>
+        <div style={{padding: '0 5px'}}>
           {children}
         </div>
       </div>

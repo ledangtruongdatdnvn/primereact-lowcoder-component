@@ -2,9 +2,9 @@ import { createRoot } from 'react-dom/client';
 import { CompIDE } from 'lowcoder-sdk';
 import { name, version, lowcoder } from './package.json';
 import compMap from './src/index';
-// import 'primereact/resources/themes/lara-light-cyan/theme.css';
-// import 'primeicons/primeicons.css';
-// import 'primeflex/primeflex.scss';
+import 'primereact/resources/themes/lara-light-cyan/theme.css';
+import 'primeicons/primeicons.css';
+import 'primeflex/primeflex.scss';
 // import './global.css';
 
 function CompDevApp() {
