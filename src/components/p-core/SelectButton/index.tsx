@@ -10,23 +10,24 @@ import {
   UICompBuilder,
   withExposingConfigs,
   ArrayControl,
-  withDefault
+  withDefault,
 } from 'lowcoder-sdk';
 
 import { SelectButton } from 'primereact/selectbutton';
 
 export const defStaticProps = { optionLabel: 'name' };
 
-export const defOptions = "[\n" +
+export const defOptions =
+  '[\n' +
   "        { name: 'Option 1', value: 1 },\n" +
   "        { name: 'Option 2', value: 2 },\n" +
   "        { name: 'Option 3', value: 3 }\n" +
-  "    ]";
+  '    ]';
 
 let SelectButtonCompBase = (function () {
   const childrenMap = {
     staticProps: jsonControl(toJSONObject, defStaticProps),
-    options:  withDefault(ArrayControl, defOptions),
+    options: withDefault(ArrayControl, defOptions),
     value: jsonValueExposingStateControl('value', null),
     onEvent: eventHandlerControl([
       {
@@ -42,7 +43,7 @@ let SelectButtonCompBase = (function () {
       <SelectButton
         value={props.value.value}
         onChange={(e) => props.value.onChange(e.value)}
-        options={props.options }
+        options={props.options}
         {...props.staticProps}
       />
     );
@@ -50,21 +51,19 @@ let SelectButtonCompBase = (function () {
     .setPropertyViewFn((children: any) => {
       return (
         <>
-          <Section name='Basic'>
+          <Section name="Basic">
             {children.staticProps.propertyView({ label: 'Static Props' })}
             {children.value.propertyView({ label: 'Value' })}
             {children.options.propertyView({ label: 'Options' })}
           </Section>
-          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
+          <Section name="Interaction">{hiddenPropertyView(children)}</Section>
 
-          <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
-          <Section name='Description'>
-            <ol className='text-sm p-0 m-0 mx-3'>
+          <Section name="Event">{children.onEvent.getPropertyView()}</Section>
+          <Section name="Description">
+            <ol className="text-sm p-0 m-0 mx-3">
+              <li>Static Props area should contain only static props of Primereact SelectButton.</li>
               <li>
-                Static Props area should contain only static props of Primereact SelectButton.
-              </li>
-              <li>
-                <a href='https://primereact.org/selectbutton/' target='_blank'>
+                <a href="https://primereact.org/selectbutton/" target="_blank">
                   More information
                 </a>
               </li>
@@ -75,10 +74,6 @@ let SelectButtonCompBase = (function () {
     })
     .build();
 })();
-export const exposingConfigs = [
-  new NameConfig('staticProps'),
-  new NameConfig('value'),
-  NameConfigHidden,
-];
+export const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value'), NameConfigHidden];
 
 export default withExposingConfigs(SelectButtonCompBase, exposingConfigs);

@@ -26,16 +26,14 @@ let SkeletonCompBase = (function () {
     .setPropertyViewFn((children: any) => {
       return (
         <>
-          <Section name='Basic'>
-            {children.staticProps.propertyView({ label: 'Static Props' })}
-          </Section>
-          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
+          <Section name="Basic">{children.staticProps.propertyView({ label: 'Static Props' })}</Section>
+          <Section name="Interaction">{hiddenPropertyView(children)}</Section>
 
-          <Section name='Description'>
-            <ol className='text-sm p-0 m-0 mx-3'>
+          <Section name="Description">
+            <ol className="text-sm p-0 m-0 mx-3">
               <li>Static Props area should contain only static props of Primereact Skeleton.</li>
               <li>
-                <a href='https://primereact.org/skeleton/' target='_blank'>
+                <a href="https://primereact.org/skeleton/" target="_blank">
                   More information
                 </a>
               </li>

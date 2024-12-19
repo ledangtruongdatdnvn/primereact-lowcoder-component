@@ -150,7 +150,11 @@ let TableCompBase = (function () {
 
   return new UICompBuilder(childrenMap, (props: any) => {
     const handleChange = (event: any) => {
-      if ((event.rows !== props.rows || event.first !== props.first) && typeof event.first == 'number' && typeof event.rows == 'number') {
+      if (
+        (event.rows !== props.rows || event.first !== props.first) &&
+        typeof event.first == 'number' &&
+        typeof event.rows == 'number'
+      ) {
         props.rows.onChange(event.rows);
         props.first.onChange(event.first);
       }
@@ -166,7 +170,7 @@ let TableCompBase = (function () {
 
     const bodyTemplate = (rowData: any) => {
       return (
-        <div className='flex justify-content-center align-items-center gap-2'>
+        <div className="flex justify-content-center align-items-center gap-2">
           {props.buttonGroups.map((item: any, index: any) => {
             return (
               <Button
@@ -222,7 +226,9 @@ let TableCompBase = (function () {
         {props.columns.map((column: any, index: any) => (
           <Column key={index} {...column}></Column>
         ))}
-        {props.buttonGroups && props.buttonGroups.length > 0 && <Column header={props.actionsColumnLabel.value} align='center' body={bodyTemplate}></Column>}
+        {props.buttonGroups && props.buttonGroups.length > 0 && (
+          <Column header={props.actionsColumnLabel.value} align="center" body={bodyTemplate}></Column>
+        )}
       </DataTable>
     );
   })
@@ -230,7 +236,7 @@ let TableCompBase = (function () {
       return (
         <>
           {JSON.stringify(children.staticProps.midValue)}
-          <Section name='Basic'>
+          <Section name="Basic">
             {children.staticProps.propertyView({ label: 'Props' })}
             {children.mobile.propertyView({ label: 'Mobile' })}
             {children.value.propertyView({ label: 'Value' })}
@@ -241,20 +247,23 @@ let TableCompBase = (function () {
             {children.rows.propertyView({ label: 'Rows' })}
             {children.totalRecords.propertyView({ label: 'Total Records' })}
           </Section>
-          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
-          <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
-          <Section name='Description'>
-            <ol className='text-sm p-0 m-0 mx-3'>
+          <Section name="Interaction">{hiddenPropertyView(children)}</Section>
+          <Section name="Event">{children.onEvent.getPropertyView()}</Section>
+          <Section name="Description">
+            <ol className="text-sm p-0 m-0 mx-3">
               <li>Static Props area should contain only static props of Primereact DataTable.</li>
               <li>The Total Records Properties only work with a lazy table.</li>
               <li>The Actions Column appears only when the length of Button Groups is greater than 0.</li>
-              <li>'hiddenFieldCondition' and 'hiddenValueCondition' are used for controlling the visibility of the action button.</li>
               <li>
-                'selectedRow' and 'selectedButtonType' are exposed states, used for event checking. Paging buttons will have a 'paging' type, while other buttons will have their own predefined types
-                in Button Groups.
+                'hiddenFieldCondition' and 'hiddenValueCondition' are used for controlling the visibility of the action
+                button.
               </li>
               <li>
-                <a href='https://primereact.org/datatable/' target='_blank'>
+                'selectedRow' and 'selectedButtonType' are exposed states, used for event checking. Paging buttons will
+                have a 'paging' type, while other buttons will have their own predefined types in Button Groups.
+              </li>
+              <li>
+                <a href="https://primereact.org/datatable/" target="_blank">
                   More information
                 </a>
               </li>

@@ -38,13 +38,9 @@ let CheckboxCompBase = (function () {
     };
 
     return (
-      <div className='flex justify-content-center align-items-center'>
-        <Checkbox
-          inputId={props.inputId.value}
-          onChange={handleChange}
-          checked={props.checked.value}
-        ></Checkbox>
-        <label htmlFor={props.inputId.value} className='ml-2'>
+      <div className="flex justify-content-center align-items-center">
+        <Checkbox inputId={props.inputId.value} onChange={handleChange} checked={props.checked.value}></Checkbox>
+        <label htmlFor={props.inputId.value} className="ml-2">
           {props.label.value}
         </label>
       </div>
@@ -53,20 +49,18 @@ let CheckboxCompBase = (function () {
     .setPropertyViewFn((children: any) => {
       return (
         <>
-          <Section name='Basic'>
+          <Section name="Basic">
             {children.checked.propertyView({ label: 'Checked' })}
             {children.label.propertyView({ label: 'Label' })}
             {children.inputId.propertyView({ label: 'Input ID' })}
           </Section>
-          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
-          <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
-          <Section name='Description'>
-            <ol className='text-sm p-0 m-0 mx-3'>
+          <Section name="Interaction">{hiddenPropertyView(children)}</Section>
+          <Section name="Event">{children.onEvent.getPropertyView()}</Section>
+          <Section name="Description">
+            <ol className="text-sm p-0 m-0 mx-3">
+              <li>Common Props area should contain only common static props of Primereact Checkbox.</li>
               <li>
-                Common Props area should contain only common static props of Primereact Checkbox.
-              </li>
-              <li>
-                <a href='https://primereact.org/checkbox/' target='_blank'>
+                <a href="https://primereact.org/checkbox/" target="_blank">
                   More information
                 </a>
               </li>

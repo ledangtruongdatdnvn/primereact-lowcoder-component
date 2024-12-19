@@ -1,6 +1,6 @@
 {
   "name": "@ledangtruongdat/primereact-lowcoder-components",
-  "version": "0.0.71",
+  "version": "0.0.72",
   "type": "module",
   "license": "MIT",
   "dependencies": {
@@ -377,10 +377,12 @@
   "scripts": {
     "start": "vite",
     "build": "lowcoder-cli build",
-    "build_publish": "lowcoder-cli build --publish"
+    "build_publish": "lowcoder-cli build --publish",
+    "format:write": "prettier --write \"**/*.{js,jsx,mjs,ts,tsx,mdx}\" --cache"
   },
   "devDependencies": {
     "@types/lodash": "^4.17.5",
+    "prettier": "^3.4.2",
     "sass": "^1.72.0"
   },
   "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"

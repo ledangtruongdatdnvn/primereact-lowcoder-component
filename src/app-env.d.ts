@@ -1,3 +1,3 @@
 /// <reference types="lowcoder-cli/client" />
 
-declare module "lowcoder-sdk";
+declare module 'lowcoder-sdk';

@@ -40,7 +40,7 @@ let LabelCompBase = (function () {
   return new UICompBuilder(childrenMap, (props: { label: any; type: any; text: any }) => {
     const value = props.text.value;
     return (
-      <div className='flex flex-column gap-2'>
+      <div className="flex flex-column gap-2">
         <label>{props.label}</label>
         <TextContainer>{props.type === 'markdown' ? <TacoMarkDown>{value}</TacoMarkDown> : value}</TextContainer>
       </div>
@@ -49,18 +49,19 @@ let LabelCompBase = (function () {
     .setPropertyViewFn((children: any) => {
       return (
         <>
-          <Section name='Basic'>
+          <Section name="Basic">
             {children.label.propertyView({ label: 'Label' })}
             {children.type.propertyView({
               label: 'Type',
-              tooltip: 'Markdown Supports Most HTML Tags and Attributes. iframe, Script, and Other Tags Are Disabled for Security Reasons.',
+              tooltip:
+                'Markdown Supports Most HTML Tags and Attributes. iframe, Script, and Other Tags Are Disabled for Security Reasons.',
               radioButton: true,
             })}
             {children.text.propertyView({ label: 'Content' })}
           </Section>
-          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
-          <Section name='Description'>
-            <ol className='text-sm p-0 m-0 mx-3'>
+          <Section name="Interaction">{hiddenPropertyView(children)}</Section>
+          <Section name="Description">
+            <ol className="text-sm p-0 m-0 mx-3">
               <li>Content can be markdown or text.</li>
             </ol>
           </Section>

@@ -51,18 +51,18 @@ let ListBoxCompBase = (function () {
     .setPropertyViewFn((children: any) => {
       return (
         <>
-          <Section name='Basic'>
+          <Section name="Basic">
             {children.staticProps.propertyView({ label: 'Static Props' })}
             {children.value.propertyView({ label: 'Value' })}
           </Section>
-          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
+          <Section name="Interaction">{hiddenPropertyView(children)}</Section>
 
-          <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
-          <Section name='Description'>
-            <ol className='text-sm p-0 m-0 mx-3'>
+          <Section name="Event">{children.onEvent.getPropertyView()}</Section>
+          <Section name="Description">
+            <ol className="text-sm p-0 m-0 mx-3">
               <li>Static Props area should contain only static props of Primereact ListBox.</li>
               <li>
-                <a href='https://primereact.org/listbox/' target='_blank'>
+                <a href="https://primereact.org/listbox/" target="_blank">
                   More information
                 </a>
               </li>
@@ -73,10 +73,6 @@ let ListBoxCompBase = (function () {
     })
     .build();
 })();
-export const exposingConfigs = [
-  new NameConfig('staticProps'),
-  new NameConfig('value'),
-  NameConfigHidden,
-];
+export const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('value'), NameConfigHidden];
 
 export default withExposingConfigs(ListBoxCompBase, exposingConfigs);

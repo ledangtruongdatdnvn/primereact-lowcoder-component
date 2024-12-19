@@ -51,7 +51,11 @@ let CalendarCompBase = (function () {
     const isRange = props.staticProps.selectionMode === 'range';
     const start = props.value.value.start;
     const end = props.value.value.end;
-    const input = isRange ? [start ? new Date(start) : null, end ? new Date(end) : null] : start ? new Date(start) : null;
+    const input = isRange
+      ? [start ? new Date(start) : null, end ? new Date(end) : null]
+      : start
+        ? new Date(start)
+        : null;
 
     const handleChange = (e: any) => {
       if (!isRange) {
@@ -82,7 +86,20 @@ let CalendarCompBase = (function () {
         dayNames: ['Chủ Nhật', 'Thứ Hai', 'Thứ Ba', 'Thứ Tư', 'Thứ Năm', 'Thứ Sáu', 'Thứ Bảy'],
         dayNamesShort: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
         dayNamesMin: ['CN', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7'],
-        monthNames: ['Tháng Một', 'Tháng Hai', 'Tháng Ba', 'Tháng Tư', 'Tháng Năm', 'Tháng Sáu', 'Tháng Bảy', 'Tháng Tám', 'Tháng Chín', 'Tháng Mười', 'Tháng Mười Một', 'Tháng Mười Hai'],
+        monthNames: [
+          'Tháng Một',
+          'Tháng Hai',
+          'Tháng Ba',
+          'Tháng Tư',
+          'Tháng Năm',
+          'Tháng Sáu',
+          'Tháng Bảy',
+          'Tháng Tám',
+          'Tháng Chín',
+          'Tháng Mười',
+          'Tháng Mười Một',
+          'Tháng Mười Hai',
+        ],
         monthNamesShort: ['T1', 'T2', 'T3', 'T4', 'T5', 'T6', 'T7', 'T8', 'T9', 'T10', 'T11', 'T12'],
         today: 'Hôm nay',
         weekHeader: 'Tuần',
@@ -90,32 +107,43 @@ let CalendarCompBase = (function () {
     }, []);
 
     return (
-      <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
-        <Calendar {...props.staticProps} value={input} onChange={handleChange} invalid={props.error.value.length > 0}></Calendar>
+      <LabelWrapper
+        label={props.label.value}
+        required={props.required.value}
+        error={props.error.value}
+        caption={props.caption.value}
+        showCaption={props.showCaption.value}
+      >
+        <Calendar
+          {...props.staticProps}
+          value={input}
+          onChange={handleChange}
+          invalid={props.error.value.length > 0}
+        ></Calendar>
       </LabelWrapper>
     );
   })
     .setPropertyViewFn((children: any) => {
       return (
         <>
-          <Section name='Basic'>
+          <Section name="Basic">
             {children.staticProps.propertyView({ label: 'Static Props' })}
             {children.value.propertyView({ label: 'Value' })}
           </Section>
-          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
-          <Section name='Form'>
+          <Section name="Interaction">{hiddenPropertyView(children)}</Section>
+          <Section name="Form">
             {children.label.propertyView({ label: 'Label' })}
             {children.error.propertyView({ label: 'Error' })}
             {children.caption.propertyView({ label: 'Caption' })}
             {children.showCaption.propertyView({ label: 'Show caption' })}
             {children.required.propertyView({ label: 'Required' })}
           </Section>
-          <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
-          <Section name='Description'>
-            <ol className='text-sm p-0 m-0 mx-3'>
+          <Section name="Event">{children.onEvent.getPropertyView()}</Section>
+          <Section name="Description">
+            <ol className="text-sm p-0 m-0 mx-3">
               <li>Static Props area should contain only static props of Primereact Calendar.</li>
               <li>
-                <a href='https://primereact.org/calendar/' target='_blank'>
+                <a href="https://primereact.org/calendar/" target="_blank">
                   More information
                 </a>
               </li>

@@ -9,26 +9,45 @@ interface LabelWrapperProps {
   children?: React.ReactNode;
 }
 
-const LabelWrapper = ({ label, inputId, required, error, caption, showCaption, underRightContent, children }: LabelWrapperProps): React.JSX.Element => {
+const LabelWrapper = ({
+  label,
+  inputId,
+  required,
+  error,
+  caption,
+  showCaption,
+  underRightContent,
+  children,
+}: LabelWrapperProps): React.JSX.Element => {
   return (
     <>
-      <div className='flex flex-column gap-2'>
+      <div className="flex flex-column gap-2">
         {label && label?.length > 0 && (
-          <label style={{padding: '0 5px'}} htmlFor={inputId} className={required ? 'required' : ''}>
+          <label style={{ padding: '0 5px' }} htmlFor={inputId} className={required ? 'required' : ''}>
             {label}
           </label>
         )}
-        <div style={{padding: '0 5px'}}>
-          {children}
-        </div>
+        <div style={{ padding: '0 5px' }}>{children}</div>
       </div>
-      <div className='flex justify-content-between gap-2' style={{padding: '0 5px'}}>
-        {(error && error?.length > 0) ?
-          <div className='p-error'>{error}</div> : (showCaption && caption && caption?.length > 0) ? <div style={{
-            color: 'var(--text-color-secondary)', whiteSpace: 'normal', wordBreak: 'break-word'
-          }}>{caption}</div> : <div></div>}
-        {(showCaption && underRightContent && underRightContent.length > 0) &&
-            <div style={{color: 'var(--text-color-secondary)'}}>{underRightContent}</div>}
+      <div className="flex justify-content-between gap-2" style={{ padding: '0 5px' }}>
+        {error && error?.length > 0 ? (
+          <div className="p-error">{error}</div>
+        ) : showCaption && caption && caption?.length > 0 ? (
+          <div
+            style={{
+              color: 'var(--text-color-secondary)',
+              whiteSpace: 'normal',
+              wordBreak: 'break-word',
+            }}
+          >
+            {caption}
+          </div>
+        ) : (
+          <div></div>
+        )}
+        {showCaption && underRightContent && underRightContent.length > 0 && (
+          <div style={{ color: 'var(--text-color-secondary)' }}>{underRightContent}</div>
+        )}
       </div>
     </>
   );

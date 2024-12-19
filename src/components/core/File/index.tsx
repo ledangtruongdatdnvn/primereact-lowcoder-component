@@ -126,7 +126,13 @@ let FileCompBase = (function () {
     };
 
     return (
-      <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+      <LabelWrapper
+        label={props.label.value}
+        required={props.required.value}
+        error={props.error.value}
+        caption={props.caption.value}
+        showCaption={props.showCaption.value}
+      >
         <button
           ref={buttonFileInput}
           className={`p-inputtext cursor-pointer ${props.error.value || internalError ? 'ng-invalid ng-dirty' : ''}`}
@@ -135,28 +141,36 @@ let FileCompBase = (function () {
           onDragLeave={handleDragLeave}
           onDrop={handleDrop}
         >
-          <div className='relative'>
-            <div className='text-lg text-center'>
+          <div className="relative">
+            <div className="text-lg text-center">
               Kéo thả file hoặc <b>Chọn file</b> để tải lên
             </div>
-            <div className='text-center mt-2'>
+            <div className="text-center mt-2">
               (Cho phép dung lượng tối đa {props.size.value}MB và chỉ chấp nhận định dạng {props.accept.value})
             </div>
           </div>
         </button>
-        <input ref={fileInput} type='file' accept={props.accept.value} required={props.required.value} onChange={handleChange} hidden multiple={props.multiple.value} />
+        <input
+          ref={fileInput}
+          type="file"
+          accept={props.accept.value}
+          required={props.required.value}
+          onChange={handleChange}
+          hidden
+          multiple={props.multiple.value}
+        />
 
         {!props.multiple.value && props.files.value.length > 0 && (
-          <div className='flex justify-content-between align-items-center pt-2 pb-2 custom-file'>
-            <div className='custom-file-name'>{props.files.value[0].name}</div>
+          <div className="flex justify-content-between align-items-center pt-2 pb-2 custom-file">
+            <div className="custom-file-name">{props.files.value[0].name}</div>
           </div>
         )}
 
         {props.multiple.value &&
           props.files.value.length > 0 &&
           props.files.value.map((file: any, index: any) => (
-            <div key={index} className='flex justify-content-between align-items-center pt-2 pb-2 custom-file'>
-              <div className='custom-file-name'>{(file as any)?.name}</div>
+            <div key={index} className="flex justify-content-between align-items-center pt-2 pb-2 custom-file">
+              <div className="custom-file-name">{(file as any)?.name}</div>
               {/* <Button styleClass='p-button-sm p-button-rounded p-button-text' icon='pi pi-trash' onClick={() => handleDeleteFile(file)} /> */}
             </div>
           ))}
@@ -166,20 +180,20 @@ let FileCompBase = (function () {
     .setPropertyViewFn((children: any) => {
       return (
         <>
-          <Section name='Basic'>{children.staticProps.propertyView({ label: 'Static Props' })}</Section>
-          <Section name='Form'>
+          <Section name="Basic">{children.staticProps.propertyView({ label: 'Static Props' })}</Section>
+          <Section name="Form">
             {children.label.propertyView({ label: 'Label' })}
             {children.error.propertyView({ label: 'Error' })}
             {children.caption.propertyView({ label: 'Caption' })}
             {children.showCaption.propertyView({ label: 'Show caption' })}
             {children.required.propertyView({ label: 'Required' })}
           </Section>
-          <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
-          <Section name='Description'>
-            <ol className='text-sm p-0 m-0 mx-3'>
+          <Section name="Event">{children.onEvent.getPropertyView()}</Section>
+          <Section name="Description">
+            <ol className="text-sm p-0 m-0 mx-3">
               <li>Static Props area should contain only static props of Primereact InputText.</li>
               <li>
-                <a href='https://primereact.org/inputtext/' target='_blank'>
+                <a href="https://primereact.org/inputtext/" target="_blank">
                   More information
                 </a>
               </li>

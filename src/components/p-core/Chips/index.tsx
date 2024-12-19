@@ -44,35 +44,31 @@ let ChipsCompBase = (function () {
         caption={props.caption.value}
         showCaption={props.showCaption.value}
       >
-        <Chips
-          value={props.value.value}
-          onChange={(e) => props.value.onChange(e.value)}
-          {...props.staticProps}
-        />
+        <Chips value={props.value.value} onChange={(e) => props.value.onChange(e.value)} {...props.staticProps} />
       </LabelWrapper>
     );
   })
     .setPropertyViewFn((children: any) => {
       return (
         <>
-          <Section name='Basic'>
+          <Section name="Basic">
             {children.staticProps.propertyView({ label: 'Static Props' })}
             {children.value.propertyView({ label: 'Value' })}
           </Section>
-          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
-          <Section name='Form'>
+          <Section name="Interaction">{hiddenPropertyView(children)}</Section>
+          <Section name="Form">
             {children.label.propertyView({ label: 'Label' })}
             {children.error.propertyView({ label: 'Error' })}
             {children.caption.propertyView({ label: 'Caption' })}
             {children.showCaption.propertyView({ label: 'Show caption' })}
             {children.required.propertyView({ label: 'Required' })}
           </Section>
-          <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
-          <Section name='Description'>
-            <ol className='text-sm p-0 m-0 mx-3'>
+          <Section name="Event">{children.onEvent.getPropertyView()}</Section>
+          <Section name="Description">
+            <ol className="text-sm p-0 m-0 mx-3">
               <li>Static Props area should contain only static props of Primereact Chips.</li>
               <li>
-                <a href='https://primereact.org/chips/' target='_blank'>
+                <a href="https://primereact.org/chips/" target="_blank">
                   More information
                 </a>
               </li>

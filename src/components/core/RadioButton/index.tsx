@@ -43,11 +43,16 @@ let RadioButtonCompBase = (function () {
     };
 
     return (
-      <div className='flex gap-4 justify-content-center align-items-center'>
+      <div className="flex gap-4 justify-content-center align-items-center">
         {props.radioButtons.map((item: any, index: number) => (
           <div key={index}>
-            <RadioButton {...props.commonProps} {...item} checked={props.checked.value === item.value} onChange={handleChange}></RadioButton>
-            <label htmlFor={item.inputId} className='ml-2'>
+            <RadioButton
+              {...props.commonProps}
+              {...item}
+              checked={props.checked.value === item.value}
+              onChange={handleChange}
+            ></RadioButton>
+            <label htmlFor={item.inputId} className="ml-2">
               {item.name}
             </label>
           </div>
@@ -58,18 +63,18 @@ let RadioButtonCompBase = (function () {
     .setPropertyViewFn((children: any) => {
       return (
         <>
-          <Section name='Basic'>
+          <Section name="Basic">
             {children.commonProps.propertyView({ label: 'Common Props' })}
             {children.checked.propertyView({ label: 'Checked' })}
             {children.radioButtons.propertyView({ label: 'RadioButtons Props' })}
           </Section>
-          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
-          <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
-          <Section name='Description'>
-            <ol className='text-sm p-0 m-0 mx-3'>
+          <Section name="Interaction">{hiddenPropertyView(children)}</Section>
+          <Section name="Event">{children.onEvent.getPropertyView()}</Section>
+          <Section name="Description">
+            <ol className="text-sm p-0 m-0 mx-3">
               <li>Common Props area should contain only common static props of Primereact RadioButtons.</li>
               <li>
-                <a href='https://primereact.org/radiobutton/' target='_blank'>
+                <a href="https://primereact.org/radiobutton/" target="_blank">
                   More information
                 </a>
               </li>

@@ -145,27 +145,25 @@ let CascadeSelectCompBase = (function () {
     .setPropertyViewFn((children: any) => {
       return (
         <>
-          <Section name='Basic'>
+          <Section name="Basic">
             {children.staticProps.propertyView({ label: 'Static Props' })}
             {children.defaultValue.propertyView({ label: 'Default Value' })}
             {children.options.propertyView({ label: 'Options' })}
           </Section>
-          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
-          <Section name='Form'>
+          <Section name="Interaction">{hiddenPropertyView(children)}</Section>
+          <Section name="Form">
             {children.label.propertyView({ label: 'Label' })}
             {children.error.propertyView({ label: 'Error' })}
             {children.caption.propertyView({ label: 'Caption' })}
             {children.showCaption.propertyView({ label: 'Show caption' })}
             {children.required.propertyView({ label: 'Required' })}
           </Section>
-          <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
-          <Section name='Description'>
-            <ol className='text-sm p-0 m-0 mx-3'>
+          <Section name="Event">{children.onEvent.getPropertyView()}</Section>
+          <Section name="Description">
+            <ol className="text-sm p-0 m-0 mx-3">
+              <li>Static Props area should contain only static props of Primereact Cascade Select.</li>
               <li>
-                Static Props area should contain only static props of Primereact Cascade Select.
-              </li>
-              <li>
-                <a href='https://primereact.org/cascadeselect/' target='_blank'>
+                <a href="https://primereact.org/cascadeselect/" target="_blank">
                   More information
                 </a>
               </li>

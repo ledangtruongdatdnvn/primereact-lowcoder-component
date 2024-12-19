@@ -49,15 +49,13 @@ let SpeedDialCompBase = (function () {
     .setPropertyViewFn((children: any) => {
       return (
         <>
-          <Section name='Basic'>
-            {children.staticProps.propertyView({ label: 'Static Props' })}
-          </Section>
-          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
-          <Section name='Description'>
-            <ol className='text-sm p-0 m-0 mx-3'>
+          <Section name="Basic">{children.staticProps.propertyView({ label: 'Static Props' })}</Section>
+          <Section name="Interaction">{hiddenPropertyView(children)}</Section>
+          <Section name="Description">
+            <ol className="text-sm p-0 m-0 mx-3">
               <li>Static Props area should contain only static props of Primereact SpeedDial.</li>
               <li>
-                <a href='https://primereact.org/speeddial/' target='_blank'>
+                <a href="https://primereact.org/speeddial/" target="_blank">
                   More information
                 </a>
               </li>
@@ -68,10 +66,6 @@ let SpeedDialCompBase = (function () {
     })
     .build();
 })();
-export const exposingConfigs = [
-  new NameConfig('staticProps'),
-  new NameConfig('model'),
-  NameConfigHidden,
-];
+export const exposingConfigs = [new NameConfig('staticProps'), new NameConfig('model'), NameConfigHidden];
 
 export default withExposingConfigs(SpeedDialCompBase, exposingConfigs);

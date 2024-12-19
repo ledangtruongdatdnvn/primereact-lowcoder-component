@@ -1,12 +1,15 @@
 import {
   blurMethod,
   booleanExposingStateControl,
-  eventHandlerControl, focusWithOptions,
+  eventHandlerControl,
+  focusWithOptions,
   hiddenPropertyView,
   jsonControl,
   jsonExposingStateControl,
   NameConfig,
-  NameConfigHidden, RefControl, refMethods,
+  NameConfigHidden,
+  RefControl,
+  refMethods,
   Section,
   stringExposingStateControl,
   toJSONObject,
@@ -83,7 +86,13 @@ let AutoCompleteCompBase = (function () {
       .join(' ');
 
     return (
-      <LabelWrapper label={props.label.value} required={props.required.value} error={props.error.value} caption={props.caption.value} showCaption={props.showCaption.value}>
+      <LabelWrapper
+        label={props.label.value}
+        required={props.required.value}
+        error={props.error.value}
+        caption={props.caption.value}
+        showCaption={props.showCaption.value}
+      >
         <span className={classNames}>
           {props.staticProps.iconClass && <i className={props.staticProps.iconClass} style={{ zIndex: 9 }}></i>}
           <AutoComplete
@@ -95,12 +104,21 @@ let AutoCompleteCompBase = (function () {
             onChange={handleChange}
             inputStyle={{
               paddingLeft: props.staticProps.iconClass ? '40px' : '12px',
-              paddingRight: props.staticProps.showClear && props.value.value && props.value.value?.length > 0 && !props.staticProps.disabled ? '40px' : '12px',
+              paddingRight:
+                props.staticProps.showClear &&
+                props.value.value &&
+                props.value.value?.length > 0 &&
+                !props.staticProps.disabled
+                  ? '40px'
+                  : '12px',
               width: '100%',
             }}
             invalid={props.error.value.length > 0}
           ></AutoComplete>
-          {props.staticProps.showClear && props.value.value && props.value.value?.length > 0 && !props.staticProps.disabled && <i className='pi pi-times cursor-pointer' onClick={handleClear}></i>}
+          {props.staticProps.showClear &&
+            props.value.value &&
+            props.value.value?.length > 0 &&
+            !props.staticProps.disabled && <i className="pi pi-times cursor-pointer" onClick={handleClear}></i>}
         </span>
       </LabelWrapper>
     );
@@ -108,25 +126,25 @@ let AutoCompleteCompBase = (function () {
     .setPropertyViewFn((children: any) => {
       return (
         <>
-          <Section name='Basic'>
+          <Section name="Basic">
             {children.staticProps.propertyView({ label: 'Static Props' })}
             {children.value.propertyView({ label: 'Value' })}
             {children.suggestions.propertyView({ label: 'Suggestions' })}
           </Section>
-          <Section name='Interaction'>{hiddenPropertyView(children)}</Section>
-          <Section name='Form'>
+          <Section name="Interaction">{hiddenPropertyView(children)}</Section>
+          <Section name="Form">
             {children.label.propertyView({ label: 'Label' })}
             {children.error.propertyView({ label: 'Error' })}
             {children.caption.propertyView({ label: 'Caption' })}
             {children.showCaption.propertyView({ label: 'Show caption' })}
             {children.required.propertyView({ label: 'Required' })}
           </Section>
-          <Section name='Event'>{children.onEvent.getPropertyView()}</Section>
-          <Section name='Description'>
-            <ol className='text-sm p-0 m-0 mx-3'>
+          <Section name="Event">{children.onEvent.getPropertyView()}</Section>
+          <Section name="Description">
+            <ol className="text-sm p-0 m-0 mx-3">
               <li>Static Props area should contain only static props of Primereact AutoComplete.</li>
               <li>
-                <a href='https://primereact.org/autocomplete/' target='_blank'>
+                <a href="https://primereact.org/autocomplete/" target="_blank">
                   More information
                 </a>
               </li>
