@@ -19,13 +19,7 @@ import LabelWrapper from '../../../components/common/LabelWrapper';
 import { useDeepCompareEffect, useDeepCompareMemo } from 'use-deep-compare';
 import _ from 'lodash';
 import { IconType } from 'primereact/utils';
-import { useRef, useState } from 'react';
-
-declare global {
-  interface Window {
-    currentPrimeOverlay: Dropdown;
-  }
-}
+import { useEffect, useRef, useState } from 'react';
 
 const defStaticProps = {
   placeholder: 'Select a City',
@@ -94,6 +88,24 @@ const DropdownView = (props: any) => {
   const [filter, setFilter] = useState<string>('');
   const dropdownRef = useRef<Dropdown>(null);
 
+  const handleClickOutside = (event: MouseEvent) => {
+    if (dropdownRef.current && dropdownRef.current.getOverlay()) {
+      if (
+        !dropdownRef.current.getOverlay()?.contains(event.target as Node) &&
+        !dropdownRef.current.getElement()?.contains(event.target as Node)
+      ) {
+        dropdownRef.current.hide();
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mouseup', handleClickOutside);
+    return () => {
+      document.removeEventListener('mouseup', handleClickOutside);
+    };
+  }, []);
+
   return (
     <LabelWrapper
       label={props.label.value}
@@ -104,12 +116,6 @@ const DropdownView = (props: any) => {
     >
       <Dropdown
         ref={dropdownRef}
-        onShow={() => {
-          if (!dropdownRef.current) return;
-          if (dropdownRef.current?.getElement() !== window.currentPrimeOverlay?.getElement())
-            window.currentPrimeOverlay?.hide();
-          window.currentPrimeOverlay = dropdownRef.current;
-        }}
         {..._.merge(staticProps, { style: { width: '100%' } })}
         value={props.value.value}
         options={options}

@@ -1,6 +1,6 @@
 {
   "name": "@ledangtruongdat/primereact-lowcoder-components",
-  "version": "0.0.76",
+  "version": "0.0.80",
   "type": "module",
   "license": "MIT",
   "dependencies": {
@@ -9,9 +9,10 @@
     "@types/react-dom": "18",
     "autoprefixer": "^10.4.19",
     "dayjs": "^1.11.10",
+    "is-what": "^5.0.2",
     "lodash": "^4.17.21",
     "lowcoder-cli": "^0.0.30",
-    "lowcoder-sdk": "^2.4.4",
+    "lowcoder-sdk": "2.4.4",
     "postcss": "^8.4.38",
     "primeflex": "^3.3.1",
     "primeicons": "^7.0.0",
@@ -23,13 +24,22 @@
     "react-resize-detector": "^10.0.1",
     "styled-components": "^6.1.8",
     "typescript": "^5.4.3",
-    "use-deep-compare": "^1.2.1",
+    "use-deep-compare": "^1.3.0",
     "vite": "^6.0.1",
     "vite-plugin-fonts": "^0.7.0"
   },
   "lowcoder": {
     "description": "A Demo Hillchart Component Plugin",
     "comps": {
+      "pCalendar": {
+        "name": "P-Calendar",
+        "icon": "./icons/component.svg",
+        "description": "Calendar Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
       "button": {
         "name": "Button",
         "icon": "./icons/component.svg",
@@ -130,7 +140,7 @@
         }
       },
       "calendar": {
-        "name": "Calendar",
+        "name": "Old Calendar (deprecated)",
         "icon": "./icons/component.svg",
         "description": "Calendar Component",
         "layoutInfo": {
