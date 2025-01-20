@@ -40,7 +40,7 @@ let LabelCompBase = (function () {
   return new UICompBuilder(childrenMap, (props: { label: any; type: any; text: any }) => {
     const value = props.text.value;
     return (
-      <div className="flex flex-column gap-2">
+      <div className="flex flex-col gap-2">
         <label>{props.label}</label>
         <TextContainer>{props.type === 'markdown' ? <TacoMarkDown>{value}</TacoMarkDown> : value}</TextContainer>
       </div>
@@ -61,7 +61,7 @@ let LabelCompBase = (function () {
           </Section>
           <Section name="Interaction">{hiddenPropertyView(children)}</Section>
           <Section name="Description">
-            <ol className="text-sm p-0 m-0 mx-3">
+            <ol className="text-sm p-0 m-0 mx-4">
               <li>Content can be markdown or text.</li>
             </ol>
           </Section>

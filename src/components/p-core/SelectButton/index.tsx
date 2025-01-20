@@ -60,7 +60,7 @@ let SelectButtonCompBase = (function () {
 
           <Section name="Event">{children.onEvent.getPropertyView()}</Section>
           <Section name="Description">
-            <ol className="text-sm p-0 m-0 mx-3">
+            <ol className="text-sm p-0 m-0 mx-4">
               <li>Static Props area should contain only static props of Primereact SelectButton.</li>
               <li>
                 <a href="https://primereact.org/selectbutton/" target="_blank">

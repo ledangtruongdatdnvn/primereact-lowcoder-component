@@ -49,7 +49,7 @@ let TimelineCompBase = (function () {
           </div>
         )}
         // marker={(item: any) => (
-        //   <span className='flex w-2rem h-2rem align-items-center justify-content-center text-white border-circle z-1 shadow-1' style={{ backgroundColor: item.color }}>
+        //   <span className='flex w-8 h-8 items-center justify-center text-white rounded-full z-10 shadow-sm' style={{ backgroundColor: item.color }}>
         //     <i className={item[props.icon]}></i>
         //   </span>
         // )}
@@ -67,7 +67,7 @@ let TimelineCompBase = (function () {
             {children.icon.propertyView({ label: 'Icon' })}
           </Section>
           <Section name="Description">
-            <ol className="text-sm p-0 m-0 mx-3">
+            <ol className="text-sm p-0 m-0 mx-4">
               <li>Static Props area should contain only static props of Primereact Timeline.</li>
               <li>
                 <a href="https://primereact.org/timeline/" target="_blank">

@@ -29,7 +29,7 @@ let DividerCompBase = (function () {
           <Section name="Props">{children.staticProps.propertyView({ label: 'Static Props' })}</Section>
           <Section name="Interaction">{hiddenPropertyView(children)}</Section>
           <Section name="Description">
-            <ol className="text-sm p-0 m-0 mx-3">
+            <ol className="text-sm p-0 m-0 mx-4">
               <li>Static Props area should contain only static props of Primereact Divider.</li>
               <li>
                 <a href="https://primereact.org/divider/" target="_blank">

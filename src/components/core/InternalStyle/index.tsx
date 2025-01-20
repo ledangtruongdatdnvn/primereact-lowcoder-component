@@ -38,7 +38,7 @@ let InternalStyleCompBase = (function () {
             {children.theme.propertyView({ label: 'Theme' })}
           </Section>
           <Section name="Description">
-            <ol className="text-sm p-0 m-0 mx-3">
+            <ol className="text-sm p-0 m-0 mx-4">
               <li>Using this component for adding internal style to Primereact Component.</li>
             </ol>
           </Section>

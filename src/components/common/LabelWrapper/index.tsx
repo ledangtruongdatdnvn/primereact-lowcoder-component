@@ -21,7 +21,7 @@ const LabelWrapper = ({
 }: LabelWrapperProps): React.JSX.Element => {
   return (
     <>
-      <div className="flex flex-column gap-2">
+      <div className="flex flex-col gap-2">
         {label && label?.length > 0 && (
           <label style={{ padding: '0 5px' }} htmlFor={inputId} className={required ? 'required' : ''}>
             {label}
@@ -29,7 +29,7 @@ const LabelWrapper = ({
         )}
         <div style={{ padding: '0 5px' }}>{children}</div>
       </div>
-      <div className="flex justify-content-between gap-2" style={{ padding: '0 5px' }}>
+      <div className="flex justify-between gap-2" style={{ padding: '0 5px' }}>
         {error && error?.length > 0 ? (
           <div className="p-error">{error}</div>
         ) : showCaption && caption && caption?.length > 0 ? (

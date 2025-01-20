@@ -170,7 +170,7 @@ let TableCompBase = (function () {
 
     const bodyTemplate = (rowData: any) => {
       return (
-        <div className="flex justify-content-center align-items-center gap-2">
+        <div className="flex justify-center items-center gap-2">
           {props.buttonGroups.map((item: any, index: any) => {
             return (
               <Button
@@ -250,7 +250,7 @@ let TableCompBase = (function () {
           <Section name="Interaction">{hiddenPropertyView(children)}</Section>
           <Section name="Event">{children.onEvent.getPropertyView()}</Section>
           <Section name="Description">
-            <ol className="text-sm p-0 m-0 mx-3">
+            <ol className="text-sm p-0 m-0 mx-4">
               <li>Static Props area should contain only static props of Primereact DataTable.</li>
               <li>The Total Records Properties only work with a lazy table.</li>
               <li>The Actions Column appears only when the length of Button Groups is greater than 0.</li>

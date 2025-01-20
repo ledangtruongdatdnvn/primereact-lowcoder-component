@@ -38,7 +38,7 @@ let CheckboxCompBase = (function () {
     };
 
     return (
-      <div className="flex justify-content-center align-items-center">
+      <div className="flex justify-center items-center">
         <Checkbox inputId={props.inputId.value} onChange={handleChange} checked={props.checked.value}></Checkbox>
         <label htmlFor={props.inputId.value} className="ml-2">
           {props.label.value}
@@ -57,7 +57,7 @@ let CheckboxCompBase = (function () {
           <Section name="Interaction">{hiddenPropertyView(children)}</Section>
           <Section name="Event">{children.onEvent.getPropertyView()}</Section>
           <Section name="Description">
-            <ol className="text-sm p-0 m-0 mx-3">
+            <ol className="text-sm p-0 m-0 mx-4">
               <li>Common Props area should contain only common static props of Primereact Checkbox.</li>
               <li>
                 <a href="https://primereact.org/checkbox/" target="_blank">
