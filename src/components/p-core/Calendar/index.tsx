@@ -15,7 +15,7 @@ import {
 } from 'lowcoder-sdk';
 import LabelWrapper from '../../../components/common/LabelWrapper';
 import { Calendar, CalendarProps } from 'primereact/calendar';
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import { isDate, isFullArray, isString } from 'is-what';
 import { classNames } from 'primereact/utils';
 import dayjs from 'dayjs';
@@ -23,12 +23,6 @@ import customParseFormat from 'dayjs/plugin/customParseFormat';
 import { useDeepCompareEffect } from 'use-deep-compare';
 
 dayjs.extend(customParseFormat);
-
-const getDate = (value: string) => {
-  return new Date(value.slice(4, 8) + '/' + value.slice(2, 4) + '/' + value.slice(0, 2));
-};
-
-const regex: RegExp = new RegExp(/^[0-9]*$/);
 
 type AppDate = Date | (Date | null)[] | null | any;
 
@@ -54,6 +48,9 @@ export const defStaticProps = {
     width: '100%',
   },
 };
+
+const dateFormatRegex = new RegExp('[^0-9a-zA-Z.]', 'g');
+const trimDateString = (date: string) => date.replaceAll(dateFormatRegex, '');
 
 let CalendarCompBase = (function () {
   const childrenMap = {
@@ -117,60 +114,7 @@ let CalendarCompBase = (function () {
     const handleChange = (event: any) => {
       const value = event.value;
       setValue(value);
-      if (value?.length === 8 && selectionMode === 'single' && !value.includes('/')) {
-        const date = getDate(value);
-        if (date && !isNaN(date.getTime())) {
-          setValue(date ?? null);
-          props.value.onChange?.(date);
-          inputRef.current?.blur();
-          hideOverlay();
-        }
-      }
-      if (value?.length === 8 && selectionMode === 'range' && !value.includes('/')) {
-        const start = getDate(value);
-        if (start && !isNaN(start.getTime())) {
-          setValue([start, null]);
-          props.value.onChange?.([start, null]);
-          updateInput();
-        }
-      }
-
-      if (isString(value)) {
-        const n = value?.length;
-        const startStr = value
-          ?.slice(0, n - 8)
-          .split('/')
-          .join('');
-        const endStr = value?.slice(Math.max(n - 8, 9), n);
-
-        if (
-          n >= 17 &&
-          n <= 21 &&
-          selectionMode === 'range' &&
-          value.includes('-') &&
-          regex.test(startStr.slice(0, 8)) &&
-          regex.test(endStr)
-        ) {
-          const start = getDate(startStr);
-          const end = getDate(endStr);
-
-          if (end && start && !isNaN(end.getTime()) && !isNaN(start.getTime())) {
-            setValue([start, end]);
-            props.value.onChange?.([start, end]);
-            inputRef.current?.blur();
-            hideOverlay();
-          }
-        }
-      }
-
-      if (
-        (selectionMode === 'single' && isDate(value)) ||
-        (selectionMode === 'range' && isDate(value[0])) ||
-        isDate(value[1])
-      ) {
-        setValue(value);
-        props.value.onChange?.(value);
-      }
+      props.value.onChange?.(value);
     };
 
     const handleClickOutside = (event: MouseEvent) => {
@@ -216,6 +160,11 @@ let CalendarCompBase = (function () {
             {...staticProps}
             value={value}
             onChange={handleChange}
+            parseDateTime={(text): any => {
+              const date = dayjs(trimDateString(text), trimDateString(dateFormat), true);
+              if (date.isValid()) return date.toDate();
+              else return null;
+            }}
             invalid={props.error?.value?.length > 0}
             formatDateTime={(value) => dayjs(value).format(dateFormat)}
           ></Calendar>
