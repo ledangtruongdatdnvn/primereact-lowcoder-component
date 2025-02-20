@@ -15,12 +15,11 @@ import {
 } from 'lowcoder-sdk';
 import LabelWrapper from '../../../components/common/LabelWrapper';
 import { Calendar, CalendarProps } from 'primereact/calendar';
-import React, { useEffect, useMemo, useRef } from 'react';
-import { isDate, isFullArray, isString } from 'is-what';
+import React, { useEffect, useRef } from 'react';
+import { isFullArray } from 'is-what';
 import { classNames } from 'primereact/utils';
 import dayjs from 'dayjs';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
-import { useDeepCompareEffect } from 'use-deep-compare';
 
 dayjs.extend(customParseFormat);
 
@@ -52,7 +51,116 @@ export const defStaticProps = {
 const dateFormatRegex = new RegExp('[^0-9a-zA-Z.]', 'g');
 const trimDateString = (date: string) => date.replaceAll(dateFormatRegex, '');
 
-let CalendarCompBase = (function () {
+const CalendarCompView = (props: CalendarCompProps) => {
+  const [value, setValue] = React.useState<AppDate>(props.value ?? null);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const calendarRef = useRef<Calendar>(null);
+
+  const {
+    selectionMode,
+    showClear,
+    disabled,
+    iconClass,
+    showIcon,
+    dateFormat = 'DD/MM/YYYY',
+    style,
+    ...staticProps
+  } = props.staticProps;
+
+  useEffect(() => {
+    const newDate = isFullArray(props.defaultValue.value)
+      ? props.defaultValue.value.map((i: string) => dayjs(i, dateFormat).toDate())
+      : dayjs(props.defaultValue.value, dateFormat).toDate();
+    props.value.onChange?.(newDate);
+    setValue(newDate);
+  }, [JSON.stringify(props.defaultValue?.value)]);
+
+  const handleClear = () => {
+    setValue(null);
+    props.value.onChange?.(null);
+  };
+
+  const updateInput = () => {
+    inputRef.current?.blur();
+    setTimeout(() => {
+      inputRef.current?.focus();
+    }, 100);
+  };
+
+  const hideOverlay = () => {
+    calendarRef.current?.hide();
+  };
+
+  const handleChange = (event: any) => {
+    const value = event.value;
+    setValue(value);
+    props.value.onChange?.(value);
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (calendarRef.current && calendarRef.current.getOverlay()) {
+      if (
+        !calendarRef.current.getOverlay()?.contains(event.target as Node) &&
+        !calendarRef.current.getElement()?.contains(event.target as Node)
+      ) {
+        calendarRef.current.hide();
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mouseup', handleClickOutside);
+    return () => {
+      document.removeEventListener('mouseup', handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <LabelWrapper
+      label={props.label.value}
+      required={props.required.value}
+      error={props.error.value}
+      caption={props.caption.value}
+      showCaption={props.showCaption.value}
+    >
+      <span
+        style={style}
+        className={classNames({
+          'p-input-icon-left': iconClass && iconClass?.length > 0,
+          'p-input-icon-right': showClear && value,
+        })}
+      >
+        <Calendar
+          ref={calendarRef}
+          inputRef={inputRef}
+          selectionMode={selectionMode}
+          disabled={disabled}
+          showIcon={showIcon}
+          style={style}
+          {...staticProps}
+          value={value}
+          onChange={handleChange}
+          parseDateTime={(text): any => {
+            const date = dayjs(trimDateString(text), trimDateString(dateFormat), true);
+            if (date.isValid()) return date.toDate();
+            else return null;
+          }}
+          invalid={props.error?.value?.length > 0}
+          formatDateTime={(value) => dayjs(value).format(dateFormat)}
+        ></Calendar>
+        {showClear && value && !disabled && (
+          <i
+            className="pi pi-times cursor-pointer"
+            style={{ right: showIcon ? `3.75rem` : '0.75rem' }}
+            onClick={handleClear}
+          ></i>
+        )}
+      </span>
+    </LabelWrapper>
+  );
+};
+
+const CalendarCompBase = (function () {
   const childrenMap = {
     staticProps: jsonControl(toJSONObject, defStaticProps),
     value: jsonObjectExposingStateControl('value', null),
@@ -71,113 +179,8 @@ let CalendarCompBase = (function () {
     ]),
   };
 
-  return new UICompBuilder(childrenMap, (props: CalendarCompProps) => {
-    const [value, setValue] = React.useState<AppDate>(props.value ?? null);
-    const inputRef = useRef<HTMLInputElement>(null);
-    const calendarRef = useRef<Calendar>(null);
-
-    const {
-      selectionMode,
-      showClear,
-      disabled,
-      iconClass,
-      showIcon,
-      dateFormat = 'DD/MM/YYYY',
-      style,
-      ...staticProps
-    } = props.staticProps;
-
-    useDeepCompareEffect(() => {
-      const newDate = isFullArray(props.defaultValue.value)
-        ? props.defaultValue.value.map((i: string) => dayjs(i, dateFormat).toDate())
-        : dayjs(props.defaultValue.value, dateFormat).toDate();
-      props.value.onChange?.(newDate);
-      setValue(newDate);
-    }, [props.defaultValue?.value]);
-
-    const handleClear = () => {
-      setValue(null);
-      props.value.onChange?.(null);
-    };
-
-    const updateInput = () => {
-      inputRef.current?.blur();
-      setTimeout(() => {
-        inputRef.current?.focus();
-      }, 100);
-    };
-
-    const hideOverlay = () => {
-      calendarRef.current?.hide();
-    };
-
-    const handleChange = (event: any) => {
-      const value = event.value;
-      setValue(value);
-      props.value.onChange?.(value);
-    };
-
-    const handleClickOutside = (event: MouseEvent) => {
-      if (calendarRef.current && calendarRef.current.getOverlay()) {
-        if (
-          !calendarRef.current.getOverlay()?.contains(event.target as Node) &&
-          !calendarRef.current.getElement()?.contains(event.target as Node)
-        ) {
-          calendarRef.current.hide();
-        }
-      }
-    };
-
-    useEffect(() => {
-      document.addEventListener('mouseup', handleClickOutside);
-      return () => {
-        document.removeEventListener('mouseup', handleClickOutside);
-      };
-    }, []);
-
-    return (
-      <LabelWrapper
-        label={props.label.value}
-        required={props.required.value}
-        error={props.error.value}
-        caption={props.caption.value}
-        showCaption={props.showCaption.value}
-      >
-        <span
-          style={style}
-          className={classNames({
-            'p-input-icon-left': iconClass && iconClass?.length > 0,
-            'p-input-icon-right': showClear && value,
-          })}
-        >
-          <Calendar
-            ref={calendarRef}
-            inputRef={inputRef}
-            selectionMode={selectionMode}
-            disabled={disabled}
-            showIcon={showIcon}
-            style={style}
-            {...staticProps}
-            value={value}
-            onChange={handleChange}
-            parseDateTime={(text): any => {
-              const date = dayjs(trimDateString(text), trimDateString(dateFormat), true);
-              if (date.isValid()) return date.toDate();
-              else return null;
-            }}
-            invalid={props.error?.value?.length > 0}
-            formatDateTime={(value) => dayjs(value).format(dateFormat)}
-          ></Calendar>
-          {showClear && value && !disabled && (
-            <i
-              className="pi pi-times cursor-pointer"
-              style={{ right: showIcon ? `3.75rem` : '0.75rem' }}
-              onClick={handleClear}
-            ></i>
-          )}
-        </span>
-      </LabelWrapper>
-    );
+  return new UICompBuilder(childrenMap, (props: any) => {
+    return <CalendarCompView {...props}></CalendarCompView>;
   })
     .setPropertyViewFn((children: any) => {
       return (

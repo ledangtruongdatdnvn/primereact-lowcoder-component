@@ -16,10 +16,9 @@ import {
 } from 'lowcoder-sdk';
 import { Dropdown, DropdownProps } from 'primereact/dropdown';
 import LabelWrapper from '../../../components/common/LabelWrapper';
-import { useDeepCompareEffect, useDeepCompareMemo } from 'use-deep-compare';
 import _ from 'lodash';
 import { IconType } from 'primereact/utils';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 
 const defStaticProps = {
   placeholder: 'Select a City',
@@ -73,20 +72,27 @@ const childrenMap = {
 };
 
 const DropdownView = (props: any) => {
+  const [filter, setFilter] = useState<string>('');
+  const dropdownRef = useRef<Dropdown>(null);
+
+  useEffect(() => {
+    document.addEventListener('mouseup', handleClickOutside);
+    return () => {
+      document.removeEventListener('mouseup', handleClickOutside);
+    };
+  }, []);
+
+  useEffect(() => {
+    props.value.onChange?.(props.defaultValue?.value);
+  }, [JSON.stringify(props.defaultValue?.value)]);
+
+  const options = useMemo(() => props.options, [JSON.stringify(props.options)]);
+  const staticProps = useMemo(() => props.staticProps, [JSON.stringify(props.staticProps)]);
+
   const handleChange = (e: any) => {
     props.value.onChange(e.target.value);
     props.onEvent('change');
   };
-
-  useDeepCompareEffect(() => {
-    props.value.onChange?.(props.defaultValue?.value);
-  }, [props.defaultValue?.value]);
-
-  const options = useDeepCompareMemo(() => props.options, [props.options]);
-  const staticProps = useDeepCompareMemo(() => props.staticProps, [props.staticProps]);
-
-  const [filter, setFilter] = useState<string>('');
-  const dropdownRef = useRef<Dropdown>(null);
 
   const handleClickOutside = (event: MouseEvent) => {
     if (dropdownRef.current && dropdownRef.current.getOverlay()) {
@@ -98,13 +104,6 @@ const DropdownView = (props: any) => {
       }
     }
   };
-
-  useEffect(() => {
-    document.addEventListener('mouseup', handleClickOutside);
-    return () => {
-      document.removeEventListener('mouseup', handleClickOutside);
-    };
-  }, []);
 
   return (
     <LabelWrapper
@@ -131,7 +130,9 @@ const DropdownView = (props: any) => {
   );
 };
 
-const DropdownCompBase = new UICompBuilder(childrenMap, DropdownView)
+const DropdownCompBase = new UICompBuilder(childrenMap, (props: any) => {
+  return <DropdownView {...props}></DropdownView>;
+})
   .setPropertyViewFn((children: any) => {
     return (
       <>
