@@ -14,6 +14,7 @@ import {
 } from 'lowcoder-sdk';
 import LabelWrapper from '../../../components/common/LabelWrapper';
 import { Calendar } from 'primereact/calendar';
+import React, {useEffect, useRef} from "react";
 
 export const defStaticProps = {
   placeholder: 'Choose date(s)',
@@ -24,6 +25,75 @@ export const defStaticProps = {
     width: '100%',
   },
 };
+
+const CalendarCompView = (props: any) => {
+  const calendarRef = useRef<Calendar>(null);
+  const isRange = props.staticProps.selectionMode === 'range';
+  const start = props.value.value.start;
+  const end = props.value.value.end;
+  const input = isRange
+    ? [start ? new Date(start) : null, end ? new Date(end) : null]
+    : start
+      ? new Date(start)
+      : null;
+
+  const handleChange = (e: any) => {
+    if (!isRange) {
+      props.value.onChange({ start: new Date(e.value), end: null });
+    } else {
+      if (!start || (start && end)) {
+        props.value.onChange({ start: new Date(e.value[0]), end: null });
+      } else if (!end) {
+        const firstValue = new Date(e.value[0]);
+        const secondValue = new Date(e.value[1]);
+
+        if (new Date(firstValue).getTime() < new Date(secondValue).getTime()) {
+          props.value.onChange({ start: firstValue, end: secondValue });
+        } else {
+          props.value.onChange({ start: secondValue, end: firstValue });
+        }
+      }
+    }
+
+    props.onEvent('change');
+  };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (calendarRef.current && calendarRef.current.getOverlay()) {
+      if (
+        !calendarRef.current.getOverlay()?.contains(event.target as Node) &&
+        !calendarRef.current.getElement()?.contains(event.target as Node)
+      ) {
+        calendarRef.current.hide();
+      }
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mouseup', handleClickOutside);
+    return () => {
+      document.removeEventListener('mouseup', handleClickOutside);
+    };
+  }, []);
+
+  return (
+    <LabelWrapper
+      label={props.label.value}
+      required={props.required.value}
+      error={props.error.value}
+      caption={props.caption.value}
+      showCaption={props.showCaption.value}
+    >
+      <Calendar
+        ref={calendarRef}
+        {...props.staticProps}
+        value={input}
+        onChange={handleChange}
+        invalid={props.error.value.length > 0}
+      ></Calendar>
+    </LabelWrapper>
+  );
+}
 
 let CalendarCompBase = (function () {
   const childrenMap = {
@@ -47,52 +117,7 @@ let CalendarCompBase = (function () {
   };
 
   return new UICompBuilder(childrenMap, (props: any) => {
-    const isRange = props.staticProps.selectionMode === 'range';
-    const start = props.value.value.start;
-    const end = props.value.value.end;
-    const input = isRange
-      ? [start ? new Date(start) : null, end ? new Date(end) : null]
-      : start
-        ? new Date(start)
-        : null;
-
-    const handleChange = (e: any) => {
-      if (!isRange) {
-        props.value.onChange({ start: new Date(e.value), end: null });
-      } else {
-        if (!start || (start && end)) {
-          props.value.onChange({ start: new Date(e.value[0]), end: null });
-        } else if (!end) {
-          const firstValue = new Date(e.value[0]);
-          const secondValue = new Date(e.value[1]);
-
-          if (new Date(firstValue).getTime() < new Date(secondValue).getTime()) {
-            props.value.onChange({ start: firstValue, end: secondValue });
-          } else {
-            props.value.onChange({ start: secondValue, end: firstValue });
-          }
-        }
-      }
-
-      props.onEvent('change');
-    };
-
-    return (
-      <LabelWrapper
-        label={props.label.value}
-        required={props.required.value}
-        error={props.error.value}
-        caption={props.caption.value}
-        showCaption={props.showCaption.value}
-      >
-        <Calendar
-          {...props.staticProps}
-          value={input}
-          onChange={handleChange}
-          invalid={props.error.value.length > 0}
-        ></Calendar>
-      </LabelWrapper>
-    );
+    return <CalendarCompView {...props}></CalendarCompView>;
   })
     .setPropertyViewFn((children: any) => {
       return (
