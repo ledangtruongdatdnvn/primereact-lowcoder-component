@@ -38,6 +38,15 @@
           "h": 6
         }
       },
+      "vgcCalendar": {
+        "name": "VGC-Calendar",
+        "icon": "./icons/component.svg",
+        "description": "VGC Calendar Component",
+        "layoutInfo": {
+          "w": 6,
+          "h": 6
+        }
+      },
       "button": {
         "name": "Button",
         "icon": "./icons/component.svg",

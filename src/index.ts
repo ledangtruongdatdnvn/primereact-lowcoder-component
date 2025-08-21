@@ -37,6 +37,7 @@ import ProgressBar from './components/p-core/ProgressBar';
 import Badge from './components/p-core/Badge';
 import Skeleton from './components/p-core/Skeleton';
 import PCalendar from './components/p-core/Calendar';
+import VgcCalendar from './components/p-core/VgcCalendar';
 import { addLocale, locale } from 'primereact/api';
 
 addLocale('vi', {
@@ -67,6 +68,7 @@ locale('vi');
 
 export default {
   pCalendar: PCalendar,
+  vgcCalendar: VgcCalendar,
   button: Button,
   timeline: Timeline,
   table: Table,
